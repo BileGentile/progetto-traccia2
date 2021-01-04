@@ -15,7 +15,7 @@ public class Starter {
 		c=tastiera.nextInt();
 		System.out.println("La sottostringa è " + s.substring(a-1, b-1));
 		System.out.println("il valore di c è " +c);
-		
+		System.out.println("Culetto");
 		
 		
 		tastiera.close();
