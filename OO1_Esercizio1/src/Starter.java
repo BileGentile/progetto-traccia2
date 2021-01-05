@@ -7,17 +7,13 @@ public class Starter {
 		System.out.println("Inserisci la stringa s:");
 		Scanner tastiera = new Scanner(System.in);
 		s=tastiera.nextLine();
-		System.out.println("Il numero totale di caratteri Ã¨: " + s.length());
-		int a,b,c;
-		System.out.println("Inserisci a e b e c:");
-		a=tastiera.nextInt();
-		b=tastiera.nextInt();
-		c=tastiera.nextInt();
-		System.out.println("La sottostringa Ã¨ " + s.substring(a-1, b-1));
-		System.out.println("il valore di c Ã¨ " +c);
-		System.out.println("Culetto");
-		
-		
+		System.out.println("Il numero totale di caratteri è: " + s.length());
+		int x,y;
+		System.out.println("Inserisci x e y:");
+		x=tastiera.nextInt();
+		y=tastiera.nextInt();
+		System.out.println("La sottostringa è " + s.substring(x-1, y-1));
+
 		tastiera.close();
 
 	}
