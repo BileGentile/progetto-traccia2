@@ -8,15 +8,11 @@ public class Starter {
 		Scanner tastiera = new Scanner(System.in);
 		s=tastiera.nextLine();
 		System.out.println("Il numero totale di caratteri è: " + s.length());
-		int a,b,c;
-		System.out.println("Inserisci a e b e c:");
+		int a,b;
+		System.out.println("Inserisci a e b:");
 		a=tastiera.nextInt();
 		b=tastiera.nextInt();
-		c=tastiera.nextInt();
 		System.out.println("La sottostringa è" + s.substring(a-1, b-1));
-		System.out.println("il valore di c è " +c);
-		
-		
 		
 		tastiera.close();
 
