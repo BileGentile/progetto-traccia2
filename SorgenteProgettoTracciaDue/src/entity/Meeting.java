@@ -1,8 +1,10 @@
+package entity;
+
 import java.sql.Date;
 
 public class Meeting {
 
-	//	attributi
+	// attributi
 	private String NomeProgetto;
 	private Date DataInzio;
 	

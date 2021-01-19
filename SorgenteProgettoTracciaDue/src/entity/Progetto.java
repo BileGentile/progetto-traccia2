@@ -1,8 +1,10 @@
+package entity;
+
 import java.util.ArrayList;
 
 public class Progetto {
 	
-//	attributi
+    //	attributi
 	private String NomeProgetto;
 	private String TipoProgetto;
 	private ArrayList<String> AmbitoProgetto;
