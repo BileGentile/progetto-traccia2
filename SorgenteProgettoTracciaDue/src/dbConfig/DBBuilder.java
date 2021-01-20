@@ -31,4 +31,33 @@ public class DBBuilder
         return false;
 
     }
+    
+    public int createTableMembro() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("Membro")) {
+    				String sql = "CREATE TABLE Membro " +
+                            "(matricola VARCHAR(9) not NULL, " + //DA CAMBIARE
+                            " nome VARCHAR(255), " +
+                            " cognome VARCHAR(255), " +
+                            " email VARCHAR(255), " +
+                            " PRIMARY KEY ( matricola ));";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Membro esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception in creation table Membro: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
 }
