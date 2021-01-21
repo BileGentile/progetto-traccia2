@@ -2,7 +2,7 @@ package Gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import Controller.Controller;
+import app.Controller;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,8 +21,8 @@ public class Presentazione extends JFrame {
 	Controller IlControllore;	
 
 
-	public Presentazione(Controller controller){
-		IlControllore =controller;
+	public Presentazione(Controller c){
+		IlControllore = c;
 
 		setTitle("Azienda- Benvenuto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
@@ -59,6 +59,8 @@ public class Presentazione extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Clicca sul tuo ruolo:");
 		lblNewLabel_1.setBounds(23, 65, 279, 13);
 		contentPane.add(lblNewLabel_1);
+		
+		
 	}
 }
 

@@ -1,6 +1,4 @@
 package app;
-
-
 import Gui.CosaFarePM;
 import Gui.LoginProjectManager;
 import Gui.Presentazione;

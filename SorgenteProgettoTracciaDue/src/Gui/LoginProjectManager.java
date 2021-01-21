@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Controller.Controller;
+import app.Controller;
 
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -27,8 +27,8 @@ public class LoginProjectManager extends JFrame {
 	 * Launch the application.
 	 */
 	
-	public LoginProjectManager(Controller controller ) {
-		IlControllore =controller;
+	public LoginProjectManager(Controller c ) {
+		IlControllore =c;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
 		setTitle("Azienda- Login del project manager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
