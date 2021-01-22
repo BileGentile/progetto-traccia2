@@ -2,15 +2,29 @@ package entity;
 
 public class Membro {
 	
-//	attributi
+    //ATTRIBUTI
 	private String Nome;
 	private String Cognome;
 	private String CF;
 	private String ValutazioneAziendale;
-//	skill da inserire
+    
+	//SKILLS
+	//TODO
 	
-//	costruttori
+    //COSTRUTTORI
+	public Membro(String nome, String cognome, String cF, String valutazioneAziendale) {
+		super();
+		Nome = nome;
+		Cognome = cognome;
+		CF = cF;
+		ValutazioneAziendale = valutazioneAziendale;
+	}
 	
+	public Membro(String CF) {
+		this.CF = CF;
+	}
+	
+	//GETTERS & SETTERS
 	public String getNome() {
 		return Nome;
 	}
@@ -42,14 +56,13 @@ public class Membro {
 	public void setValutazioneAziendale(String valutazioneAziendale) {
 		ValutazioneAziendale = valutazioneAziendale;
 	}
-	
-	public Membro(String nome, String cognome, String cF) {
-		super();
-		Nome = nome;
-		Cognome = cognome;
-		CF = cF;
+
+	@Override
+	public String toString() {
+		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", ValutazioneAziendale="
+				+ ValutazioneAziendale + "]";
 	}
 	
-//	metodi
+    //METODI
 	
 }

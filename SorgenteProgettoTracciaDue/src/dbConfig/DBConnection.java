@@ -11,17 +11,18 @@ public class DBConnection {
 
     private static DBConnection instance;
     private Connection connection = null;
-    private final String USERNAME = "admin";
-    private final String PASSWORD = "";
+    private final String USERNAME = "postgres";
+    private final String PASSWORD = "admin";
     private final String IP = "localhost";
     private final String PORT = "5432";
-    private String url = "jdbc:postgresql://"+IP+":"+PORT+"/unina";
+    private String url = "jdbc:postgresql://"+IP+":"+PORT+"/DBProgettoTracciaDue";
 
     private DBConnection() throws SQLException {
         //Properties props = new Properties();
         //props.setProperty("user", USERNAME);
         //props.setProperty("pwd", PASSWORD);
-
+        
+    	//1 e 2  CARICARE IL DRIVER/OTTENERE UNA CONNESSIONE
         try
         {
             Class.forName("org.postgresql.Driver");
@@ -53,7 +54,7 @@ public class DBConnection {
         return instance;
     }
 
-    /*private void createDatabase(String dbname)
+   /*private void createDatabase(String dbname)
     {
         Statement statement = null;
         try {

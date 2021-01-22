@@ -40,13 +40,13 @@ public class DBBuilder
     		try {
     			Statement st = connection.createStatement();
     			
-    			if(!tableExists("Membro")) {
-    				String sql = "CREATE TABLE Membro " +
-                            "(matricola VARCHAR(9) not NULL, " + //DA CAMBIARE
-                            " nome VARCHAR(255), " +
-                            " cognome VARCHAR(255), " +
-                            " email VARCHAR(255), " +
-                            " PRIMARY KEY ( matricola ));";
+    			if(!tableExists("membro")) {
+    				String sql = "CREATE TABLE membro " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "(nome VARCHAR(255) not NULL, " +
+                            " cognome VARCHAR(255) not NULL, " +
+                            " codFiscale VARCHAR(255), " +
+                            " valutazioneAziendale VARCHAR(255), " +
+                            " PRIMARY KEY ( codFiscale ));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {

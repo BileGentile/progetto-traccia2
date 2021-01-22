@@ -2,16 +2,18 @@ package app;
 
 import gui.Presentazione;
 import gui.LoginSviluppatore;
-
 import gui.LoginProjectManager;
+
 public class Controller {
-int caso;
-Presentazione  presenta;
-LoginProjectManager LoginPM;
-LoginSviluppatore LoginS;
+
+	int caso;
+	Presentazione  presenta;
+	LoginProjectManager LoginPM;
+	LoginSviluppatore LoginS;
+	
 	public static void main(String[] args) {
 
-		Controller c =new Controller();
+		Controller c = new Controller();
 	}
 
 	public Controller() {
