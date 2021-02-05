@@ -23,8 +23,9 @@ public class LoginProjectManager extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	Controller IlControllore;
+
 	private JButton btnNewButton_1;
+	Controller IlControllore;
 	public LoginProjectManager(Controller c) {
 		IlControllore =c;
 		
@@ -50,6 +51,7 @@ public class LoginProjectManager extends JFrame {
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaBenvenutoPM(textField.getText());
 			}
 		});
 		btnNewButton.setBounds(242, 183, 119, 41);

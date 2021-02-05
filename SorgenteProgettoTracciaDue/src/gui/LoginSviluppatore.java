@@ -43,6 +43,11 @@ public class LoginSviluppatore extends JFrame {
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Login");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaBenvenutoS(textField.getText());
+			}
+		});
 		btnNewButton.setBounds(257, 156, 116, 34);
 		contentPane.add(btnNewButton);
 		
