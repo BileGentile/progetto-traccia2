@@ -7,17 +7,18 @@ public class Membro {
 	private String Cognome;
 	private String CF;
 	private String ValutazioneAziendale;
-    
+    private String Ruolo;
 	//SKILLS
 	//TODO
 	
     //COSTRUTTORI
-	public Membro(String nome, String cognome, String cF, String valutazioneAziendale) {
+	public Membro(String nome, String cognome, String cF, String valutazioneAziendale, String ruolo) {
 		super();
 		Nome = nome;
 		Cognome = cognome;
 		CF = cF;
 		ValutazioneAziendale = valutazioneAziendale;
+		Ruolo = ruolo;
 	}
 	
 	public Membro(String CF) {
@@ -56,12 +57,21 @@ public class Membro {
 	public void setValutazioneAziendale(String valutazioneAziendale) {
 		ValutazioneAziendale = valutazioneAziendale;
 	}
+	public String getRuolo() {
+		return Ruolo;
+	}
 
+	public void setRuolo(String ruolo) {
+		Ruolo = ruolo;
+	}
+	
 	@Override
 	public String toString() {
 		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", ValutazioneAziendale="
-				+ ValutazioneAziendale + "]";
+				+ ValutazioneAziendale + ", Ruolo=" + Ruolo + "]";
 	}
+
+	
 	
     //METODI
 	

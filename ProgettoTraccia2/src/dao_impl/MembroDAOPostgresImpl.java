@@ -13,12 +13,13 @@ import entity.Membro;
 public class MembroDAOPostgresImpl implements MembroDAO {
 	
 	private Connection connection;
-	private PreparedStatement getMembroByNomePS, inserisciMembroPS;
+	private PreparedStatement getMembroByNomePS, inserisciMembroPS, getMembroByCodFiscalePS;
 	
 	public MembroDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getMembroByNomePS = connection.prepareStatement("SELECT * FROM membro WHERE nome LIKE ?");
-		inserisciMembroPS = connection.prepareStatement("INSERT INTO membro VALUES (?, ?, ?, ?)");
+		inserisciMembroPS = connection.prepareStatement("INSERT INTO membro VALUES (?, ?, ?, ?, ? )");
+		getMembroByCodFiscalePS = connection.prepareStatement("SELECT * FROM membro WHERE codFiscale LIKE ?");
 	}
 
 	@Override
@@ -26,6 +27,7 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	@Override
 	public List<Membro> getMembroByNome(String nome) throws SQLException {
@@ -38,10 +40,17 @@ public class MembroDAOPostgresImpl implements MembroDAO {
             s.setNome(rs.getString("nome"));
             s.setCognome(rs.getString("cognome"));
             s.setValutazioneAziendale(rs.getString("valutazioneAziendale"));
+            s.setRuolo(rs.getString("ruolo"));
             lista.add(s);
         }
         rs.close();
         return lista;
+	}
+
+	@Override
+	public List<Membro> getMembroByRuolo(String ruolo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -51,9 +60,21 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 	}
 
 	@Override
-	public List<Membro> getMembroByCodFiscale(String codfiscale) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Membro> getMembroByCodFiscale(String codfiscale) throws SQLException {
+		getMembroByCodFiscalePS.setString(1, codfiscale);
+        ResultSet rs= getMembroByCodFiscalePS.executeQuery();
+        List<Membro> lista = new ArrayList<Membro>();
+        while(rs.next())
+        {
+            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
+            s.setNome(rs.getString("nome"));
+            s.setCognome(rs.getString("cognome"));
+            s.setValutazioneAziendale(rs.getString("valutazioneAziendale"));
+            s.setRuolo(rs.getString("ruolo"));
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
 	}
 
 	@Override
@@ -68,6 +89,7 @@ public class MembroDAOPostgresImpl implements MembroDAO {
         inserisciMembroPS.setString(2, membro.getCognome());
         inserisciMembroPS.setString(3, membro.getCF());
         inserisciMembroPS.setString(4, membro.getValutazioneAziendale());
+        inserisciMembroPS.setString(5, membro.getRuolo());
         int row = inserisciMembroPS.executeUpdate();
         return row;
 	}

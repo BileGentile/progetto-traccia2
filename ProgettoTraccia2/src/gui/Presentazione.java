@@ -22,7 +22,8 @@ public class Presentazione extends JFrame {
 	
 	public Presentazione(Controller c) {
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		IlControllore =c;
 
 		setTitle("Azienda- Benvenuto");

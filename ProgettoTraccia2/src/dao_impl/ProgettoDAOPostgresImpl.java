@@ -18,7 +18,7 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	public ProgettoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getProgettoByNomePS = connection.prepareStatement("SELECT * FROM progetto WHERE nome LIKE ?");
-		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, ?, ?, )");
+		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, ?, ? )");
 	}
 
 	@Override
@@ -67,10 +67,15 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	}
 
 	@Override
-	public int inserisciProgetto(Progetto progetto) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int inserisciProgetto(Progetto progetto) throws SQLException {	
+	inserisciProgettoPS.setString(1, progetto.getNomeProgetto());
+    inserisciProgettoPS.setString(2, progetto.getTipoProgetto());
+    inserisciProgettoPS.setString(3, progetto.getAmbitoProgetto());
+    inserisciProgettoPS.setString(4, progetto.getStato());
+    inserisciProgettoPS.setString(5, progetto.getCodiceProgetto());
+    int row = inserisciProgettoPS.executeUpdate();
+    return row;
+}
 
 	@Override
 	public int cancellaMembro(Progetto progetto) {

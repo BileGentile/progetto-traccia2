@@ -23,7 +23,8 @@ public class BenvenutoProjectManager extends JFrame {
 	public BenvenutoProjectManager(Controller c) {
 		IlControllore =c;
 		setTitle("Azienda- Benvenuto Project Manager");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -44,7 +45,7 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton = new JButton("Aggiungi progetto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.CreaProgetto();
+				IlControllore.AvviaCreaProgetto();
 			}
 		});
 		btnNewButton.setBounds(10, 120, 168, 21);

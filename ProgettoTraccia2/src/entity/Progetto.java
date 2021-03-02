@@ -21,6 +21,7 @@ public class Progetto {
 		Stato = stato;
 		CodiceProgetto = codiceProgetto;
 		}
+	
 	public Progetto(String CodiceProgetto) {
 		this.CodiceProgetto = CodiceProgetto;
 	}
@@ -57,6 +58,13 @@ public class Progetto {
 		CodiceProgetto = codiceProgetto;
 	}
 	
+	
+
+	@Override
+	public String toString() {
+		return "Progetto [Progetto=" + NomeProgetto + ", TipoProgetto=" + TipoProgetto + ", AmbitoProgetto=" + AmbitoProgetto + ", Stato="
+				+ Stato + ", CodiceProgetto=" + CodiceProgetto + "]";
+	}
 //metodi
 	
 }

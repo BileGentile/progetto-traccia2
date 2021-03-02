@@ -44,9 +44,10 @@ public class DBBuilder
     				String sql = "CREATE TABLE membro " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
                             "(nome VARCHAR(255) not NULL, " +
                             " cognome VARCHAR(255) not NULL, " +
-                            " codFiscale VARCHAR(255) CHECK (codFiscale LIKE  '[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
-                            " valutazioneAziendale VARCHAR(255), " +
-                            " PRIMARY KEY ( codFiscale ));";
+                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
+                            " valutazioneAziendale VARCHAR(255), "+
+                            " ruolo VARCHAR CHECK (ruolo LIKE 'ProjectManager' OR  ruolo LIKE 'Sviluppatore'),"+
+    						" PRIMARY KEY (codFiscale));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -74,10 +75,10 @@ public class DBBuilder
     			if(!tableExists("progetto")) {
     				String sql = "CREATE TABLE progetto " +        //DA RIVEDERE
                             "(nome VARCHAR(255) not NULL, " +
-                            " tipo VARCHAR(255) not NULL, " +
-                            " ambito VARCHAR(255) not NULL  CHECK (Ambito LIKE 'Informatico' OR Ambito LIKE 'Medico' OR Ambito LIKE 'Economico'),  " +
+                            " tipo VARCHAR(255) not NULL  CHECK (tipo LIKE 'Ricerca di base' OR tipo LIKE 'Ricerca industruale' OR tipo LIKE 'Ricerca sperimentale' OR tipo LIKE 'Sviluppo sperimentale'), " +
+                            " ambito VARCHAR(255) not NULL  CHECK (ambito LIKE 'Informatico' OR ambito LIKE 'Medico' OR ambito LIKE 'Economico'),  " +
                             " codProgetto VARCHAR(255) PRIMARY KEY, " +
-                            " stato VARCHAR(255) CHECK( stato LIKE 'Completo' OR stato LIKE 'Incompleto'));";
+                            " stato VARCHAR(255) not NULL CHECK (stato LIKE 'Completo' OR stato LIKE 'Incompleto'));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -91,4 +92,5 @@ public class DBBuilder
     	}
     	return result;
 	}
+	
 }

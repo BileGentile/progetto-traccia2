@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -29,11 +31,11 @@ public class AggiungiProgetto extends JFrame {
 
 
 	Controller IlControllore;
-	private JTextField textField;
+	private JTextField nomeProgetto;
 	public AggiungiProgetto(Controller c) {
 		IlControllore =c;
-		setTitle("Azienda- Benvenuto Project Manager");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
+		setTitle("Azienda- Aggiungi progetto");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("workspace/ProgettoTraccia2/src/image/R47a12be5666da4a55756df4a9442574e.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -47,10 +49,10 @@ public class AggiungiProgetto extends JFrame {
 		lblNewLabel.setBounds(38, 45, 152, 29);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(211, 45, 134, 29);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nomeProgetto = new JTextField();
+		nomeProgetto.setBounds(211, 45, 134, 29);
+		contentPane.add(nomeProgetto);
+		nomeProgetto.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona tipo");
 		lblNewLabel_1.setBounds(38, 84, 127, 29);
@@ -61,7 +63,7 @@ public class AggiungiProgetto extends JFrame {
 		contentPane.add(lblNewLabel_1_1);
 		
 		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Economia", "Medicina", "Informatica"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Economico", "Medico", "Informatico"}));
 		comboBox.setBounds(211, 137, 134, 43);
 		contentPane.add(comboBox);
 		
@@ -71,6 +73,11 @@ public class AggiungiProgetto extends JFrame {
 		contentPane.add(comboBox_1);
 		
 		JButton btnNewButton = new JButton("Crea");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.CreaProgetto(nomeProgetto.getText(),  comboBox_1.getSelectedItem().toString(),comboBox.getSelectedItem().toString());
+			}
+		});
 		btnNewButton.setBounds(270, 207, 96, 35);
 		contentPane.add(btnNewButton);
 		

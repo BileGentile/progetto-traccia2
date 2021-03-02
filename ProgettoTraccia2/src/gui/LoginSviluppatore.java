@@ -24,7 +24,8 @@ public class LoginSviluppatore extends JFrame {
 	public LoginSviluppatore(Controller c) {
 		IlControllore= c;
 		setTitle("Azienda -Login");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

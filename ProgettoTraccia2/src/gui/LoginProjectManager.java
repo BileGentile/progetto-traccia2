@@ -18,19 +18,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
 
 public class LoginProjectManager extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField codiceFiscale;
 
 	private JButton btnNewButton_1;
 	Controller IlControllore;
+	
 	public LoginProjectManager(Controller c) {
 		IlControllore =c;
 		
 		setTitle("Azienda- Login");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -43,15 +47,15 @@ public class LoginProjectManager extends JFrame {
 		lblNewLabel.setBounds(30, 48, 163, 55);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(208, 66, 153, 19);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		codiceFiscale = new JTextField();
+		codiceFiscale.setBounds(185, 66, 176, 19);
+		contentPane.add(codiceFiscale);
+		codiceFiscale.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.AvviaBenvenutoPM(textField.getText());
+				IlControllore.AvviaBenvenutoPM(codiceFiscale);
 			}
 		});
 		btnNewButton.setBounds(242, 183, 119, 41);
@@ -66,5 +70,15 @@ public class LoginProjectManager extends JFrame {
 		});
 		btnNewButton_1.setBounds(34, 183, 127, 41);
 		contentPane.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("Non sei registrato? Fallo subito");
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				IlControllore.AvviaRegistrazioneProjectManager();
+			}
+		});
+		lblNewLabel_1.setBounds(185, 95, 195, 19);
+		contentPane.add(lblNewLabel_1);
 	}
 }
