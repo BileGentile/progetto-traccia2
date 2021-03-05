@@ -20,7 +20,8 @@ public class BenvenutoProjectManager extends JFrame {
 	private JPanel contentPane;
 
 	Controller IlControllore;
-	public BenvenutoProjectManager(Controller c) {
+	
+		public BenvenutoProjectManager(Controller c) {
 		IlControllore =c;
 		setTitle("Azienda- Benvenuto Project Manager");
 
@@ -38,9 +39,6 @@ public class BenvenutoProjectManager extends JFrame {
 		lblNewLabel.setBounds(10, 25, 405, 58);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnNewButton_3 = new JButton("New button");
-		btnNewButton_3.setBounds(0, 0, 0, 0);
-		contentPane.add(btnNewButton_3);
 		
 		JButton btnNewButton = new JButton("Aggiungi progetto");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -52,6 +50,11 @@ public class BenvenutoProjectManager extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Elimina progetto");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaCreaProgetto();
+			}
+		});
 		btnNewButton_1.setBounds(10, 167, 168, 21);
 		contentPane.add(btnNewButton_1);
 		
@@ -59,8 +62,23 @@ public class BenvenutoProjectManager extends JFrame {
 		btnNewButton_2.setBounds(10, 215, 168, 21);
 		contentPane.add(btnNewButton_2);
 		
-		JButton btnNewButton_4 = new JButton("Valuta Sviluppatore");
+		JButton btnNewButton_4 = new JButton("Aggiungi Membri al progetto");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaInserimentoMembro();
+			}
+		});
+		
 		btnNewButton_4.setBounds(242, 120, 139, 21);
 		contentPane.add(btnNewButton_4);
+		
+		JButton btnNewButton_4_1 = new JButton("Valuta Membro");
+		btnNewButton_4_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaValutazione();
+			}
+		});
+		btnNewButton_4_1.setBounds(242, 167, 139, 21);
+		contentPane.add(btnNewButton_4_1);
 	}
 }

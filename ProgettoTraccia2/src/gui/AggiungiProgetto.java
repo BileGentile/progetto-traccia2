@@ -28,14 +28,14 @@ import javax.swing.JButton;
 public class AggiungiProgetto extends JFrame {
 
 	private JPanel contentPane;
-
-
-	Controller IlControllore;
 	private JTextField nomeProgetto;
+	Controller IlControllore;
+	
+	
 	public AggiungiProgetto(Controller c) {
-		IlControllore =c;
-		setTitle("Azienda- Aggiungi progetto");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("workspace/ProgettoTraccia2/src/image/R47a12be5666da4a55756df4a9442574e.png"));
+		IlControllore = c;
+		setTitle("Azienda - Aggiungi progetto");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

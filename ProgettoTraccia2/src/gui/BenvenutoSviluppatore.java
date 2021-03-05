@@ -42,6 +42,7 @@ public class BenvenutoSviluppatore extends JFrame {
 		JButton btnNewButton = new JButton("Aggiungi presenza");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaAggiungipresenza();
 			}
 		});
 		btnNewButton.setBounds(10, 152, 159, 28);
@@ -54,7 +55,6 @@ public class BenvenutoSviluppatore extends JFrame {
 		});
 		btnNewButton_1.setBounds(217, 152, 159, 28);
 		contentPane.add(btnNewButton_1);
-		
-	}
 
+	}
 }

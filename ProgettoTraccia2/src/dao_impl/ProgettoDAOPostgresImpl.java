@@ -13,20 +13,35 @@ import entity.Progetto;
 public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	
 	private Connection connection;
-	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS;
+	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS;
 	
 	public ProgettoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getProgettoByNomePS = connection.prepareStatement("SELECT * FROM progetto WHERE nome LIKE ?");
-		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, ?, ? )");
+		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, nextval(?), ? )");
+		getAllProgettiPS = connection.prepareStatement("SELECT * FROM progetto ");
 	}
-
 	@Override
-	public List<Progetto> getAllProgetti() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Progetto> getAllProgetti()  throws SQLException {
+        ResultSet rs= getAllProgettiPS.executeQuery();
+        List<Progetto> lista = new ArrayList<Progetto>();
+        while(rs.next())
+        {
+            Progetto s = new Progetto(rs.getString("codProgetto")); 
+            s.setNomeProgetto(rs.getString("nome"));
+            s.setAmbitoProgetto(rs.getString("ambito"));
+            s.setTipoProgetto(rs.getString("tipo"));
+            s.setStato(rs.getString("stato"));
+            
+            
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
 	}
 
+		
+		
 	@Override
 	public List<Progetto> getProgettoByNome(String nome) throws SQLException {
 		getProgettoByNomePS.setString(1, nome);

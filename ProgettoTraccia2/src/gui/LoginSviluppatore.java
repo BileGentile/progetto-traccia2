@@ -14,6 +14,8 @@ import javax.swing.JButton;
 
 import app.Controller;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 public class LoginSviluppatore extends JFrame {
 
@@ -24,8 +26,7 @@ public class LoginSviluppatore extends JFrame {
 	public LoginSviluppatore(Controller c) {
 		IlControllore= c;
 		setTitle("Azienda -Login");
-
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Sara\\Desktop\\ingranaggio-blu.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -62,6 +63,18 @@ public class LoginSviluppatore extends JFrame {
 		});
 		btnNewButton_1.setBounds(22, 156, 129, 34);
 		contentPane.add(btnNewButton_1);
-	}
+	
+		JLabel BottoneRegistrareS = new JLabel("Non sei registrato? clicca quì");
+		BottoneRegistrareS.addMouseListener(new MouseAdapter() {
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
 
+			IlControllore.AvviaRegistrazioneSviluppatore();
+		}
+	});
+	BottoneRegistrareS.setBounds(187, 79, 195, 19);
+	contentPane.add(BottoneRegistrareS);
+	
+	}
 }

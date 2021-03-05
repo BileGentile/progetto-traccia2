@@ -6,19 +6,19 @@ public class Membro {
 	private String Nome;
 	private String Cognome;
 	private String CF;
-	private String ValutazioneAziendale;
     private String Ruolo;
+    private int SalarioMedio;
 	//SKILLS
 	//TODO
 	
     //COSTRUTTORI
-	public Membro(String nome, String cognome, String cF, String valutazioneAziendale, String ruolo) {
+	public Membro(String nome, String cognome, String cF, String ruolo, int salarioMedio) {
 		super();
 		Nome = nome;
 		Cognome = cognome;
 		CF = cF;
-		ValutazioneAziendale = valutazioneAziendale;
 		Ruolo = ruolo;
+		SalarioMedio = salarioMedio;
 	}
 	
 	public Membro(String CF) {
@@ -50,13 +50,6 @@ public class Membro {
 		CF = cF;
 	}
 	
-	public String getValutazioneAziendale() {
-		return ValutazioneAziendale;
-	}
-	
-	public void setValutazioneAziendale(String valutazioneAziendale) {
-		ValutazioneAziendale = valutazioneAziendale;
-	}
 	public String getRuolo() {
 		return Ruolo;
 	}
@@ -65,11 +58,19 @@ public class Membro {
 		Ruolo = ruolo;
 	}
 	
+	public int getSalarioMedio() {
+		return SalarioMedio;
+	}
+	
+	public void setSalarioMedio(int salario) {
+		SalarioMedio = salario;
+	}
+	
 	@Override
 	public String toString() {
-		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", ValutazioneAziendale="
-				+ ValutazioneAziendale + ", Ruolo=" + Ruolo + "]";
+		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", Ruolo=" + Ruolo + ", SalarioMedio=" + SalarioMedio +"]";
 	}
+	
 
 	
 	

@@ -43,7 +43,7 @@ public class LoginProjectManager extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Inserisci codice Fiscale");
+		JLabel lblNewLabel = new JLabel("Inserisci codice fiscale");
 		lblNewLabel.setBounds(30, 48, 163, 55);
 		contentPane.add(lblNewLabel);
 		
@@ -71,14 +71,16 @@ public class LoginProjectManager extends JFrame {
 		btnNewButton_1.setBounds(34, 183, 127, 41);
 		contentPane.add(btnNewButton_1);
 		
-		JLabel lblNewLabel_1 = new JLabel("Non sei registrato? Fallo subito");
-		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+		JLabel BottoneRegistrarePW = new JLabel("Non sei registrato? clicca quì");
+		BottoneRegistrarePW.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseClicked(MouseEvent e) {
+
 				IlControllore.AvviaRegistrazioneProjectManager();
 			}
 		});
-		lblNewLabel_1.setBounds(185, 95, 195, 19);
-		contentPane.add(lblNewLabel_1);
+		BottoneRegistrarePW.setBounds(185, 95, 195, 19);
+		contentPane.add(BottoneRegistrarePW);
 	}
 }

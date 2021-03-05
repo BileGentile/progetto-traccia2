@@ -27,12 +27,14 @@ public class RegistrazioneProjectManager extends JFrame {
 	private JLabel lblInserisciNome;
 	private JTextField NomePM;
 	private JTextField CognomePM;
+	private JTextField SalarioMedio;
+	private JLabel lblInserisciSalario;
 	
 	
-	public RegistrazioneProjectManager(Controller c) {
-		IlControllore =c;
+		public RegistrazioneProjectManager(Controller c) {
+		IlControllore = c;
 		
-		setTitle("Azienda- Registrazione");
+		setTitle("Azienda - Registrazione Sviluppatore");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -41,7 +43,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		JLabel lblNewLabel = new JLabel("Inserisci codice Fiscale");
+		JLabel lblNewLabel = new JLabel("Inserisci codice fiscale");
 		lblNewLabel.setBounds(20, 30, 163, 55);
 		contentPane.add(lblNewLabel);
 		
@@ -51,30 +53,39 @@ public class RegistrazioneProjectManager extends JFrame {
 		CodiceFiscalePM.setColumns(10);
 		
 		lblInserisciNome = new JLabel("Inserisci nome");
-		lblInserisciNome.setBounds(20, 76, 163, 55);
+		lblInserisciNome.setBounds(20, 72, 163, 29);
 		contentPane.add(lblInserisciNome);
 		
 		NomePM = new JTextField();
 		NomePM.setColumns(10);
-		NomePM.setBounds(185, 95, 176, 19);
+		NomePM.setBounds(185, 77, 176, 19);
 		contentPane.add(NomePM);
 		
 		JLabel lblInserisciCognome = new JLabel("Inserisci cognome");
-		lblInserisciCognome.setBounds(20, 121, 163, 55);
+		lblInserisciCognome.setBounds(20, 101, 163, 29);
 		contentPane.add(lblInserisciCognome);
 		
 		CognomePM = new JTextField();
 		CognomePM.setColumns(10);
-		CognomePM.setBounds(185, 141, 176, 19);
+		CognomePM.setBounds(185, 106, 176, 19);
 		contentPane.add(CognomePM);
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.RegistraProjectManager(CognomePM, NomePM, CodiceFiscalePM);
+				IlControllore.RegistraProjectManager(CognomePM.getText(), NomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText());
 			}
 		});
 		btnNewButton.setBounds(229, 190, 103, 39);
 		contentPane.add(btnNewButton);
+		
+		SalarioMedio = new JTextField();
+		SalarioMedio.setColumns(10);
+		SalarioMedio.setBounds(185, 135, 176, 19);
+		contentPane.add(SalarioMedio);
+		
+		lblInserisciSalario = new JLabel("Inserisci salario\r\n");
+		lblInserisciSalario.setBounds(20, 130, 163, 29);
+		contentPane.add(lblInserisciSalario);
 	}
 }

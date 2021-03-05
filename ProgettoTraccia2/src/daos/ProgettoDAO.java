@@ -8,7 +8,7 @@ import entity.Progetto;
 public interface ProgettoDAO {
 	
 	
-		public List<Progetto> getAllProgetti();
+		public List<Progetto> getAllProgetti() throws SQLException;
 		public List<Progetto> getProgettoByNome(String nome) throws SQLException;
 		public List<Progetto> getProgettoByCodProgetto(String codice);
 		public List<Progetto> getProgettoByAmbito(String ambito);
