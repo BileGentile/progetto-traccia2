@@ -24,8 +24,11 @@ import exceptions.ConnectionException;
 import gui.AggiungiMembroAlProgetto;
 import gui.AggiungiPresenza;
 import gui.AggiungiProgetto;
+import gui.AzioneAvvenutaConSuccesso;
 import gui.BenvenutoProjectManager;
 import gui.BenvenutoSviluppatore;
+import gui.EliminaProgetto;
+import gui.ErroreCodiceFiscaleSbagliato;
 import gui.LoginProjectManager;
 
 public class Controller {
@@ -42,7 +45,9 @@ public class Controller {
 	ValutazioneMembro valutazioneMembro;
 	AggiungiMembroAlProgetto aggiungiMembroAlProgetto;
 	AggiungiPresenza aggiungiPresenza;
-	
+	EliminaProgetto eliminaProgetto;
+	AzioneAvvenutaConSuccesso azioneAvvenutaConSuccesso;
+	ErroreCodiceFiscaleSbagliato erroreCodiceFiscaleSbagliato;
 	
 	public static void main(String[] args) {
 
@@ -61,7 +66,8 @@ public class Controller {
 		loginPM.setVisible(true);
 		
 	}
-	
+
+
 	public void AvviaLoginSviluppatore() {
 		presenta.setVisible(false);
 		loginS= new LoginSviluppatore(this);
@@ -69,18 +75,25 @@ public class Controller {
 		
 	}
 
-	public void TornaPresentazione(int caso) {
-		if(caso==1) {
+	public void TornaPresentazione() {
+		if(loginPM.isVisible()) {
 			loginPM.setVisible(false);
+			if(erroreCodiceFiscaleSbagliato.isVisible()) {
+				erroreCodiceFiscaleSbagliato.setVisible(false);
+			}
 			presenta=new Presentazione(this);
 			presenta.setVisible(true);
 		}else {
+			if(erroreCodiceFiscaleSbagliato.isVisible()) {
+				erroreCodiceFiscaleSbagliato.setVisible(false);
+			}
 			loginS.setVisible(false);
 			presenta=new Presentazione(this);
 			presenta.setVisible(true);
 		}
 			
 	}
+
 
 	public void AvviaCreaProgetto() {
 		benvenutoPM.setVisible(false);
@@ -104,9 +117,8 @@ public class Controller {
 	            List<Membro> lista = dao.getProjectManagerByCodFiscale(codiceFiscale.getText());
 	            
 	            if(lista.isEmpty()) {
-	            	loginPM.setVisible(false);
-	            	loginPM = new LoginProjectManager(this);
-	            	loginPM.setVisible(true);
+	            	erroreCodiceFiscaleSbagliato = new ErroreCodiceFiscaleSbagliato(this);
+	            	erroreCodiceFiscaleSbagliato.setVisible(true);
 
 	            }else {
 	            	loginPM.setVisible(false);
@@ -138,10 +150,9 @@ public class Controller {
             List<Membro> lista = dao.getSviluppatoreByCodFiscale(codiceFiscale);
            
             if(lista.isEmpty()) {
-            	loginS.setVisible(false);
-            	loginS= new LoginSviluppatore(this);
-    			loginS.setVisible(true);
-         
+
+            	erroreCodiceFiscaleSbagliato = new ErroreCodiceFiscaleSbagliato(this);
+            	erroreCodiceFiscaleSbagliato.setVisible(true);
 
             }else {
             	loginS.setVisible(false);
@@ -177,7 +188,7 @@ public class Controller {
             
             dao = new MembroDAOPostgresImpl(connection);
             
-		Membro m1  =  new Membro( nome, cognome, codfiscale , "ProjectManager", Integer.valueOf(salario) );
+		Membro m1  =  new Membro( nome, cognome, codfiscale , "ProjectManager", Integer.valueOf(salario), "NULL" );
 		int res =  dao.inserisciMembro(m1);
 
         }
@@ -239,7 +250,7 @@ public class Controller {
             
             dao = new MembroDAOPostgresImpl(connection);
             
-		Membro m1  =  new Membro( nomeS.getText(), cognomeS.getText(), codiceFiscaleS.getText(), "Sviluppatore", Integer.valueOf(salario.getText()));
+		Membro m1  =  new Membro( nomeS.getText(), cognomeS.getText(), codiceFiscaleS.getText(), "Sviluppatore", Integer.valueOf(salario.getText()), "NULL");
 		int res =  dao.inserisciMembro(m1);
 
         }
@@ -270,7 +281,7 @@ public class Controller {
 	            
 	            dao = new ProgettoDAOPostgresImpl(connection);
 	            
-	            Progetto p1  =  new Progetto(nomeProgetto, tipoProgetto, ambitoProgetto, "sequenzacodiceprogetti", "Completo" );
+	            Progetto p1  =  new Progetto(nomeProgetto, tipoProgetto, ambitoProgetto, "sequenzacodiceprogetti", "Incompleto" );
 	            int res =  dao.inserisciProgetto(p1);
 	        }
 	        catch (SQLException exception)
@@ -314,8 +325,76 @@ public class Controller {
     	aggiungiPresenza.setVisible(true);
 		
 	}
+
+	public void RitornaBenvenuto() {
+		if(valutazioneMembro.isVisible()) {
+			valutazioneMembro.setVisible(false);
+		}else {
+		
+		eliminaProgetto.setVisible(false);
+		}
+		azioneAvvenutaConSuccesso.setVisible(false);
+		benvenutoPM = new BenvenutoProjectManager (this);
+	    benvenutoPM.setVisible(true);
+	    
+	}
+
+	public void AvviaEliminaProgetto() {
+		benvenutoPM.setVisible(false);
+		eliminaProgetto = new EliminaProgetto(this);
+		eliminaProgetto.setVisible(true);
+	}
+
+	public void EliminaProgetto(String nomeProgetto) {
+		DBConnection dbconn = null;
+        Connection connection = null;
+        DBBuilder builder = null;
+
+        try
+        {
+            dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            ProgettoDAO dao = null;
+            
+            dao = new ProgettoDAOPostgresImpl(connection);
+            
+            dao.cambiaStatoProgetto(nomeProgetto);
+           
+        }
+        catch (SQLException exception)
+        {
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+        }
+        azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
+        azioneAvvenutaConSuccesso.setVisible(true);
+        
+	}
+
+	public void ValutazioneMembro(String valutazione, String codicefiscale) {
+	DBConnection dbconn = null;
+    Connection connection = null;
+    DBBuilder builder = null;
+ try
+    {
+        dbconn = DBConnection.getInstance();
+        connection = dbconn.getConnection();
+        builder = new DBBuilder(connection);
+        MembroDAO dao = null;
+        
+        dao = new MembroDAOPostgresImpl(connection);
+        
+        dao.inserisciValutazione(valutazione , codicefiscale );
+       
+    }
+    catch (SQLException exception)
+    {
+        System.out.println("Errore SQLException: "+ exception.getMessage());
+    }
+ azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
+ azioneAvvenutaConSuccesso.setVisible(true);
+	}
+	}
 	
 
 	
-	
-}

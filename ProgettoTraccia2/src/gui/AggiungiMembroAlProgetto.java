@@ -49,7 +49,7 @@ public class AggiungiMembroAlProgetto extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Saleziona valore del salario\r\n");
+		JLabel lblNewLabel = new JLabel("Saleziona valore del \r\n");
 		lblNewLabel.setBounds(38, 87, 146, 21);
 		contentPane.add(lblNewLabel);
 		
@@ -99,30 +99,10 @@ public class AggiungiMembroAlProgetto extends JFrame {
 		
 		JComboBox comboBox_1_1 = new JComboBox();
 		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"<500", "<1000", "<1500", "<2000", ">2000"}));
-		
-		try
-		{
-	            dbconn = DBConnection.getInstance();     
-	            connection = dbconn.getConnection();	           
-	            builder = new DBBuilder(connection);
-	            MembroDAO dao = null;
-	            
-	            dao = new MembroDAOPostgresImpl(connection);
-			    List<Membro> lista = dao.getMembroByNome("%");
-			    for(Membro mm : lista)
-			    {
-			    	 comboBox_1_1.addItem(mm.getCF());
-			    }
-
-		}
-	    catch (SQLException exception)
-		{
-	    	System.out.println("Errore SQLException: "+ exception.getMessage());
-		}
 		comboBox_1_1.setBounds(211, 91, 155, 43);
 		contentPane.add(comboBox_1_1);
 		
-		JLabel lblSalarioMedioDel = new JLabel("medio del membro");
+		JLabel lblSalarioMedioDel = new JLabel("salario medio del membro");
 		lblSalarioMedioDel.setBounds(38, 106, 146, 21);
 		contentPane.add(lblSalarioMedioDel);
 		

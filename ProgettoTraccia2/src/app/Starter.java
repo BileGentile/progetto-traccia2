@@ -46,14 +46,7 @@ public class Starter {
 //            System.out.println(res2);
 //            int res3 = dao.inserisciMembro(m3);
 //            System.out.println(res3);
-//         
-            List<Membro> lista = dao.getMembroByNome("P%");
-            List<Membro> lista1 = dao.getMembroByNome("R%");
-            for(Membro mm : lista1)
-            {
-                System.out.println(mm.toString());
-            }
-
+//        
         }
         catch (SQLException exception)
         {

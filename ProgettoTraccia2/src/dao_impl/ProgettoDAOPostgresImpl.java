@@ -13,13 +13,14 @@ import entity.Progetto;
 public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	
 	private Connection connection;
-	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS;
+	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS,cambiaStatoProgettoPS;
 	
 	public ProgettoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getProgettoByNomePS = connection.prepareStatement("SELECT * FROM progetto WHERE nome LIKE ?");
 		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, nextval(?), ? )");
-		getAllProgettiPS = connection.prepareStatement("SELECT * FROM progetto ");
+		getAllProgettiPS = connection.prepareStatement("SELECT * FROM progetto WHERE stato LIKE 'Incompleto' ");
+		cambiaStatoProgettoPS = connection.prepareStatement("UPDATE progetto SET stato = 'Completo' WHERE nome LIKE ?");
 	}
 	@Override
 	public List<Progetto> getAllProgetti()  throws SQLException {
@@ -96,6 +97,13 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	public int cancellaMembro(Progetto progetto) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public int cambiaStatoProgetto(String nome) throws SQLException {
+		cambiaStatoProgettoPS.setString(1, nome);
+		int row = cambiaStatoProgettoPS.executeUpdate();
+		return row;
 	}
 
 }

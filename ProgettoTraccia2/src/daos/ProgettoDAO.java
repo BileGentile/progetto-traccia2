@@ -15,6 +15,7 @@ public interface ProgettoDAO {
 		public List<Progetto> getMembroByTipo(String tipo);
 		
 		public int inserisciProgetto(Progetto progetto) throws SQLException;
+		public int cambiaStatoProgetto(String nome) throws SQLException;
 		
 		public int cancellaMembro(Progetto progetto);
 

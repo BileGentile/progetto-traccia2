@@ -57,7 +57,7 @@ public class LoginSviluppatore extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i= 2;
-				IlControllore.TornaPresentazione(i);
+				IlControllore.TornaPresentazione();
 
 			}
 		});

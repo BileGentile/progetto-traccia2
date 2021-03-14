@@ -42,11 +42,12 @@ public class DBBuilder
     			
     			if(!tableExists("membro")) {
     				String sql = "CREATE TABLE membro " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                            "(nome VARCHAR(255) not NULL, " +
-                            " cognome VARCHAR(255) not NULL, " +
+                            "(nome VARCHAR(100) not NULL, " +
+                            " cognome VARCHAR(100) not NULL, " +
                             " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
                             " ruolo VARCHAR CHECK (ruolo LIKE 'ProjectManager' OR  ruolo LIKE 'Sviluppatore'),"+
                             " salariomedio INTEGER not NULL,"+
+                            " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
     						" PRIMARY KEY (codFiscale));";
     				result = st.executeUpdate(sql);
     				st.close();

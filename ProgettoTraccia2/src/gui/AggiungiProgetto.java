@@ -34,6 +34,7 @@ public class AggiungiProgetto extends JFrame {
 	
 	public AggiungiProgetto(Controller c) {
 		IlControllore = c;
+		
 		setTitle("Azienda - Aggiungi progetto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

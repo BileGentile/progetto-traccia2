@@ -64,8 +64,8 @@ public class LoginProjectManager extends JFrame {
 		btnNewButton_1 = new JButton("Torna indietro");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i=1;
-				IlControllore.TornaPresentazione(i);
+		
+				IlControllore.TornaPresentazione();
 			}
 		});
 		btnNewButton_1.setBounds(34, 183, 127, 41);

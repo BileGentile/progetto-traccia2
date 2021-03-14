@@ -38,8 +38,7 @@ public class BenvenutoProjectManager extends JFrame {
 		JLabel lblNewLabel = new JLabel("Benvenuto project manager, cosa desideri fare?");
 		lblNewLabel.setBounds(10, 25, 405, 58);
 		contentPane.add(lblNewLabel);
-		
-		
+
 		JButton btnNewButton = new JButton("Aggiungi progetto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -49,16 +48,17 @@ public class BenvenutoProjectManager extends JFrame {
 		btnNewButton.setBounds(10, 120, 168, 21);
 		contentPane.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Elimina progetto");
-		btnNewButton.addActionListener(new ActionListener() {
+		
+		JButton btnNewButton_1 = new JButton("Consegna progetto");
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.AvviaCreaProgetto();
+				IlControllore.AvviaEliminaProgetto();
 			}
 		});
 		btnNewButton_1.setBounds(10, 167, 168, 21);
 		contentPane.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("Modifica progetto");
+		JButton btnNewButton_2 = new JButton("...");
 		btnNewButton_2.setBounds(10, 215, 168, 21);
 		contentPane.add(btnNewButton_2);
 		
