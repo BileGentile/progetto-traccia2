@@ -1,27 +1,18 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import app.Controller;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JList;
-import javax.swing.JSpinner;
-import javax.swing.JScrollBar;
-import javax.swing.JTree;
-import javax.swing.AbstractListModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 
 public class AggiungiProgetto extends JFrame {
 

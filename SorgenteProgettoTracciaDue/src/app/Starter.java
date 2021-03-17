@@ -1,15 +1,13 @@
 package app;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import dao_impl.MembroDAOPostgresImpl;
 import daos.MembroDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
-import entity.Membro;
 import exceptions.ConnectionException;
-
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.util.List;
 
 public class Starter {
 	public static void main(String[] args)

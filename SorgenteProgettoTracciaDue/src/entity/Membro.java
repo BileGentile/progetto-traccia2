@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class Membro {
 	
     //ATTRIBUTI
@@ -7,17 +9,20 @@ public class Membro {
 	private String Cognome;
 	private String CF;
 	private String ValutazioneAziendale;
+	
+	//ASSOCIAZIONI
+	private ArrayList<Progetto> Partecipazioni;
     
 	//SKILLS
 	//TODO
 	
     //COSTRUTTORI
-	public Membro(String nome, String cognome, String cF, String valutazioneAziendale) {
+	public Membro(String Nome, String Cognome, String CF, String ValutazioneAziendale) {
 		super();
-		Nome = nome;
-		Cognome = cognome;
-		CF = cF;
-		ValutazioneAziendale = valutazioneAziendale;
+		this.Nome = Nome;
+		this.Cognome = Cognome;
+		this.CF = CF;
+		this.ValutazioneAziendale = ValutazioneAziendale;
 	}
 	
 	public Membro(String CF) {

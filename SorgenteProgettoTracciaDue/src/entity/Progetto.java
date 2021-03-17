@@ -4,13 +4,24 @@ import java.util.ArrayList;
 
 public class Progetto {
 	
-    //	attributi
+    //ATTRIBUTI
 	private String NomeProgetto;
 	private String TipoProgetto;
 	private ArrayList<String> AmbitoProgetto;
 	
-	//	costruttori
+	//ASSOCIAZIONI
+	private projectManager Manager;
+	private ArrayList<Membro> Partecipanti;
 	
+	//COSTRUTTORI
+	public Progetto(String nomeProgetto, String tipoProgetto, ArrayList<String> ambitoProgetto) {
+		super();
+		NomeProgetto = nomeProgetto;
+		TipoProgetto = tipoProgetto;
+		AmbitoProgetto = ambitoProgetto;
+	}
+	
+	//GETTERS & SETTERS
 	public String getNomeProgetto() {
 		return NomeProgetto;
 	}
@@ -30,13 +41,21 @@ public class Progetto {
 		AmbitoProgetto = ambitoProgetto;
 	}
 	
-	public Progetto(String nomeProgetto, String tipoProgetto, ArrayList<String> ambitoProgetto) {
-		super();
-		NomeProgetto = nomeProgetto;
-		TipoProgetto = tipoProgetto;
-		AmbitoProgetto = ambitoProgetto;
+	public projectManager getManager() {
+		return Manager;
+	}
+	public void setManager(projectManager manager) {
+		Manager = manager;
+	}
+
+	public ArrayList<Membro> getPartecipanti() {
+		return Partecipanti;
+	}
+
+	public void setPartecipanti(ArrayList<Membro> partecipanti) {
+		Partecipanti = partecipanti;
 	}
 	
-//metodi
+	//METODI
 	
 }

@@ -2,6 +2,7 @@ package daos;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import entity.Membro;
 
 public interface MembroDAO {
