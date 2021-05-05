@@ -34,7 +34,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		public RegistrazioneProjectManager(Controller c) {
 		IlControllore = c;
 		
-		setTitle("Azienda - Registrazione Sviluppatore");
+		setTitle("Azienda - Registrazione Project Manager");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -76,7 +76,7 @@ public class RegistrazioneProjectManager extends JFrame {
 				IlControllore.RegistraProjectManager(CognomePM.getText(), NomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText());
 			}
 		});
-		btnNewButton.setBounds(229, 190, 103, 39);
+		btnNewButton.setBounds(258, 190, 132, 39);
 		contentPane.add(btnNewButton);
 		
 		SalarioMedio = new JTextField();
@@ -87,5 +87,16 @@ public class RegistrazioneProjectManager extends JFrame {
 		lblInserisciSalario = new JLabel("Inserisci salario\r\n");
 		lblInserisciSalario.setBounds(20, 130, 163, 29);
 		contentPane.add(lblInserisciSalario);
+		
+		JButton btnNewButton_1_1 = new JButton("Torna indietro");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso;
+				caso=2;
+				IlControllore.TornaLogin(caso);
+			}
+		});
+		btnNewButton_1_1.setBounds(105, 190, 120, 39);
+		contentPane.add(btnNewButton_1_1);
 	}
 }

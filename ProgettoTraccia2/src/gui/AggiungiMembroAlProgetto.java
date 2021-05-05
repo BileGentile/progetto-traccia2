@@ -31,11 +31,15 @@ import entity.Progetto;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JScrollBar;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class AggiungiMembroAlProgetto extends JFrame {
 
 	private JPanel contentPane;
 	Controller IlControllore;
+	private JComboBox ComboBoxMembri;
 	
 	public AggiungiMembroAlProgetto(Controller c) {
 		IlControllore = c;
@@ -83,7 +87,7 @@ public class AggiungiMembroAlProgetto extends JFrame {
 		        	{
 		                System.out.println("Errore SQLException: "+ exception.getMessage());
 		        	}
-		ComboBoxProgetti.setBounds(211, 38, 155, 43);
+		ComboBoxProgetti.setBounds(211, 42, 155, 35);
 		contentPane.add(ComboBoxProgetti);
 		
 		
@@ -97,18 +101,48 @@ public class AggiungiMembroAlProgetto extends JFrame {
 		btnNewButton.setBounds(270, 207, 96, 35);
 		contentPane.add(btnNewButton);
 		
-		JComboBox comboBox_1_1 = new JComboBox();
-		comboBox_1_1.setModel(new DefaultComboBoxModel(new String[] {"<500", "<1000", "<1500", "<2000", ">2000"}));
-		comboBox_1_1.setBounds(211, 91, 155, 43);
-		contentPane.add(comboBox_1_1);
+		JSpinner spinner = new JSpinner();
+		spinner.setModel(new SpinnerNumberModel(new Integer(500), new Integer(500), null, new Integer(10)));
+		spinner.setBounds(211, 88, 50, 39);
+		contentPane.add(spinner);
 		
-		JLabel lblSalarioMedioDel = new JLabel("salario medio del membro");
+		JLabel lblSalarioMedioDel = new JLabel("Salario medio del membro");
 		lblSalarioMedioDel.setBounds(38, 106, 146, 21);
 		contentPane.add(lblSalarioMedioDel);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Seleziona progetto");
+		JLabel lblNewLabel_1_1 = new JLabel("Seleziona membro");
 		lblNewLabel_1_1.setBounds(38, 137, 128, 29);
 		contentPane.add(lblNewLabel_1_1);
+		
+		ComboBoxMembri = new JComboBox();
+		ComboBoxMembri.setMaximumRowCount(10);
+		 try
+	        {
+	            dbconn = DBConnection.getInstance();
+	            connection = dbconn.getConnection();
+	            builder = new DBBuilder(connection);
+	            MembroDAO dao = null;
+	            
+	            dao = new MembroDAOPostgresImpl(connection);
+	            
+	            List<Membro> listaMembri = dao.getSviluppatoreBySalario(Integer.parseInt(spinner.getValue().toString())); 
+	            //con getValue esce l'ogetto selezionato, con to string diventa una stringa e con Integer.parseInt diventa intero 
+	            System.out.println("ecco:"+spinner.getValue().toString());
+	            for(Membro n : listaMembri)
+	            {
+	            	
+	            	ComboBoxMembri.addItem(n.getCF());
+	            }
+
+	        }
+		catch (SQLException exception)
+  	{
+          System.out.println("Errore SQLException: "+ exception.getMessage());
+  	}
+		ComboBoxMembri.setBounds(211, 132, 155, 35);
+		contentPane.add(ComboBoxMembri);
+		
+	
 		
 	}
 }

@@ -58,7 +58,13 @@ public class BenvenutoProjectManager extends JFrame {
 		btnNewButton_1.setBounds(10, 167, 168, 21);
 		contentPane.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("...");
+		JButton btnNewButton_2 = new JButton("Crea Meeting");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			IlControllore.AvviaCreaMeeting();
+			}
+			});
 		btnNewButton_2.setBounds(10, 215, 168, 21);
 		contentPane.add(btnNewButton_2);
 		

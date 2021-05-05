@@ -46,7 +46,7 @@ public class DBBuilder
                             " cognome VARCHAR(100) not NULL, " +
                             " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
                             " ruolo VARCHAR CHECK (ruolo LIKE 'ProjectManager' OR  ruolo LIKE 'Sviluppatore'),"+
-                            " salariomedio INTEGER not NULL,"+
+                            " salarioMedio INTEGER not NULL,"+
                             " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
     						" PRIMARY KEY (codFiscale));";
     				result = st.executeUpdate(sql);
@@ -64,8 +64,8 @@ public class DBBuilder
     }
 
     
-    
-	public int createTableProgetto() throws ConnectionException
+	
+    public int createTableProgetto() throws ConnectionException
     {
     	int result= -1;
     	
@@ -94,35 +94,37 @@ public class DBBuilder
     	return result;
 	}
 	
-	  public int createTableMeetingTelematico() throws ConnectionException
-	    {
-	    	int result= -1;
-	    	
-	    	if(connectionExists()) {
-	    		try {
-	    			Statement st = connection.createStatement();
-	    			
-	    			if(!tableExists("MeetingTelematico")) {
-	    				String sql = "CREATE TABLE MeetingTelematico " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-	                            "(nome VARCHAR(255) not NULL, " +
-	                            " codiceMeetingTelematico VARCHAR(255) not NULL, " +
-	                            " data VARCHAR(10) CHECK (data  ~* '^[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]'), " +
-	                            " oraInizio VARCHAR CHECK (ruolo LIKE 'ProjectManager' OR  ruolo LIKE 'Sviluppatore'),"+
-	                            " piattaforma INTEGER not NULL,"+
-	    						" PRIMARY KEY (codiceMeetingTelematico));";
-	    				result = st.executeUpdate(sql);
-	    				st.close();
-	    			} else {
-	    				System.out.println("La tabella MeetingTelematico esiste già!");
-	    			}
-	    		} catch(SQLException ex) {
-	    			System.out.println("SQL Exception in creation table MeetingTelematico: "+ex);
-	    		}
-	    	} else {
-	    		throw new ConnectionException("A connection must exist!");
-	    	}
-	    	return result;
-	    }
 
-	    
+public int createTableMeeting() throws ConnectionException
+  {
+  	int result= -1;
+  	
+  	if(connectionExists()) {
+  		try {
+  			Statement st = connection.createStatement();
+  			
+  			if(!tableExists("Meeting")) {
+  				String sql = "CREATE TABLE Meeting " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                          " codiceMeeting VARCHAR(255) NOT NULL, " +
+                          " data VARCHAR(10) CHECK (data  ~* '^[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]') NOT NULL, " +
+                          " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
+                          " piattaforma VARCHAR,"+
+                          " tipologia VARCHAR CHECK (tipologia LIKE 'Fisico' OR tipologia LIKE 'Virtuale')," +
+                          " nomeSala VARCHAR,"+
+  						" PRIMARY KEY (codiceMeetingTelematico));";
+  				result = st.executeUpdate(sql);
+  				st.close();
+  			} else {
+  				System.out.println("La tabella MeetingTelematico esiste già!");
+  			}
+  		} catch(SQLException ex) {
+  			System.out.println("SQL Exception in creation table MeetingTelematico: "+ex);
+  		}
+  	} else {
+  		throw new ConnectionException("A connection must exist!");
+  	}
+  	return result;
+  }
+
+  
 }

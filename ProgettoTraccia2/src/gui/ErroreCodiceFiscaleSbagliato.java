@@ -59,6 +59,12 @@ public class ErroreCodiceFiscaleSbagliato extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("riprova");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						int caso=1;
+						IlControllore.TornaLogin(caso);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

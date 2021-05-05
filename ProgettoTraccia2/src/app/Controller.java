@@ -12,12 +12,15 @@ import java.util.List;
 
 import javax.swing.JTextField;
 
+import dao_impl.MeetingDAOPostgresImpl;
 import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
+import daos.MeetingDAO;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
+import entity.Meeting;
 import entity.Membro;
 import entity.Progetto;
 import exceptions.ConnectionException;
@@ -27,6 +30,7 @@ import gui.AggiungiProgetto;
 import gui.AzioneAvvenutaConSuccesso;
 import gui.BenvenutoProjectManager;
 import gui.BenvenutoSviluppatore;
+import gui.CreaMeeting;
 import gui.EliminaProgetto;
 import gui.ErroreCodiceFiscaleSbagliato;
 import gui.LoginProjectManager;
@@ -44,10 +48,11 @@ public class Controller {
 	RegistrazioneSviluppatore registrazioneS;
 	ValutazioneMembro valutazioneMembro;
 	AggiungiMembroAlProgetto aggiungiMembroAlProgetto;
-	AggiungiPresenza aggiungiPresenza;
+	
 	EliminaProgetto eliminaProgetto;
 	AzioneAvvenutaConSuccesso azioneAvvenutaConSuccesso;
 	ErroreCodiceFiscaleSbagliato erroreCodiceFiscaleSbagliato;
+	CreaMeeting  creaMeeting;
 	
 	public static void main(String[] args) {
 
@@ -75,6 +80,7 @@ public class Controller {
 		
 	}
 
+// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "ok", si ritornerà alla schermata di presentazione
 	public void TornaPresentazione() {
 		if(loginPM.isVisible()) {
 			loginPM.setVisible(false);
@@ -93,14 +99,37 @@ public class Controller {
 		}
 			
 	}
+// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
+public void TornaLogin(int caso) {
 
+	
+if(caso==1) {
+	erroreCodiceFiscaleSbagliato.setVisible(false);
+		if(loginPM.isVisible()) {
+			loginPM.setVisible(false);
+			loginPM=new LoginProjectManager(this);
+			loginPM.setVisible(true);
+		}else if (caso==2) {
+			loginS.setVisible(false);
+			loginS=new LoginSviluppatore(this);
+			loginS.setVisible(true);
+		}
+}
+else if(registrazionePM.isVisible()) {
+	registrazionePM.setVisible(false);
+	loginPM=new LoginProjectManager(this);
+	loginPM.setVisible(true);
+}
+	
+}
 
 	public void AvviaCreaProgetto() {
 		benvenutoPM.setVisible(false);
 		aggiungiProgetto= new AggiungiProgetto(this);
 		aggiungiProgetto.setVisible(true);
 	}
-
+	
+//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 	public void AvviaBenvenutoPM(JTextField codiceFiscale) {
 		DBConnection dbconn = null;
         Connection connection = null;
@@ -132,6 +161,7 @@ public class Controller {
 	            }
         }
 	
+//verifica se il codice fiscale inserito dallo sviluppatore risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 
 	public void AvviaBenvenutoS(String codiceFiscale) {
 		DBConnection dbconn = null;
@@ -166,15 +196,24 @@ public class Controller {
                 System.out.println("Errore SQLException: "+ exception.getMessage());
             }
 			}
-
+	
+//L'utente ha scelto di creare un nuovo account (del tipo project manager), si mostra la scheda di registrazione
 	public void AvviaRegistrazioneProjectManager() {
 		loginPM.setVisible(false);
 		registrazionePM= new RegistrazioneProjectManager(this);
 		registrazionePM.setVisible(true);
 	}
+	
+//L'utente ha scelto di creare un nuovo account (del tipo sviluppatore), si mostra la scheda di registrazione
+	public void AvviaRegistrazioneSviluppatore() {
+		loginS.setVisible(false);
+	    registrazioneS = new RegistrazioneSviluppatore(this);
+	    registrazioneS.setVisible(true);
+	    
+	}
 
+//Creazione di un nuovo project manager 
 	public void RegistraProjectManager(String cognome, String nome, String codfiscale, String salario) {
-
         DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -200,43 +239,11 @@ public class Controller {
 		registrazionePM.setVisible(false);
 		loginPM= new LoginProjectManager(this);
 		loginPM.setVisible(true);
-		
-		
 	}
-	public void AvviaBenvenutoS(JTextField codiceFiscale) {
-		DBConnection dbconn = null;
-        Connection connection = null;
-        DBBuilder builder = null;
-        try
-	        {
-	            dbconn = DBConnection.getInstance();
-	            connection = dbconn.getConnection();
-	            builder = new DBBuilder(connection);
-	            MembroDAO dao = null;
-	            
-	            dao = new MembroDAOPostgresImpl(connection);
-	            
-	            List<Membro> lista = dao.getSviluppatoreByCodFiscale(codiceFiscale.getText());
-	            
-	            if(lista.isEmpty()) {
-	            	loginS.setVisible(false);
-	            	loginS= new LoginSviluppatore(this);
-	            	loginS.setVisible(true);
-
-	            }else {
-	            	loginS.setVisible(false);
-	            	benvenutoS=new BenvenutoSviluppatore (this);
-	            	benvenutoS.setVisible(true);
-	            }
-	        	}
-	            catch (SQLException exception)
-	            {
-	                System.out.println("Errore SQLException: "+ exception.getMessage());
-	            }
-        }
 	
-	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario) {
 
+//Creazione di un nuovo sviluppatore 
+	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario) {
         DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -262,10 +269,9 @@ public class Controller {
 		registrazioneS.setVisible(false);
 		loginS= new LoginSviluppatore(this);
 		loginS.setVisible(true);
-		
-		
 	}
 
+//Creazione di un nuovo progetto
 	public void CreaProgetto(String nomeProgetto, String tipoProgetto , String ambitoProgetto) {
 			DBConnection dbconn = null;
 	        Connection connection = null;
@@ -298,13 +304,7 @@ public class Controller {
     	benvenutoPM.setVisible(true);
 }
 
-	public void AvviaRegistrazioneSviluppatore() {
-		
-		loginS.setVisible(false);
-	    registrazioneS = new RegistrazioneSviluppatore(this);
-	    registrazioneS.setVisible(true);
-	    
-	}
+	
 
 	public void AvviaValutazione() {
 		benvenutoPM.setVisible(false);
@@ -318,13 +318,7 @@ public class Controller {
 		aggiungiMembroAlProgetto.setVisible(true);
 	}
 
-	public void AvviaAggiungipresenza() {
-		
-    	benvenutoS.setVisible(false);
-    	aggiungiPresenza = new AggiungiPresenza(this);
-    	aggiungiPresenza.setVisible(true);
-		
-	}
+	
 
 	public void RitornaBenvenuto() {
 		if(valutazioneMembro.isVisible()) {
@@ -375,7 +369,7 @@ public class Controller {
 	DBConnection dbconn = null;
     Connection connection = null;
     DBBuilder builder = null;
- try
+    try
     {
         dbconn = DBConnection.getInstance();
         connection = dbconn.getConnection();
@@ -394,7 +388,46 @@ public class Controller {
  azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
  azioneAvvenutaConSuccesso.setVisible(true);
 	}
+
+	public void AvviaCreaMeeting() {
+		benvenutoPM.setVisible(false);
+		creaMeeting = new CreaMeeting(this);
+		creaMeeting.setVisible(true);
+		
 	}
+
+	
+	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala) {
+		DBConnection dbconn = null;
+        Connection connection = null;
+        DBBuilder builder = null;
+
+        try
+        {
+            dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            builder.createTableMeeting();
+            MeetingDAO dao = null;
+            
+            dao = new MeetingDAOPostgresImpl(connection);
+
+        	
+            Meeting p1  =  new Meeting("sequenzacodicemeeting" ,data , oraInizio , piattaforma ,tipologia , nomeSala  );
+            int res =  dao.inserisciMeeting(p1);
+        }
+        catch (SQLException exception)
+        {
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+        }
+        catch (ConnectionException ex)
+        {
+            System.out.println("CE: "+ex);
+        }
+	}
+
 	
 
 	
+
+}

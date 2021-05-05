@@ -25,14 +25,13 @@ public class Starter {
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
             builder.createTableMembro();
-            builder.createTableProgetto();
             
             controller = new Controller();
            
             
             MembroDAO dao = null;
             ProgettoDAO daoo = null;
-            
+           
             dao = new MembroDAOPostgresImpl(connection);
             
             //TEST PER IL DATABASE, SIMULO L'INSERIMENTO DI TRE MEMBRI, TOGLI COMMENTO PER TESTARE

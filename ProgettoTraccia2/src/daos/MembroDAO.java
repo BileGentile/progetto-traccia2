@@ -10,15 +10,14 @@ public interface MembroDAO {
 	public List<Membro> getMembroByCognome(String cognome);
 	public List<Membro> getSviluppatoreByCodFiscale(String codfiscale) throws SQLException ;
 	public List<Membro> getProjectManagerByCodFiscale(String codfiscale) throws SQLException;
-	public List<Membro> getMembroByRuolo(String ruolo);
-	public List<Membro> getMembroBySalario(int salario);
-	public List<Membro> getMembroByValutazione(String valutazione)  throws SQLException;
+	public List<Membro> getMembroByRuolo(String ruolo) throws SQLException;
+	public List<Membro> getSviluppatoreBySalario(int salario) throws SQLException;
+	public List<Membro> getSviluppatoreByValutazione(String valutazione)  throws SQLException;
 	public List<Membro> getAllSviluppatori() throws SQLException;
 	
 	public int inserisciMembro(Membro membro) throws SQLException;
 	public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;
 	
-	public int cancellaMembro(Membro membro);	
-	
+	public int cancellaMembro(Membro membro);
 
 }
