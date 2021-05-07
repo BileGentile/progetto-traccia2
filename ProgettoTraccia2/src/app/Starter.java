@@ -19,14 +19,19 @@ public class Starter {
         Connection connection = null;
         DBBuilder builder = null;
         Controller controller = null;
+  
+        
+        
+        
         try
         {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
-            builder.createTableMembro();
-            
+            builder.createSequenceProgetto();
+            builder.createSequenceMembri();
             controller = new Controller();
+          
            
             
             MembroDAO dao = null;

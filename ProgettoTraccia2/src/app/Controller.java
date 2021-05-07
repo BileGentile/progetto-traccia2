@@ -48,7 +48,6 @@ public class Controller {
 	RegistrazioneSviluppatore registrazioneS;
 	ValutazioneMembro valutazioneMembro;
 	AggiungiMembroAlProgetto aggiungiMembroAlProgetto;
-	
 	EliminaProgetto eliminaProgetto;
 	AzioneAvvenutaConSuccesso azioneAvvenutaConSuccesso;
 	ErroreCodiceFiscaleSbagliato erroreCodiceFiscaleSbagliato;
@@ -217,12 +216,14 @@ else if(registrazionePM.isVisible()) {
         DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
-
+        
         try
         {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
+            builder.createTableMembro();
+            
             MembroDAO dao = null;
             
             dao = new MembroDAOPostgresImpl(connection);
@@ -234,7 +235,10 @@ else if(registrazionePM.isVisible()) {
         catch (SQLException exception)
         {
             System.out.println("Errore SQLException: "+ exception.getMessage());
-        }
+        } catch (ConnectionException e) {
+			// TODO Auto-generated catch block
+        	  System.out.println("CE: "+e);
+		}
         
 		registrazionePM.setVisible(false);
 		loginPM= new LoginProjectManager(this);
@@ -253,6 +257,7 @@ else if(registrazionePM.isVisible()) {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
+            builder.createTableMembro();
             MembroDAO dao = null;
             
             dao = new MembroDAOPostgresImpl(connection);
@@ -264,7 +269,9 @@ else if(registrazionePM.isVisible()) {
         catch (SQLException exception)
         {
             System.out.println("Errore SQLException: "+ exception.getMessage());
-        }
+        } catch (ConnectionException e) {
+        	  System.out.println("CE: "+e);
+		}
         
 		registrazioneS.setVisible(false);
 		loginS= new LoginSviluppatore(this);

@@ -32,6 +32,63 @@ public class DBBuilder
 
     }
     
+    
+    public int createSequenceProgetto() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("sequenzacodiceprogetti")) {
+    				String sql = "CREATE SEQUENCE sequenzacodiceprogetti " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La sequenza codice progetti esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della sequenza codice progetti: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    public int createSequenceMembri() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("sequenzacodicemembri")) {
+    				String sql = "CREATE SEQUENCE sequenzacodicemembri " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La sequenza codice membri esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della sequenza codice membri: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
     public int createTableMembro() throws ConnectionException
     {
     	int result= -1;
@@ -55,7 +112,7 @@ public class DBBuilder
     				System.out.println("La tabella Membro esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception in creation table Membro: "+ex);
+    			System.out.println("SQL Exception nella crezione della tabella Membro: "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
@@ -86,7 +143,7 @@ public class DBBuilder
     				System.out.println("La tabella Progetto esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception in creation table Progetto: "+ex);
+    			System.out.println("SQL Exception nella crezione della tabella Progetto: "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
