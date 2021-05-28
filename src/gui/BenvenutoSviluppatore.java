@@ -56,5 +56,14 @@ public class BenvenutoSviluppatore extends JFrame {
 		btnNewButton_1.setBounds(217, 152, 159, 28);
 		contentPane.add(btnNewButton_1);
 
+		JButton btnNewButton_2 = new JButton("Logout");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+				IlControllore.Logout();
+			}
+		});
+		btnNewButton_2.setBounds(217, 215, 159, 28);
+		contentPane.add(btnNewButton_2);
 	}
 }

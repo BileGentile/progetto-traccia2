@@ -388,6 +388,17 @@ else if(registrazionePM.isVisible()) {
         
 	}
 
+	public void Logout() {
+		if(benvenutoPM.isVisible())
+		{
+			benvenutoPM.setVisible(false);
+		}else {
+			benvenutoS.setVisible(false);
+		}
+		presenta = new Presentazione(this);
+		presenta.setVisible(true);
+	}
+	
 	public void ValutazioneMembro(String valutazione, String codicefiscale) {
 	DBConnection dbconn = null;
     Connection connection = null;

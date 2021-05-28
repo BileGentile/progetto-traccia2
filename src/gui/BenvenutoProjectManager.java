@@ -68,23 +68,33 @@ public class BenvenutoProjectManager extends JFrame {
 		btnNewButton_2.setBounds(10, 215, 168, 21);
 		contentPane.add(btnNewButton_2);
 		
-		JButton btnNewButton_4 = new JButton("Aggiungi Membri al progetto");
-		btnNewButton_4.addActionListener(new ActionListener() {
+		JButton btnNewButton_3 = new JButton("Aggiungi Membri al progetto");
+		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaInserimentoMembro();
 			}
 		});
 		
-		btnNewButton_4.setBounds(242, 120, 139, 21);
-		contentPane.add(btnNewButton_4);
+		btnNewButton_3.setBounds(242, 120, 139, 21);
+		contentPane.add(btnNewButton_3);
 		
-		JButton btnNewButton_4_1 = new JButton("Valuta Membro");
-		btnNewButton_4_1.addActionListener(new ActionListener() {
+		JButton btnNewButton_4 = new JButton("Valuta Membro");
+		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaValutazione();
 			}
 		});
-		btnNewButton_4_1.setBounds(242, 167, 139, 21);
-		contentPane.add(btnNewButton_4_1);
+		btnNewButton_4.setBounds(242, 167, 139, 21);
+		contentPane.add(btnNewButton_4);
+		
+		JButton btnNewButton_5 = new JButton("Logout");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+				IlControllore.Logout();
+			}
+		});
+		btnNewButton_5.setBounds(242, 215, 139, 21);
+		contentPane.add(btnNewButton_5);
 	}
 }
