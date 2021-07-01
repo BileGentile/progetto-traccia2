@@ -30,7 +30,7 @@ public class Starter {
             
             //TEST PER IL DATABASE, SIMULO L'INSERIMENTO DI TRE MEMBRI, TOGLI COMMENTO PER TESTARE
             
-            /*Membro m1  =  new Membro("Mario", "Biondi", "BNDMRA66H06F839L", "Schifo");
+            Membro m1  =  new Membro("Mario", "Biondi", "BNDMRA66H06F839L", "Schifo");
             Membro m2  =  new Membro("Pino", "Verdi", "PNOVRD", "Bravo");
             Membro m3  =  new Membro("Rino", "Ceronte", "RNOCRNT", "Eccellente");
             int res =  dao.inserisciMembro(m1);
@@ -45,7 +45,7 @@ public class Starter {
             for(Membro mm : lista)
             {
                 System.out.println(mm.toString());
-            }*/
+            }
 
         }
         catch (SQLException exception)
