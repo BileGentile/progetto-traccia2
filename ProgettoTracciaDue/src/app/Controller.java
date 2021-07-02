@@ -69,14 +69,12 @@ public class Controller {
 		presenta.setVisible(true);
 	}
 	
-
 	public void LoginProjectManager() {
 		presenta.setVisible(false);
 		loginPM= new LoginProjectManager(this);
 		loginPM.setVisible(true);
 		
 	}
-
 
 	public void AvviaLoginSviluppatore() {
 		presenta.setVisible(false);
@@ -85,7 +83,7 @@ public class Controller {
 		
 	}
 
-// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "ok", si ritornerà alla schermata di presentazione
+	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "ok", si ritornerà alla schermata di presentazione
 	public void TornaPresentazione() {
 		if(loginPM.isVisible()) {
 			loginPM.setVisible(false);
@@ -103,8 +101,8 @@ public class Controller {
 			
 		}
 			
-// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
-public void TornaLogin(int caso) {
+	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
+	public void TornaLogin(int caso) {
 
 	
 if(caso==1) {
@@ -132,7 +130,7 @@ if(caso==1) {
 		aggiungiProgetto.setVisible(true);
 	}
 	
-//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
+	//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 	public void AvviaBenvenutoPM(JTextField codiceFiscale) {
 		DBConnection dbconn = null;
         Connection connection = null;
@@ -164,7 +162,7 @@ if(caso==1) {
 	            }
         }
 	
-//verifica se il codice fiscale inserito dallo sviluppatore risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
+	//verifica se il codice fiscale inserito dallo sviluppatore risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 
 	public void AvviaBenvenutoS(String codiceFiscale) {
 		DBConnection dbconn = null;
@@ -200,14 +198,14 @@ if(caso==1) {
             }
 			}
 	
-//L'utente ha scelto di creare un nuovo account (del tipo project manager), si mostra la scheda di registrazione
+	//L'utente ha scelto di creare un nuovo account (del tipo project manager), si mostra la scheda di registrazione
 	public void AvviaRegistrazioneProjectManager() {
 		loginPM.setVisible(false);
 		registrazionePM= new RegistrazioneProjectManager(this);
 		registrazionePM.setVisible(true);
 	}
 	
-//L'utente ha scelto di creare un nuovo account (del tipo sviluppatore), si mostra la scheda di registrazione
+	//L'utente ha scelto di creare un nuovo account (del tipo sviluppatore), si mostra la scheda di registrazione
 	public void AvviaRegistrazioneSviluppatore() {
 		loginS.setVisible(false);
 	    registrazioneS = new RegistrazioneSviluppatore(this);
@@ -215,7 +213,7 @@ if(caso==1) {
 	    
 	}
 
-//Creazione di un nuovo project manager 
+	//Creazione di un nuovo project manager 
 	public void RegistraProjectManager(String cognome, String nome, String codfiscale, String salario, boolean selected, boolean selected2, boolean selected3, boolean selected4) {
         DBConnection dbconn = null;
         Connection connection = null;
@@ -278,9 +276,8 @@ if(caso==1) {
 		loginPM.setVisible(true);
 	}
 	
-
-//Creazione di un nuovo sviluppatore 
-	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario, boolean selected, boolean selected2, boolean selected3, boolean selected4) {
+	//Creazione di un nuovo sviluppatore 
+	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario, String skillDaInserire) {
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -300,31 +297,32 @@ if(caso==1) {
             
             Membro m1  =  new Membro( nomeS.getText(), cognomeS.getText(), codiceFiscaleS.getText(), "Sviluppatore", Integer.valueOf(salario.getText()), "NULL");
             int res =  daoMembro.inserisciMembro(m1);
-    		
+            Skills s1=new Skills(codiceFiscaleS.getText(),skillDaInserire);
+            int res1= daoSkill.inserisciSkills(s1);
 
-            if(selected==true) {
-            Skills s1 = new Skills(codiceFiscaleS.getText(),"Puntualità");
+//            if(selected==true) {
+//            Skills s1 = new Skills(codiceFiscaleS.getText(),"Puntualità");
+//
+//    		int res1= daoSkill.inserisciSkills(s1);
+//
+//            }
+//            if(selected2==true) {
+//            Skills s2 = new Skills(codiceFiscaleS.getText(),"Organizzazione");
+//
+//    		int res2= daoSkill.inserisciSkills(s2);
+//
+//            }
+//            if(selected3==true) {
+//            Skills s3 = new Skills(codiceFiscaleS.getText(),"Problem Solving");
+//    		int res3= daoSkill.inserisciSkills(s3);
+//
+//        	}
+//        	if(selected4==true) {
+//            Skills s4 = new Skills(codiceFiscaleS.getText(),"Empatia");
+//
+//    		int res4= daoSkill.inserisciSkills(s4);
 
-    		int res1= daoSkill.inserisciSkills(s1);
-
-            }
-            if(selected2==true) {
-            Skills s2 = new Skills(codiceFiscaleS.getText(),"Organizzazione");
-
-    		int res2= daoSkill.inserisciSkills(s2);
-
-            }
-            if(selected3==true) {
-            Skills s3 = new Skills(codiceFiscaleS.getText(),"Problem Solving");
-    		int res3= daoSkill.inserisciSkills(s3);
-
-        	}
-        	if(selected4==true) {
-            Skills s4 = new Skills(codiceFiscaleS.getText(),"Empatia");
-
-    		int res4= daoSkill.inserisciSkills(s4);
-
-        	}
+//        	}
             	
         }
         
@@ -340,7 +338,7 @@ if(caso==1) {
 		loginS.setVisible(true);
 	}
 
-//Creazione di un nuovo progetto
+	//Creazione di un nuovo progetto
 	public void CreaProgetto(String nomeProgetto, String tipoProgetto , String ambitoProgetto, String codiceFiscalePm) {
 			DBConnection dbconn = null;
 	        Connection connection = null;
@@ -401,8 +399,6 @@ if(caso==1) {
     	benvenutoPM.setVisible(true);
 }
 
-	
-
 	public void AvviaValutazione() {
 		benvenutoPM.setVisible(false);
 		valutazioneMembro = new ValutazioneMembro(this);
@@ -414,8 +410,6 @@ if(caso==1) {
 		aggiungiMembriAlProgetto = new AggiungiMembriAlProgetto(this);
 		aggiungiMembriAlProgetto.setVisible(true);
 	}
-
-	
 
 	public void RitornaBenvenuto() {
 		if(valutazioneMembro.isVisible()) {
@@ -461,6 +455,7 @@ if(caso==1) {
         azioneAvvenutaConSuccesso.setVisible(true);
         
 	}
+	
 	public void Logout() {
 		if(benvenutoPM.isVisible())
 		{
@@ -503,7 +498,6 @@ if(caso==1) {
 		
 	}
 
-	
 	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala,  int durata) {
 		DBConnection dbconn = null;
         Connection connection = null;

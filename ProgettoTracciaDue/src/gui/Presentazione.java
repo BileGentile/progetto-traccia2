@@ -35,7 +35,7 @@ public class Presentazione extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Benvenuto nell'ufficiale app dell'azienda,");
+		JLabel lblNewLabel = new JLabel("Benvenuto nell'APP ufficiale dell'azienda,");
 				lblNewLabel.setBounds(23, 35, 348, 42);
 				contentPane.add(lblNewLabel);
 				

@@ -16,12 +16,15 @@ import javax.swing.border.EmptyBorder;
 
 import app.Controller;
 import dao_impl.MembroDAOPostgresImpl;
+import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
 import daos.MembroDAO;
+import daos.ProgettoDAO;
 import daos.SkillsDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Membro;
+import entity.Progetto;
 import entity.Skills;
 import exceptions.ConnectionException;
 
@@ -29,6 +32,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -52,10 +56,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 	private JTextField NomeS;
 	private JTextField CognomeS;
 	private JTextField salario;
-	private JCheckBox chckbxNewCheckBox;
-	private JCheckBox chckbxOrganizzazione;
-	private JCheckBox chckbxProblemsolving;
-	private JCheckBox chckbxEmpatia;
 	
 	
 	public RegistrazioneSviluppatore(Controller c) {
@@ -100,7 +100,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 		contentPane.add(CognomeS);
 		
 		JLabel lblInserisciSalario = new JLabel("Inserisci salario");
-		lblInserisciSalario.setBounds(15, 142, 163, 29);
+		lblInserisciSalario.setBounds(15, 143, 163, 29);
 		contentPane.add(lblInserisciSalario);
 		
 		salario = new JTextField();
@@ -109,8 +109,38 @@ public class RegistrazioneSviluppatore extends JFrame {
 		contentPane.add(salario);
 		
 		JLabel inserisciSkills = new JLabel("Inserisci le skill");
-		inserisciSkills.setBounds(15, 176, 183, 19);
+		inserisciSkills.setBounds(15, 189, 183, 19);
 		contentPane.add(inserisciSkills);
+		
+		JComboBox SkillsJComboBox = new JComboBox();
+		SkillsJComboBox.setEditable(true);
+		SkillsJComboBox.setMaximumRowCount(10);
+			DBConnection dbconn = null;
+			Connection connection = null;
+			DBBuilder builder = null;
+			try
+	        {
+	            dbconn = DBConnection.getInstance();
+	            connection = dbconn.getConnection();
+	            builder = new DBBuilder(connection);
+	            SkillsDAO dao = null;
+	            
+	            dao = new SkillsDAOPostgresImpl(connection);
+	            
+	            List<Skills> listaSkills = dao.getAllSkills();
+	            for(Skills m : listaSkills)
+	            {
+	            	SkillsJComboBox.addItem(m.getSkill());
+	            }
+
+	        }
+    		catch (SQLException exception)
+        	{
+                System.out.println("Errore SQLException: "+ exception.getMessage());
+        	}
+
+		SkillsJComboBox.setBounds(185, 187, 168, 22);
+		contentPane.add(SkillsJComboBox);
 		
 		
 		JButton btnNewButton = new JButton("Registrati");
@@ -121,8 +151,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				IlControllore.RegistraSviluppatore(CognomeS, NomeS, CodiceFiscaleS,salario,chckbxNewCheckBox.isSelected(), chckbxOrganizzazione.isSelected(),chckbxProblemsolving.isSelected(), chckbxEmpatia.isSelected());
-				
+				IlControllore.RegistraSviluppatore(CognomeS, NomeS, CodiceFiscaleS, salario, SkillsJComboBox.getSelectedItem().toString());	
 				
 			}
 		});
@@ -131,22 +160,8 @@ public class RegistrazioneSviluppatore extends JFrame {
 		btnNewButton.setBounds(269, 232, 103, 39);
 		contentPane.add(btnNewButton);
 		
-		chckbxNewCheckBox = new JCheckBox("puntualit\u00E0");
-		chckbxNewCheckBox.setBounds(164, 177, 103, 21);
-		contentPane.add(chckbxNewCheckBox);
 		
-		chckbxOrganizzazione = new JCheckBox("organizzazione");
-		chckbxOrganizzazione.setBounds(164, 202, 103, 21);
-		contentPane.add(chckbxOrganizzazione);
 		
-		chckbxProblemsolving = new JCheckBox("ProblemSolving");
-		chckbxProblemsolving.setBounds(269, 177, 127, 21);
-		contentPane.add(chckbxProblemsolving);
 		
-		chckbxEmpatia = new JCheckBox("Empatia");
-		chckbxEmpatia.setBounds(269, 200, 127, 21);
-		contentPane.add(chckbxEmpatia);
-		
-
 	}
 }
