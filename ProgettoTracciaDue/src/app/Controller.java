@@ -346,10 +346,6 @@ public class Controller {
 	            Progetto p2  =  new Progetto(nomeProgetto, tipoProgetto, ambitoProgetto, "sequenzacodiceprogetti", "Incompleto" );
 	            int res2 =  dao2.inserisciProgetto(p2);
 	            
-	   
-	    		benvenutoPM=new BenvenutoProjectManager(this);
-	    		benvenutoPM.setVisible(true);
-	            
 	            }
 	            
 	            }
@@ -385,17 +381,18 @@ public class Controller {
 
 	public void RitornaBenvenuto(int caso) {
 		if(caso== 1){
-		//if(valutazioneMembro.isVisible()) {
 			valutazioneMembro.setVisible(false);
 		}else if (caso ==2){
 			eliminaProgetto.setVisible(false);
-		}else{ // caso 3
-		//if(azioneAvvenutaConSuccesso.isVisible()) {
+		}else if(caso==3){
 			azioneAvvenutaConSuccesso.setVisible(false);
+			eliminaProgetto.setVisible(false);
+		}else if(caso==4) {
+			aggiungiProgetto.setVisible(false);
 		}
+		
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
-	    
 	}
 
 	public void AvviaEliminaProgetto() {

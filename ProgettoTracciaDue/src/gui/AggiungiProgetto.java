@@ -92,6 +92,16 @@ public class AggiungiProgetto extends JFrame {
 		lblInserisciCodiceFiscale.setBounds(23, 190, 202, 29);
 		contentPane.add(lblInserisciCodiceFiscale);
 		
+		JButton btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso=4;
+				IlControllore.RitornaBenvenuto(caso);
+			}
+		});
+		btnNewButton_1.setBounds(50, 264, 117, 29);
+		contentPane.add(btnNewButton_1);
+		
 	}
 }
 
