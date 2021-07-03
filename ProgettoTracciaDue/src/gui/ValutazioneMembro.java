@@ -54,8 +54,6 @@ public class ValutazioneMembro extends JFrame {
 		lblNewLabel.setBounds(38, 68, 158, 29);
 		contentPane.add(lblNewLabel);
 		
-	
-		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona valutazione");
 		lblNewLabel_1.setBounds(38, 107, 127, 29);
 		contentPane.add(lblNewLabel_1);
@@ -68,9 +66,6 @@ public class ValutazioneMembro extends JFrame {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Buona", "Mediocre", "Male"}));
 		comboBox.setBounds(200, 114, 140, 29);
 		contentPane.add(comboBox);
-		
-		
-		
 
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(200, 68, 140, 29);
@@ -111,6 +106,17 @@ public class ValutazioneMembro extends JFrame {
 
 	btnNewButton.setBounds(288, 197, 91, 29);
 	contentPane.add(btnNewButton);
+	
+	JButton btnNewButton_1 = new JButton("Torna indietro");
+	btnNewButton_1.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			int caso=1;
+			IlControllore.RitornaBenvenuto(caso);
+		}
+	});
+	btnNewButton_1.setBounds(50, 197, 129, 34);
+	contentPane.add(btnNewButton_1);
+
 	}
 }
 	

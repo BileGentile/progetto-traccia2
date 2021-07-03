@@ -65,51 +65,51 @@ public class RegistrazioneSviluppatore extends JFrame {
 		setTitle("Azienda - Registrazione Sviluppatore");  
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneSviluppatore.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 150, 450, 341);
+		setBounds(100, 150, 700, 500);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		JLabel lblNewLabel = new JLabel("Inserisci codice Fiscale");
-		lblNewLabel.setBounds(15, 42, 168, 19);
+		lblNewLabel.setBounds(42, 46, 168, 19);
 		contentPane.add(lblNewLabel);
 		
 		CodiceFiscaleS = new JTextField();
-		CodiceFiscaleS.setBounds(185, 42, 168, 19);
+		CodiceFiscaleS.setBounds(420, 41, 168, 29);
 		contentPane.add(CodiceFiscaleS);
 		CodiceFiscaleS.setColumns(10);
 		
 		lblInserisciNome = new JLabel("Inserisci nome");
-		lblInserisciNome.setBounds(15, 74, 163, 29);
+		lblInserisciNome.setBounds(42, 81, 163, 29);
 		contentPane.add(lblInserisciNome);
 		
 		NomeS = new JTextField();
 		NomeS.setColumns(10);
-		NomeS.setBounds(185, 79, 168, 19);
+		NomeS.setBounds(420, 81, 168, 29);
 		contentPane.add(NomeS);
 		
 		
 		JLabel lblInserisciCognome = new JLabel("Inserisci cognome");
-		lblInserisciCognome.setBounds(15, 113, 183, 19);
+		lblInserisciCognome.setBounds(42, 131, 183, 19);
 		contentPane.add(lblInserisciCognome);
 		
 		CognomeS = new JTextField();
 		CognomeS.setColumns(10);
-		CognomeS.setBounds(185, 113, 168, 19);
+		CognomeS.setBounds(420, 126, 168, 29);
 		contentPane.add(CognomeS);
 		
 		JLabel lblInserisciSalario = new JLabel("Inserisci salario");
-		lblInserisciSalario.setBounds(15, 143, 163, 29);
+		lblInserisciSalario.setBounds(42, 170, 163, 29);
 		contentPane.add(lblInserisciSalario);
 		
 		salario = new JTextField();
 		salario.setColumns(10);
-		salario.setBounds(185, 147, 168, 19);
+		salario.setBounds(420, 170, 168, 29);
 		contentPane.add(salario);
 		
-		JLabel inserisciSkills = new JLabel("Inserisci le skill");
-		inserisciSkills.setBounds(15, 189, 183, 19);
+		JLabel inserisciSkills = new JLabel("Scegli tra le skill presenti oppure inseriscine una nuova");
+		inserisciSkills.setBounds(42, 219, 338, 29);
 		contentPane.add(inserisciSkills);
 		
 		JComboBox SkillsJComboBox = new JComboBox();
@@ -139,7 +139,7 @@ public class RegistrazioneSviluppatore extends JFrame {
                 System.out.println("Errore SQLException: "+ exception.getMessage());
         	}
 
-		SkillsJComboBox.setBounds(185, 187, 168, 22);
+		SkillsJComboBox.setBounds(420, 214, 168, 29);
 		contentPane.add(SkillsJComboBox);
 		
 		
@@ -157,11 +157,19 @@ public class RegistrazioneSviluppatore extends JFrame {
 		});
 		
 				
-		btnNewButton.setBounds(269, 232, 103, 39);
+		btnNewButton.setBounds(420, 320, 136, 49);
 		contentPane.add(btnNewButton);
 		
-		
-		
+		JButton btnNewButton_2 = new JButton("Torna indietro");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso;
+				caso=3;
+				IlControllore.TornaLogin(caso);
+			}
+		});
+		btnNewButton_2.setBounds(55, 326, 136, 49);
+		contentPane.add(btnNewButton_2);
 		
 	}
 }

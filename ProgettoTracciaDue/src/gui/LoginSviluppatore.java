@@ -72,8 +72,11 @@ public class LoginSviluppatore extends JFrame {
 			IlControllore.AvviaRegistrazioneSviluppatore();
 		}
 	});
-	BottoneRegistrareS.setBounds(187, 79, 195, 19);
+	BottoneRegistrareS.setBounds(233, 85, 195, 19);
+	
 	contentPane.add(BottoneRegistrareS);
+	
+	
 	
 	}
 }

@@ -72,15 +72,13 @@ public class Controller {
 	public void LoginProjectManager() {
 		presenta.setVisible(false);
 		loginPM= new LoginProjectManager(this);
-		loginPM.setVisible(true);
-		
+		loginPM.setVisible(true);	
 	}
 
 	public void AvviaLoginSviluppatore() {
 		presenta.setVisible(false);
 		loginS= new LoginSviluppatore(this);
 		loginS.setVisible(true);
-		
 	}
 
 	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "ok", si ritornerà alla schermata di presentazione
@@ -98,15 +96,12 @@ public class Controller {
 			if(erroreCodiceFiscaleSbagliato.isVisible()) {
 				erroreCodiceFiscaleSbagliato.setVisible(false);
 			}
-			
 		}
 			
 	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
 	public void TornaLogin(int caso) {
-
-	
-if(caso==1) {
-	erroreCodiceFiscaleSbagliato.setVisible(false);
+	if(caso==1) {
+		erroreCodiceFiscaleSbagliato.setVisible(false);
 		if(loginPM.isVisible()) {
 			loginPM.setVisible(false);
 			loginPM=new LoginProjectManager(this);
@@ -116,12 +111,15 @@ if(caso==1) {
 			loginS=new LoginSviluppatore(this);
 			loginS.setVisible(true);
 		}
-}else if(registrazionePM.isVisible()) {
-	registrazionePM.setVisible(false);
-	loginPM=new LoginProjectManager(this);
-	loginPM.setVisible(true);
-}
-	
+	}else if(caso==2) {
+		registrazionePM.setVisible(false);
+		loginPM=new LoginProjectManager(this);
+		loginPM.setVisible(true);
+	}else if(caso==3) {
+		registrazioneS.setVisible(false);
+		loginS=new LoginSviluppatore(this);
+		loginS.setVisible(true);
+	}	
 }
 
 	public void AvviaCreaProgetto() {
@@ -163,7 +161,6 @@ if(caso==1) {
         }
 	
 	//verifica se il codice fiscale inserito dallo sviluppatore risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
-
 	public void AvviaBenvenutoS(String codiceFiscale) {
 		DBConnection dbconn = null;
         Connection connection = null;
@@ -196,7 +193,7 @@ if(caso==1) {
             {
                 System.out.println("Errore SQLException: "+ exception.getMessage());
             }
-			}
+		}
 	
 	//L'utente ha scelto di creare un nuovo account (del tipo project manager), si mostra la scheda di registrazione
 	public void AvviaRegistrazioneProjectManager() {
@@ -209,8 +206,7 @@ if(caso==1) {
 	public void AvviaRegistrazioneSviluppatore() {
 		loginS.setVisible(false);
 	    registrazioneS = new RegistrazioneSviluppatore(this);
-	    registrazioneS.setVisible(true);
-	    
+	    registrazioneS.setVisible(true);    
 	}
 
 	//Creazione di un nuovo project manager 
@@ -299,30 +295,6 @@ if(caso==1) {
             int res =  daoMembro.inserisciMembro(m1);
             Skills s1=new Skills(codiceFiscaleS.getText(),skillDaInserire);
             int res1= daoSkill.inserisciSkills(s1);
-
-//            if(selected==true) {
-//            Skills s1 = new Skills(codiceFiscaleS.getText(),"Puntualità");
-//
-//    		int res1= daoSkill.inserisciSkills(s1);
-//
-//            }
-//            if(selected2==true) {
-//            Skills s2 = new Skills(codiceFiscaleS.getText(),"Organizzazione");
-//
-//    		int res2= daoSkill.inserisciSkills(s2);
-//
-//            }
-//            if(selected3==true) {
-//            Skills s3 = new Skills(codiceFiscaleS.getText(),"Problem Solving");
-//    		int res3= daoSkill.inserisciSkills(s3);
-//
-//        	}
-//        	if(selected4==true) {
-//            Skills s4 = new Skills(codiceFiscaleS.getText(),"Empatia");
-//
-//    		int res4= daoSkill.inserisciSkills(s4);
-
-//        	}
             	
         }
         
@@ -411,14 +383,16 @@ if(caso==1) {
 		aggiungiMembriAlProgetto.setVisible(true);
 	}
 
-	public void RitornaBenvenuto() {
-		if(valutazioneMembro.isVisible()) {
+	public void RitornaBenvenuto(int caso) {
+		if(caso== 1){
+		//if(valutazioneMembro.isVisible()) {
 			valutazioneMembro.setVisible(false);
-		
-		}else {
+		}else if (caso ==2){
 			eliminaProgetto.setVisible(false);
+		}else{ // caso 3
+		//if(azioneAvvenutaConSuccesso.isVisible()) {
+			azioneAvvenutaConSuccesso.setVisible(false);
 		}
-		azioneAvvenutaConSuccesso.setVisible(false);
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
 	    
@@ -487,15 +461,14 @@ if(caso==1) {
     {
         System.out.println("Errore SQLException: "+ exception.getMessage());
     }
- azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
- azioneAvvenutaConSuccesso.setVisible(true);
-	}
+    azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
+    azioneAvvenutaConSuccesso.setVisible(true);
+}
 
 	public void AvviaCreaMeeting() {
 		benvenutoPM.setVisible(false);
 		creaMeeting = new CreaMeeting(this);
 		creaMeeting.setVisible(true);
-		
 	}
 
 	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala,  int durata) {
@@ -560,7 +533,7 @@ if(caso==1) {
 	
     benvenutoPM = new BenvenutoProjectManager (this);
     benvenutoPM.setVisible(true); 
-	}
+}
 
 	public void TornaPresentazione2(int caso) {
 	if(caso==1) {
@@ -572,7 +545,6 @@ if(caso==1) {
 	}
 	presenta=new Presentazione(this);
 	presenta.setVisible(true);
-
 	}
 
 	public void AvviaAggiungiPresenza() {
