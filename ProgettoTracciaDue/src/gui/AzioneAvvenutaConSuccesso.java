@@ -48,7 +48,7 @@ public class AzioneAvvenutaConSuccesso extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int caso=3;
-						IlControllore.RitornaBenvenuto(caso);
+						IlControllore.RitornaBenvenutoProjectManager(caso);
 					}
 				});
 				okButton.setActionCommand("OK");

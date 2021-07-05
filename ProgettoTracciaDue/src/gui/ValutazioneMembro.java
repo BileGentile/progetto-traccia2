@@ -111,7 +111,7 @@ public class ValutazioneMembro extends JFrame {
 	btnNewButton_1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			int caso=1;
-			IlControllore.RitornaBenvenuto(caso);
+			IlControllore.RitornaBenvenutoProjectManager(caso);
 		}
 	});
 	btnNewButton_1.setBounds(50, 197, 129, 34);

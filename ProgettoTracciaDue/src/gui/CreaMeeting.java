@@ -57,7 +57,6 @@ public class CreaMeeting extends JFrame {
 		lblNewLabel_1.setBounds(20, 56, 140, 21);
 		contentPane.add(lblNewLabel_1);
 		
-	
 		
 		JLabel lblNewLabel_2 = new JLabel("Inserisci data e ora inizio");
 		lblNewLabel_2.addMouseListener(new MouseAdapter() {
@@ -67,6 +66,16 @@ public class CreaMeeting extends JFrame {
 		});
 		lblNewLabel_2.setBounds(20, 93, 140, 13);
 		contentPane.add(lblNewLabel_2);
+		
+		JButton btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso=5;
+				IlControllore.RitornaBenvenutoProjectManager(caso);
+			}
+		});
+		btnNewButton_1.setBounds(50, 231, 107, 41);
+		contentPane.add(btnNewButton_1);
 		
 		JSpinner spinner = new JSpinner();
 		spinner.setModel(new SpinnerDateModel(new Date(1616713200000L), new Date(1616713200000L), null, Calendar.HOUR_OF_DAY));
@@ -80,13 +89,11 @@ public class CreaMeeting extends JFrame {
 		contentPane.add(comboBox_1);
 		
 		
-		
 		JLabel lblNewLabel_2_1 = new JLabel("Seleziona piattaforma");
 		lblNewLabel_2_1.setBounds(20, 155, 143, 13);
 		contentPane.add(lblNewLabel_2_1);
 		
 		
-	
 		JLabel lblNewLabel_2_1_1 = new JLabel("Inserisci nome della sala");
 		lblNewLabel_2_1_1.setBounds(20, 186, 172, 19);
 		contentPane.add(lblNewLabel_2_1_1);
@@ -115,10 +122,6 @@ public class CreaMeeting extends JFrame {
 					}
 			}
 		});
-
-		
-	
-		
 					
 		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Telematico","Fisico"}));
 		comboBox.setToolTipText("");

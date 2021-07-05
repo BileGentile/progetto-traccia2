@@ -91,7 +91,7 @@ public class EliminaProgetto extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso=2;
-				IlControllore.RitornaBenvenuto(caso);
+				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
 		btnNewButton_1.setBounds(50, 187, 117, 29);

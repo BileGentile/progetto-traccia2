@@ -90,8 +90,8 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton_5 = new JButton("Logout");
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				IlControllore.Logout();
+				int caso=1;
+				IlControllore.Logout(caso);
 			}
 		});
 		btnNewButton_5.setBounds(242, 215, 139, 21);

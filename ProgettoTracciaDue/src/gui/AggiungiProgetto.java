@@ -96,7 +96,7 @@ public class AggiungiProgetto extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso=4;
-				IlControllore.RitornaBenvenuto(caso);
+				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
 		btnNewButton_1.setBounds(50, 264, 117, 29);

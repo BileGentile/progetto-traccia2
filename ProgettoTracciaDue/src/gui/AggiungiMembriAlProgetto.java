@@ -62,7 +62,16 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		lblNewLabel_1.setBounds(38, 45, 128, 29);
 		contentPane.add(lblNewLabel_1);
 		
-
+		JButton btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso=6;
+				IlControllore.RitornaBenvenutoProjectManager(caso);
+			}
+		});
+		btnNewButton_1.setBounds(50, 249, 119, 46);
+		contentPane.add(btnNewButton_1);
+		
 		JComboBox ComboBoxProgetti = new JComboBox();
 		ComboBoxProgetti.setMaximumRowCount(10);
 				DBConnection dbconn = null;
@@ -98,7 +107,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		Salario.setColumns(10);
 
 		
-		JButton btnNewButton = new JButton("Crea");
+		JButton btnNewButton = new JButton("Aggiungi");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.CreaArchivioPartecipanti(ComboBoxMembri.getSelectedItem().toString(),ComboBoxProgetti.getSelectedItem().toString());
@@ -165,11 +174,6 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		btnR.setBounds(142, 166, 128, 28);
 		contentPane.add(btnR);
 		
-		
-		
-		
-		
-	
 		
 	}
 }

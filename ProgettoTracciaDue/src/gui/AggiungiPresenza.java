@@ -54,6 +54,16 @@ public class AggiungiPresenza extends JFrame {
 		JLabel lblNewLabel_1 = new JLabel("Seleziona Meeting");
 		lblNewLabel_1.setBounds(41, 148, 128, 29);
 		contentPane.add(lblNewLabel_1);
+		
+		JButton btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso=1;
+				IlControllore.RitornaBenvenutoSviluppatore(caso);
+			}
+		});
+		btnNewButton_1.setBounds(50, 207,129, 35);
+		contentPane.add(btnNewButton_1);
 			
 			
 		JComboBox ComboBoxMeeting = new JComboBox();

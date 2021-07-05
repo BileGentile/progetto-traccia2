@@ -72,7 +72,6 @@ public class AggiungiPresenzaSviluppatore extends JFrame {
 		contentPane.add(ComboBoxProgetti);
 		
 		
-		
 		JButton btnNewButton = new JButton("Crea");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -32,6 +32,7 @@ import entity.Skills;
 import exceptions.ConnectionException;
 import gui.AggiungiMembriAlProgetto;
 import gui.AggiungiPresenza;
+import gui.AggiungiPresenzaSviluppatore;
 import gui.AggiungiProgetto;
 import gui.AzioneAvvenutaConSuccesso;
 import gui.BenvenutoProjectManager;
@@ -379,7 +380,7 @@ public class Controller {
 		aggiungiMembriAlProgetto.setVisible(true);
 	}
 
-	public void RitornaBenvenuto(int caso) {
+	public void RitornaBenvenutoProjectManager(int caso) {
 		if(caso== 1){
 			valutazioneMembro.setVisible(false);
 		}else if (caso ==2){
@@ -389,6 +390,10 @@ public class Controller {
 			eliminaProgetto.setVisible(false);
 		}else if(caso==4) {
 			aggiungiProgetto.setVisible(false);
+		}else if (caso==5) {
+			creaMeeting.setVisible(false);
+		}else if(caso==6) {
+			aggiungiMembriAlProgetto.setVisible(false);
 		}
 		
 		benvenutoPM = new BenvenutoProjectManager (this);
@@ -427,11 +432,11 @@ public class Controller {
         
 	}
 	
-	public void Logout() {
-		if(benvenutoPM.isVisible())
+	public void Logout(int caso) {
+		if(caso==1)
 		{
 			benvenutoPM.setVisible(false);
-		}else if(benvenutoS.isVisible()){
+		}else if(caso==2){
 			benvenutoS.setVisible(false);
 		}
 		presenta = new Presentazione(this);
@@ -550,4 +555,13 @@ public class Controller {
 	    aggiungiPresenza.setVisible(true);
 	}
 	
+	public void RitornaBenvenutoSviluppatore(int caso) {
+		if(caso== 1){
+			aggiungiPresenza.setVisible(false);
+		}
+		
+		benvenutoS = new BenvenutoSviluppatore(this);
+	    benvenutoS.setVisible(true);
+	}
+
 }
