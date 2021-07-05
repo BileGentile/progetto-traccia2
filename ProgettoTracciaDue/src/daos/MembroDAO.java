@@ -14,6 +14,7 @@ public interface MembroDAO {
 	public List<Membro> getSviluppatoreBySalarioESkills(int salario, String skills) throws SQLException;
 	public List<Membro> getSviluppatoreByValutazione(String valutazione)  throws SQLException;
 	public List<Membro> getAllSviluppatori() throws SQLException;
+	public List<Membro>  getPartecipantiProgetto(String nomeprogetto) throws SQLException ;
 	
 	public int inserisciMembro(Membro membro) throws SQLException;
 	public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;

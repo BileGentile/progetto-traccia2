@@ -78,10 +78,13 @@ public class Membro {
 	
 	@Override
 	public String toString() {
-		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", Ruolo=" + Ruolo + ", SalarioMedio=" + SalarioMedio +", Valutazione=" + Valutazione +"]";
+		return Nome +" " + Cognome + "\n" + CF +" Valutazione=" + Valutazione+ "\n";
 	}
 	
-
+//	@Override
+//	public String toString() {
+//		return "Membro [Nome=" + Nome +", Cognome=" + Cognome + ", CF=" + CF + ", Ruolo=" + Ruolo + ", SalarioMedio=" + SalarioMedio +", Valutazione=" + Valutazione +"]";
+//	}
 	
 	
     //METODI

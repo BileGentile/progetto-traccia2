@@ -13,7 +13,7 @@ import entity.Membro;
 public class MembroDAOPostgresImpl implements MembroDAO {
 	
 	private Connection connection;
-	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsPS, getAllSviluppatoriPS, inserisciValutazionePS;
+	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsPS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgetto;
 	public MembroDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getAllMembriPS = connection.prepareStatement("SELECT * FROM membro");
@@ -24,7 +24,9 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 		getSviluppatoreBySalarioESkillsPS = connection.prepareStatement("SELECT * FROM membro WHERE  salariomedio > ?  AND ruolo LIKE 'Sviluppatore' AND codFiscale IN (SELECT DISTINCT codfiscale FROM skills AS S Where S.skill=?) ");
 		getAllSviluppatoriPS = connection.prepareStatement("SELECT * FROM membro WHERE ruolo LIKE 'Sviluppatore' ");
 		inserisciValutazionePS = connection.prepareStatement("UPDATE membro SET valutazione  = ? WHERE codfiscale LIKE ?");
-	
+		getPartecipantiProgetto = connection.prepareStatement("select codfiscale,nome, cognome, valutazione\n"
+				+ "from archiviopartecipantiprogetto natural join membro \n"
+				+ "where nomeprogetto= ?;");
 	}
 	
 	@Override
@@ -38,6 +40,23 @@ public class MembroDAOPostgresImpl implements MembroDAO {
             s.setCognome(rs.getString("cognome"));
             s.setRuolo(rs.getString("ruolo"));
             s.setSalarioMedio(rs.getInt("SalarioMedio"));
+            s.setValutazione(rs.getString("valutazione"));
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+	}
+	
+	@Override
+	public List<Membro>  getPartecipantiProgetto(String nomeprogetto) throws SQLException {
+		getPartecipantiProgetto.setString(1, nomeprogetto);
+        ResultSet rs= getPartecipantiProgetto.executeQuery();
+        List<Membro> lista = new ArrayList<Membro>();
+        while(rs.next())
+        {
+            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
+            s.setNome(rs.getString("nome"));
+            s.setCognome(rs.getString("cognome"));
             s.setValutazione(rs.getString("valutazione"));
             lista.add(s);
         }

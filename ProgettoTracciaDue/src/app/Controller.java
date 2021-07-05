@@ -5,6 +5,7 @@ import gui.RegistrazioneProjectManager;
 import gui.RegistrazioneSviluppatore;
 import gui.ValutazioneMembro;
 import gui.LoginSviluppatore;
+import gui.PartecipantiAlProgetto;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -60,6 +61,8 @@ public class Controller {
 	ErroreCodiceFiscaleSbagliato erroreCodiceFiscaleSbagliato;
 	CreaMeeting  creaMeeting;
 	AggiungiPresenza aggiungiPresenza;
+	PartecipantiAlProgetto partecipantiAlProgetto;
+	
 	public static void main(String[] args) {
 
 		Controller c = new Controller();
@@ -473,6 +476,12 @@ public class Controller {
 		creaMeeting.setVisible(true);
 	}
 
+	public void AvviaPartecipantiAlProgetto() {
+		benvenutoPM.setVisible(false);
+		partecipantiAlProgetto = new PartecipantiAlProgetto(this);
+		partecipantiAlProgetto.setVisible(true);
+	}
+	
 	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala,  int durata) {
 		DBConnection dbconn = null;
         Connection connection = null;

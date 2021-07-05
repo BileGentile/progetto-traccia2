@@ -45,7 +45,7 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.AvviaCreaProgetto();
 			}
 		});
-		btnNewButton.setBounds(10, 120, 168, 21);
+		btnNewButton.setBounds(20, 120, 168, 21);
 		contentPane.add(btnNewButton);
 		
 		
@@ -55,7 +55,7 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.AvviaEliminaProgetto();
 			}
 		});
-		btnNewButton_1.setBounds(10, 167, 168, 21);
+		btnNewButton_1.setBounds(20, 167, 168, 21);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Crea Meeting");
@@ -65,7 +65,7 @@ public class BenvenutoProjectManager extends JFrame {
 			IlControllore.AvviaCreaMeeting();
 			}
 			});
-		btnNewButton_2.setBounds(10, 215, 168, 21);
+		btnNewButton_2.setBounds(20, 215, 168, 21);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Aggiungi Membri al progetto");
@@ -75,7 +75,7 @@ public class BenvenutoProjectManager extends JFrame {
 			}
 		});
 		
-		btnNewButton_3.setBounds(242, 120, 139, 21);
+		btnNewButton_3.setBounds(227, 120, 168, 21);
 		contentPane.add(btnNewButton_3);
 		
 		JButton btnNewButton_4 = new JButton("Valuta Membro");
@@ -84,7 +84,7 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.AvviaValutazione();
 			}
 		});
-		btnNewButton_4.setBounds(242, 167, 139, 21);
+		btnNewButton_4.setBounds(227, 167, 168, 21);
 		contentPane.add(btnNewButton_4);
 
 		JButton btnNewButton_5 = new JButton("Logout");
@@ -94,7 +94,24 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.Logout(caso);
 			}
 		});
-		btnNewButton_5.setBounds(242, 215, 139, 21);
+		btnNewButton_5.setBounds(227, 260, 168, 21);
 		contentPane.add(btnNewButton_5);
+		
+		JButton btnNewButton_6 = new JButton("Partecipanti Progetto");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaPartecipantiAlProgetto();
+			}
+		});
+		btnNewButton_6.setBounds(227, 214, 168, 23);
+		contentPane.add(btnNewButton_6);
+		
+		JButton btnNewButton_7 = new JButton("Partecipanti Meeting");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_7.setBounds(20, 259, 168, 23);
+		contentPane.add(btnNewButton_7);
 	}
 }

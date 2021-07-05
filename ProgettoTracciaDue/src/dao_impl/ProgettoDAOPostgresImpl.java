@@ -13,7 +13,7 @@ import entity.Progetto;
 public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	
 	private Connection connection;
-	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS,cambiaStatoProgettoPS;
+	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS,cambiaStatoProgettoPS, getProgettoProjectManager;
 	
 	public ProgettoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
@@ -21,7 +21,9 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, nextval(?), ? )");
 		getAllProgettiPS = connection.prepareStatement("SELECT * FROM progetto WHERE stato LIKE 'Incompleto' ");
 		cambiaStatoProgettoPS = connection.prepareStatement("UPDATE progetto SET stato = 'Completo' WHERE nome LIKE ?");
+		getProgettoProjectManager =connection.prepareStatement("select nome from progetto join archiviopartecipantiprogetto on nomeprogetto=nome where codfiscale LIKE ?");
 	}
+	
 	@Override
 	public List<Progetto> getAllProgetti()  throws SQLException {
         ResultSet rs= getAllProgettiPS.executeQuery();
@@ -40,8 +42,6 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
         rs.close();
         return lista;
 	}
-
-		
 		
 	@Override
 	public List<Progetto> getProgettoByNome(String nome) throws SQLException {
@@ -55,7 +55,6 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
             s.setAmbitoProgetto(rs.getString("ambito"));
             s.setTipoProgetto(rs.getString("tipo"));
             s.setStato(rs.getString("stato"));
-            
             
             lista.add(s);
         }
@@ -81,7 +80,22 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public List<Progetto> getProgettoProjectManager(String codfiscale) throws SQLException {
+		getProgettoProjectManager.setString(1, codfiscale);
+        ResultSet rs= getProgettoProjectManager.executeQuery();
+        List<Progetto> lista = new ArrayList<Progetto>();
+        while(rs.next())
+        {
+        	Progetto s = new Progetto(rs.getString("nome")); //rs.getString(1)
+        	s.setNomeProgetto(rs.getString("nome"));
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+	}
+	
 	@Override
 	public int inserisciProgetto(Progetto progetto) throws SQLException {	
 	inserisciProgettoPS.setString(1, progetto.getNomeProgetto());
