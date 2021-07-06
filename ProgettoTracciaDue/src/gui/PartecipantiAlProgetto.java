@@ -32,6 +32,7 @@ import java.awt.FlowLayout;
 import javax.swing.JDesktopPane;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
+import javax.swing.JTextArea;
 
 public class PartecipantiAlProgetto extends JFrame {
 
@@ -47,7 +48,7 @@ public class PartecipantiAlProgetto extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ValutazioneMembro.class.getResource("/image/ingranaggio blu.png"))); 
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 350);
+		setBounds(100, 100, 750, 650);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -55,31 +56,32 @@ public class PartecipantiAlProgetto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona progetto");
-		lblNewLabel_1.setBounds(10, 138, 128, 29);
+		lblNewLabel_1.setBounds(33, 114, 128, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnNewButton_1 = new JButton("Torna indietro");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				int caso=7;
+				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(23, 271, 99, 29);
+		btnNewButton_1.setBounds(35, 537, 103, 39);
 		contentPane.add(btnNewButton_1);
 		
 		JLabel lblCfPm = new JLabel("Codice fiscale del Project Manager");
-		lblCfPm.setBounds(10, 45, 175, 21);
+		lblCfPm.setBounds(33, 49, 175, 21);
 		contentPane.add(lblCfPm);
 		
 		JTextField cf = new JTextField();
-		cf.setBounds(232, 41, 156, 29);
+		cf.setBounds(267, 40, 175, 34);
 		contentPane.add(cf);
 		cf.setColumns(10);
 		
 		JComboBox ComboBoxProgetti = new JComboBox();
 		ComboBoxProgetti.setMaximumRowCount(10);
 				
-		ComboBoxProgetti.setBounds(110, 138, 128, 29);
+		ComboBoxProgetti.setBounds(267, 109, 175, 39);
 		contentPane.add(ComboBoxProgetti);
 		
 		JButton btnR = new JButton("Ricerca Progetti");
@@ -111,19 +113,20 @@ public class PartecipantiAlProgetto extends JFrame {
 		        	}
 			}
 		});
-		btnR.setBounds(232, 88, 156, 28);
+		btnR.setBounds(514, 40, 175, 39);
 		contentPane.add(btnR);
 		
-		JTextField Partecipanti = new JTextField();
-		Partecipanti.setToolTipText("questo testo non è editabile");
-		Partecipanti.setEditable(false);
-		Partecipanti.setBounds(20, 178, 368, 82);
-		contentPane.add(Partecipanti);
-		Partecipanti.setColumns(10);
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(33, 212, 438, 294);
+		textArea.setEditable(false);
+		contentPane.add(textArea);
+		
 		
 		JButton btnR1 = new JButton("Ricerca Partecipanti");
 		btnR1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				textArea.setText(""); 
+				int cont=1;
 				DBConnection dbconn = null;
 		        Connection connection = null;
 		        DBBuilder builder = null;
@@ -137,10 +140,11 @@ public class PartecipantiAlProgetto extends JFrame {
 		            dao = new MembroDAOPostgresImpl(connection);
 		            
 		            List<Membro> listaPartecipanti = dao.getPartecipantiProgetto(ComboBoxProgetti.getSelectedItem().toString());
+		           
 		            for(Membro m : listaPartecipanti)
 		            {
-		            	Partecipanti.setText(Partecipanti.getText().concat("\n\n"+m.toString()));
-		            	System.out.println(m.toString());
+		            	textArea.setText(textArea.getText().concat("\n"+cont+" "+m.toString()));
+		            	cont++;
 		            }
 
 		        }
@@ -150,8 +154,10 @@ public class PartecipantiAlProgetto extends JFrame {
 	        	}
 			}
 		});
-		btnR1.setBounds(248, 139, 141, 28);
+		btnR1.setBounds(514, 109, 175, 39);
 		contentPane.add(btnR1);
+		
+		
 		
 		
 	}

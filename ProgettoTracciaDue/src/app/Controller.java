@@ -397,6 +397,8 @@ public class Controller {
 			creaMeeting.setVisible(false);
 		}else if(caso==6) {
 			aggiungiMembriAlProgetto.setVisible(false);
+		}else if(caso==7) {
+			partecipantiAlProgetto.setVisible(false);
 		}
 		
 		benvenutoPM = new BenvenutoProjectManager (this);
