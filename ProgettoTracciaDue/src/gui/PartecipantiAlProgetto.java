@@ -6,6 +6,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -29,10 +31,13 @@ import entity.Membro;
 import entity.Progetto;
 
 import java.awt.FlowLayout;
+import java.awt.ScrollPane;
+
 import javax.swing.JDesktopPane;
 import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JTextArea;
+import java.awt.Scrollbar;
 
 public class PartecipantiAlProgetto extends JFrame {
 
@@ -117,9 +122,9 @@ public class PartecipantiAlProgetto extends JFrame {
 		contentPane.add(btnR);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(33, 212, 438, 294);
-		textArea.setEditable(false);
 		contentPane.add(textArea);
+		textArea.setBounds(67, 212, 445, 263);
+		textArea.setEditable(false);
 		
 		
 		JButton btnR1 = new JButton("Ricerca Partecipanti");
@@ -157,8 +162,7 @@ public class PartecipantiAlProgetto extends JFrame {
 		btnR1.setBounds(514, 109, 175, 39);
 		contentPane.add(btnR1);
 		
-		
-		
+	
 		
 	}
 }

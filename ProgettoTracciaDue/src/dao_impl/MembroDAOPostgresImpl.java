@@ -13,7 +13,7 @@ import entity.Membro;
 public class MembroDAOPostgresImpl implements MembroDAO {
 	
 	private Connection connection;
-	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsPS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgetto;
+	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgetto;
 	public MembroDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getAllMembriPS = connection.prepareStatement("SELECT * FROM membro");
@@ -21,10 +21,21 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 		getProjectManagerByCodFiscalePS = connection.prepareStatement("SELECT * FROM membro WHERE codFiscale LIKE UPPER(?) AND ruolo LIKE 'ProjectManager' ");
 		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM membro WHERE codFiscale LIKE UPPER(?) AND ruolo LIKE 'Sviluppatore' ");
 		getSviluppatoreByValutazionePS = connection.prepareStatement("SELECT * FROM membro WHERE Valutazione LIKE ? AND ruolo LIKE 'Sviluppatore' ");
-		getSviluppatoreBySalarioESkillsPS = connection.prepareStatement("SELECT * FROM membro WHERE  salariomedio > ?  AND ruolo LIKE 'Sviluppatore' AND codFiscale IN (SELECT DISTINCT codfiscale FROM skills AS S Where S.skill=?) ");
+		getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\n"
+				+ "FROM membro \n"
+				+ "WHERE  salariomedio > ? \n"
+				+ "	AND ruolo LIKE 'Sviluppatore' \n"
+				+ "	AND valutazione LIKE ? \n"
+				+ "	AND codFiscale IN ((SELECT DISTINCT codfiscale \n"
+				+ "						FROM skills AS S \n"
+				+ "						Where S.skill LIKE ?)\n"
+				+ "							except\n"
+				+ "						(select codfiscale\n"
+				+ "						from archiviopartecipantiprogetto\n"
+				+ "						where nomeprogetto like ?)))");
 		getAllSviluppatoriPS = connection.prepareStatement("SELECT * FROM membro WHERE ruolo LIKE 'Sviluppatore' ");
 		inserisciValutazionePS = connection.prepareStatement("UPDATE membro SET valutazione  = ? WHERE codfiscale LIKE ?");
-		getPartecipantiProgetto = connection.prepareStatement("select codfiscale,nome, cognome, valutazione\n"
+		getPartecipantiProgetto = connection.prepareStatement("select codfiscale,nome, cognome,ruolo, valutazione\n"
 				+ "from archiviopartecipantiprogetto natural join membro \n"
 				+ "where nomeprogetto= ?;");
 	}
@@ -57,6 +68,7 @@ public class MembroDAOPostgresImpl implements MembroDAO {
             Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
             s.setNome(rs.getString("nome"));
             s.setCognome(rs.getString("cognome"));
+            s.setRuolo(rs.getString("ruolo"));
             s.setValutazione(rs.getString("valutazione"));
             lista.add(s);
         }
@@ -118,10 +130,12 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 	
 
 	@Override
-	public List<Membro> getSviluppatoreBySalarioESkills(int salario,  String skills) throws SQLException{
-		getSviluppatoreBySalarioESkillsPS.setInt(1, salario);
-		getSviluppatoreBySalarioESkillsPS.setString(2, skills);
-        ResultSet rs= getSviluppatoreBySalarioESkillsPS.executeQuery();
+	public List<Membro> getSviluppatoreBySalarioESkillsEValutazionePS(int salario, String valutazione, String skills, String progetto) throws SQLException{
+		getSviluppatoreBySalarioESkillsEValutazionePS.setInt(1, salario);
+		getSviluppatoreBySalarioESkillsEValutazionePS.setString(2, valutazione);
+		getSviluppatoreBySalarioESkillsEValutazionePS.setString(3, skills);
+		getSviluppatoreBySalarioESkillsEValutazionePS.setString(4, progetto);
+        ResultSet rs= getSviluppatoreBySalarioESkillsEValutazionePS.executeQuery();
         List<Membro> lista = new ArrayList<Membro>();
         while(rs.next())
         {

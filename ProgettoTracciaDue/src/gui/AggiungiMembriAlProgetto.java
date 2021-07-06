@@ -47,7 +47,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		setTitle("Azienda - Aggiungi membri al progetto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 342);
+		setBounds(100, 100, 588, 444);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -55,11 +55,11 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Inserisci valore del \r\n");
-		lblNewLabel.setBounds(38, 87, 146, 21);
+		lblNewLabel.setBounds(80, 69, 146, 21);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona progetto");
-		lblNewLabel_1.setBounds(38, 45, 128, 29);
+		lblNewLabel_1.setBounds(80, 29, 128, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnNewButton_1 = new JButton("Torna indietro");
@@ -69,8 +69,15 @@ public class AggiungiMembriAlProgetto extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(50, 249, 119, 46);
+		btnNewButton_1.setBounds(27, 348, 119, 46);
 		contentPane.add(btnNewButton_1);
+		
+		JComboBox comboBoxValutazione = new JComboBox();
+		comboBoxValutazione.setBounds(312, 176, 155, 29);
+		comboBoxValutazione.setModel(new DefaultComboBoxModel(new String[] {"Buona", "Mediocre", "Male", "NULL"}));
+		comboBoxValutazione.setMaximumRowCount(10);
+		contentPane.add(comboBoxValutazione);
+		
 		
 		JComboBox ComboBoxProgetti = new JComboBox();
 		ComboBoxProgetti.setMaximumRowCount(10);
@@ -97,12 +104,12 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		        	{
 		                System.out.println("Errore SQLException: "+ exception.getMessage());
 		        	}
-		ComboBoxProgetti.setBounds(211, 42, 155, 35);
+		ComboBoxProgetti.setBounds(312, 23, 155, 35);
 		contentPane.add(ComboBoxProgetti);
 		
 		
 		Salario = new JTextField();
-		Salario.setBounds(211, 88, 156, 29);
+		Salario.setBounds(312, 76, 156, 29);
 		contentPane.add(Salario);
 		Salario.setColumns(10);
 
@@ -114,31 +121,31 @@ public class AggiungiMembriAlProgetto extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(268, 249, 119, 46);
+		btnNewButton.setBounds(371, 348, 119, 46);
 		contentPane.add(btnNewButton);
 		
 		
 		JLabel lblSalarioMedioDel = new JLabel("Salario medio del membro");
-		lblSalarioMedioDel.setBounds(38, 106, 146, 21);
+		lblSalarioMedioDel.setBounds(80, 84, 146, 21);
 		contentPane.add(lblSalarioMedioDel);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Inseriscis skill ricercata");
-		lblNewLabel_1_1.setBounds(38, 137, 128, 29);
+		lblNewLabel_1_1.setBounds(80, 130, 128, 29);
 		contentPane.add(lblNewLabel_1_1);
 		
 		ComboBoxMembri = new JComboBox();
 		ComboBoxMembri.setMaximumRowCount(10);
-		ComboBoxMembri.setBounds(211, 204, 155, 29);
+		ComboBoxMembri.setBounds(311, 277, 155, 29);
 		contentPane.add(ComboBoxMembri);
 		
 		JComboBox ComboBoxMembri_1 = new JComboBox();
 		ComboBoxMembri_1.setModel(new DefaultComboBoxModel(new String[] {"Puntualit\u00E0", "Organizzazione", "Problem Solving", "Empatia"}));
 		ComboBoxMembri_1.setMaximumRowCount(10);
-		ComboBoxMembri_1.setBounds(211, 127, 155, 29);
+		ComboBoxMembri_1.setBounds(312, 130, 155, 29);
 		contentPane.add(ComboBoxMembri_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Seleziona membro");
-		lblNewLabel_1_1_1.setBounds(38, 207, 128, 29);
+		lblNewLabel_1_1_1.setBounds(173, 277, 128, 29);
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		JButton btnR = new JButton("Ricerca membri");
@@ -156,11 +163,10 @@ public class AggiungiMembriAlProgetto extends JFrame {
 			            MembroDAO dao = null;
 			            
 			            dao = new MembroDAOPostgresImpl(connection);
-			            List<Membro> listaMembri = dao.getSviluppatoreBySalarioESkills(Integer.parseInt(Salario.getText().toString()),ComboBoxMembri_1.getSelectedItem().toString()); 
+			            List<Membro> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),comboBoxValutazione.getSelectedItem().toString(), ComboBoxMembri_1.getSelectedItem().toString(),ComboBoxProgetti.getSelectedItem().toString()); 
 			      
 			            for(Membro n : listaMembri)
 			            {
-			            	
 			            	ComboBoxMembri.addItem(n.getCF());
 			            }
 
@@ -171,8 +177,16 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		  	}
 			}
 		});
-		btnR.setBounds(142, 166, 128, 28);
+		btnR.setBounds(371, 238, 119, 28);
 		contentPane.add(btnR);
+		
+		JLabel lblNewLabel_2 = new JLabel("Inserisci la valutazione");
+		lblNewLabel_2.setBounds(80, 180, 128, 21);
+		contentPane.add(lblNewLabel_2);
+		
+		JLabel lblNewLabel_3 = new JLabel("aziendale minima richiesta");
+		lblNewLabel_3.setBounds(80, 199, 128, 14);
+		contentPane.add(lblNewLabel_3);
 		
 		
 	}

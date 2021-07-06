@@ -1,8 +1,5 @@
 /gui/
-/app/
-/dbConfig/
-/PartecipantiAlProgetto$1.class
-/PartecipantiAlProgetto.class
+/entity/
 /dao_impl/
 /daos/
-/entity/
+/dbConfig/
