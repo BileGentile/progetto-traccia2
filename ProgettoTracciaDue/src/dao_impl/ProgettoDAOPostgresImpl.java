@@ -21,7 +21,7 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?, ?, ?, nextval(?), ? )");
 		getAllProgettiPS = connection.prepareStatement("SELECT * FROM progetto WHERE stato LIKE 'Incompleto' ");
 		cambiaStatoProgettoPS = connection.prepareStatement("UPDATE progetto SET stato = 'Completo' WHERE nome LIKE ?");
-		getProgettoProjectManager =connection.prepareStatement("select nome from progetto join archiviopartecipantiprogetto on nomeprogetto=nome where codfiscale LIKE ?");
+		getProgettoProjectManager =connection.prepareStatement("SELECT nome from progetto join archiviopartecipantiprogetto on nomeprogetto=nome where codfiscale LIKE ?");
 	}
 	
 	@Override
