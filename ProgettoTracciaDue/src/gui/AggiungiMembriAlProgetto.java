@@ -131,10 +131,10 @@ public class AggiungiMembriAlProgetto extends JFrame {
 												   	{
 											        	System.out.println("Errore SQLException: "+ exception.getMessage());
 												   	}
-												   	}	
+					}
 
 			
-});
+		});
 		
 					       
 		ComboBoxProgetti.setMaximumRowCount(10);

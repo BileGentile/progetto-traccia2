@@ -78,7 +78,7 @@ public class Membro {
 	
 	@Override
 	public String toString() {
-		return Nome +" " + Cognome  + CF + "\n"+Ruolo+" Valutazione=" + Valutazione+"\n";
+		return Nome +" " + Cognome+ " "  + CF + "\n"+Ruolo+" Valutazione=" + Valutazione+"\n";
 	}
 	
 //	@Override

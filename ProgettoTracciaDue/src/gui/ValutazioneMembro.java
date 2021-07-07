@@ -6,6 +6,8 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -51,38 +53,53 @@ public class ValutazioneMembro extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona Membro ");
-		lblNewLabel.setBounds(38, 68, 158, 29);
+		lblNewLabel.setBounds(38, 100, 158, 29);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona valutazione");
-		lblNewLabel_1.setBounds(38, 107, 127, 29);
+		lblNewLabel_1.setBounds(38, 150, 127, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblBenvenutoNellaValutazione = new JLabel("Benvenuto nella valutazione dei membri ");
-		lblBenvenutoNellaValutazione.setBounds(38, 29, 339, 29);
+		lblBenvenutoNellaValutazione.setBounds(38, 20, 339, 29);
 		contentPane.add(lblBenvenutoNellaValutazione);
 
+		JLabel lblNewLabel_1_2 = new JLabel("Inserisci il tuo codice fiscale");
+		lblNewLabel_1_2.setBounds(38, 50, 146, 29);
+		contentPane.add(lblNewLabel_1_2);
+		
+		JTextField textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(200, 50, 156, 29);
+		contentPane.add(textField);
+
+		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Buona", "Mediocre", "Male"}));
-		comboBox.setBounds(200, 114, 140, 29);
+		comboBox.setBounds(200, 150, 140, 29);
 		contentPane.add(comboBox);
 
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(200, 68, 140, 29);
-		contentPane.add(comboBox_1);
-		try
-		{
+		comboBox_1.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+		
 			DBConnection dbconn = null;
 	        Connection connection = null;
 	        DBBuilder builder = null;
 	        
+		try
+		{
+			comboBox_1.removeAllItems();
 	        dbconn = DBConnection.getInstance();     
 	        connection = dbconn.getConnection();	           
 	        builder = new DBBuilder(connection);
 	        MembroDAO dao = null;
 	            
 	            dao = new MembroDAOPostgresImpl(connection);
-			    List<Membro> lista = dao.getAllSviluppatori();
+	            
+			    List<Membro> lista = dao.getAllSviluppatoriProgetto(textField.getText().toString());
 			    for(Membro mm : lista)
 			    {
 			    	 comboBox_1.addItem(mm.getCF());
@@ -94,7 +111,12 @@ public class ValutazioneMembro extends JFrame {
 	    	System.out.println("Errore SQLException: "+ exception.getMessage());
 		}
 		
+	}
+		
+});
 
+		comboBox_1.setBounds(200, 100, 140, 29);
+		contentPane.add(comboBox_1);
 	
 	JButton btnNewButton = new JButton("Valuta ");
 	btnNewButton.addActionListener(new ActionListener() {

@@ -13,7 +13,7 @@ import entity.Membro;
 public class MembroDAOPostgresImpl implements MembroDAO {
 	
 	private Connection connection;
-	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgetto;
+	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgetto,getAllSviluppatoriProgetto;
 	public MembroDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 		getAllMembriPS = connection.prepareStatement("SELECT * FROM membro");
@@ -38,6 +38,12 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 		getPartecipantiProgetto = connection.prepareStatement("select codfiscale,nome, cognome,ruolo, valutazione\n"
 				+ "from archiviopartecipantiprogetto natural join membro \n"
 				+ "where nomeprogetto= ?;");
+		getAllSviluppatoriProgetto=connection.prepareStatement("select distinct codfiscale\n"
+				+ "from archiviopartecipantiprogetto\n"
+				+ "where nomeprogetto in (SELECT nomeprogetto\n"
+				+ "						FROM archiviopartecipantiprogetto \n"
+				+ "						WHERE codFiscale LIKE UPPER (?) \n"
+				+ "					   AND ruolo LIKE 'ProjectManager') AND ruolo LIKE 'Sviluppatore'");
 	}
 	
 	@Override
@@ -126,8 +132,6 @@ public class MembroDAOPostgresImpl implements MembroDAO {
         rs.close();
         return lista;
 	}
-	
-	
 
 	@Override
 	public List<Membro> getSviluppatoreBySalarioESkillsEValutazionePS(int salario, String valutazione, String skills, String progetto) throws SQLException{
@@ -165,7 +169,6 @@ public class MembroDAOPostgresImpl implements MembroDAO {
         return row;
 	}
 
-
 	@Override
 	public int  inserisciValutazione(String valutazione, String codfiscale) throws SQLException {
 		inserisciValutazionePS.setString(1, valutazione);
@@ -176,16 +179,11 @@ public class MembroDAOPostgresImpl implements MembroDAO {
         return row;
 	}
 
-
-
-
 	@Override
 	public List<Membro> getMembroByNome(String nome) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 	@Override
 	public List<Membro> getAllSviluppatori() throws SQLException {
@@ -204,7 +202,6 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 	        rs.close();
 	        return lista;
 		}
-
 	
 	@Override
 	public int cancellaMembro(Membro membro) {
@@ -218,5 +215,17 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 		return null;
 	}
 
-
+	public List<Membro> getAllSviluppatoriProgetto (String codfiscale) throws SQLException {
+		getAllSviluppatoriProgetto.setString(1, codfiscale);
+        ResultSet rs= getAllSviluppatoriProgetto.executeQuery();
+        List<Membro> lista = new ArrayList<Membro>();
+        while(rs.next())
+        {
+            Membro s = new Membro(rs.getString("codFiscale")); 
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+	}
+	
 }
