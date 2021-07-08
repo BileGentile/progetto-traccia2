@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -14,8 +15,19 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import app.Controller;
+import dao_impl.SkillsDAOPostgresImpl;
+import daos.SkillsDAO;
+import dbConfig.DBBuilder;
+import dbConfig.DBConnection;
+import entity.Skills;
+
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
 
 public class RegistrazioneProjectManager extends JFrame {
 
@@ -72,28 +84,43 @@ public class RegistrazioneProjectManager extends JFrame {
 		CognomePM.setColumns(10);
 		CognomePM.setBounds(185, 106, 176, 19);
 		contentPane.add(CognomePM);
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Puntualit\u00E0");
-		chckbxNewCheckBox.setBounds(157, 165, 103, 21);
-		contentPane.add(chckbxNewCheckBox);
-		
-		JCheckBox chckbxOrganizzazione = new JCheckBox("Organizzazione");
-		chckbxOrganizzazione.setBounds(283, 165, 103, 21);
-		contentPane.add(chckbxOrganizzazione);
-		
-		JCheckBox chckbxProblemSolving = new JCheckBox("Probelm Solving");
-		chckbxProblemSolving.setBounds(157, 188, 103, 21);
-		contentPane.add(chckbxProblemSolving);
-		
-		JCheckBox chckbxEmpatia = new JCheckBox("Empatia");
-		chckbxEmpatia.setBounds(283, 188, 103, 21);
-		contentPane.add(chckbxEmpatia);
 
+		DefaultListModel<String> demoList = new DefaultListModel<>();
 		
+		DBConnection dbconn = null;
+		Connection connection = null;
+		DBBuilder builder = null;
+		try
+        {
+            dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            SkillsDAO dao = null;
+            
+            dao = new SkillsDAOPostgresImpl(connection);
+            
+            List<Skills> listaSkills = dao.getAllSkills();
+            for(Skills m : listaSkills)
+            {
+            	demoList.addElement(m.getSkill());
+            }
+
+        }
+		catch (SQLException exception)
+    	{
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+    	}
+
+		JList<String> list = new JList<String>(demoList);
+	
+		list.setBounds(20, 190, 100, 90);
+		contentPane.add(list);
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.RegistraProjectManager(CognomePM.getText(), NomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText(), chckbxNewCheckBox.isSelected(), chckbxOrganizzazione.isSelected(), chckbxProblemSolving.isSelected(), chckbxEmpatia.isSelected());
+	
+				IlControllore.RegistraProjectManager(CognomePM.getText(), NomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText(), list.getSelectedValuesList());
 			}
 		});
 		btnNewButton.setBounds(312, 241, 103, 39);
@@ -124,8 +151,5 @@ public class RegistrazioneProjectManager extends JFrame {
 		lblNewLabel_1.setBounds(20, 169, 144, 13);
 		contentPane.add(lblNewLabel_1);
 		
-		
-		
-
 		}
 }

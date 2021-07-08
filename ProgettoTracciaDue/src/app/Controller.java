@@ -9,6 +9,7 @@ import gui.PartecipantiAlProgetto;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JTextField;
@@ -214,7 +215,7 @@ public class Controller {
 	}
 
 	//Creazione di un nuovo project manager 
-	public void RegistraProjectManager(String cognome, String nome, String codfiscale, String salario, boolean selected, boolean selected2, boolean selected3, boolean selected4) {
+	public void RegistraProjectManager(String cognome, String nome, String codfiscale, String salario, List<String> list ) {
         DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -236,32 +237,13 @@ public class Controller {
          	
             Membro m1  =  new Membro( nome, cognome, codfiscale , "ProjectManager", Integer.valueOf(salario), "NULL");
             int res =  daoMembro.inserisciMembro(m1);
-		
-            if(selected==true) {
-                Skills s1 = new Skills(codfiscale,"Puntualità");
-
-        		int res1= daoSkill.inserisciSkills(s1);
-
-                }
-                if(selected2==true) {
-                Skills s2 = new Skills(codfiscale,"Organizzazione");
-
-        		int res2= daoSkill.inserisciSkills(s2);
-
-                }
-                if(selected3==true) {
-                Skills s3 = new Skills(codfiscale,"Problem Solving");
-        		int res3= daoSkill.inserisciSkills(s3);
-
+            	int i= 0;
+            	while (i<list.size()) {
+            		String s1=list.get(i);
+            		Skills s = new Skills(codfiscale,s1);
+            		int res1= daoSkill.inserisciSkills(s);
+            		i++;
             	}
-            	if(selected4==true) {
-                Skills s4 = new Skills(codfiscale,"Empatia");
-
-        		int res4= daoSkill.inserisciSkills(s4);
-
-            	}
-       
-
         }
         catch (SQLException exception)
         {
@@ -277,7 +259,7 @@ public class Controller {
 	}
 	
 	//Creazione di un nuovo sviluppatore 
-	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario, String skillDaInserire) {
+	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario, List<String> list) {
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -297,8 +279,13 @@ public class Controller {
             
             Membro m1  =  new Membro( nomeS.getText(), cognomeS.getText(), codiceFiscaleS.getText(), "Sviluppatore", Integer.valueOf(salario.getText()), "NULL");
             int res =  daoMembro.inserisciMembro(m1);
-            Skills s1=new Skills(codiceFiscaleS.getText(),skillDaInserire);
-            int res1= daoSkill.inserisciSkills(s1);
+        	int i= 0;
+        	while (i<list.size()) {
+        		String s1=list.get(i);
+        		Skills s = new Skills(codiceFiscaleS.getText(),s1);
+        		int res1= daoSkill.inserisciSkills(s);
+        		i++;
+        	}
             	
         }
         

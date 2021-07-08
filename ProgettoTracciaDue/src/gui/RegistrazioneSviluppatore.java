@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTextPane;
@@ -112,36 +114,36 @@ public class RegistrazioneSviluppatore extends JFrame {
 		inserisciSkills.setBounds(42, 219, 338, 29);
 		contentPane.add(inserisciSkills);
 		
-		JComboBox SkillsJComboBox = new JComboBox();
-		SkillsJComboBox.setEditable(true);
-		SkillsJComboBox.setMaximumRowCount(10);
-			DBConnection dbconn = null;
-			Connection connection = null;
-			DBBuilder builder = null;
-			try
-	        {
-	            dbconn = DBConnection.getInstance();
-	            connection = dbconn.getConnection();
-	            builder = new DBBuilder(connection);
-	            SkillsDAO dao = null;
-	            
-	            dao = new SkillsDAOPostgresImpl(connection);
-	            
-	            List<Skills> listaSkills = dao.getAllSkills();
-	            for(Skills m : listaSkills)
-	            {
-	            	SkillsJComboBox.addItem(m.getSkill());
-	            }
-
-	        }
-    		catch (SQLException exception)
-        	{
-                System.out.println("Errore SQLException: "+ exception.getMessage());
-        	}
-
-		SkillsJComboBox.setBounds(420, 214, 168, 29);
-		contentPane.add(SkillsJComboBox);
+		DefaultListModel<String> demoList = new DefaultListModel<>();
 		
+		DBConnection dbconn = null;
+		Connection connection = null;
+		DBBuilder builder = null;
+		try
+        {
+            dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            SkillsDAO dao = null;
+            
+            dao = new SkillsDAOPostgresImpl(connection);
+            
+            List<Skills> listaSkills = dao.getAllSkills();
+            for(Skills m : listaSkills)
+            {
+            	demoList.addElement(m.getSkill());
+            }
+
+        }
+		catch (SQLException exception)
+    	{
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+    	}
+
+		JList<String> list = new JList<String>(demoList);
+	
+		list.setBounds(420, 225, 168, 73);
+		contentPane.add(list);
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -151,7 +153,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				IlControllore.RegistraSviluppatore(CognomeS, NomeS, CodiceFiscaleS, salario, SkillsJComboBox.getSelectedItem().toString());	
+				IlControllore.RegistraSviluppatore(CognomeS, NomeS, CodiceFiscaleS, salario, list.getSelectedValuesList());	
 				
 			}
 		});
