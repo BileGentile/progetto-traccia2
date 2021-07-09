@@ -13,14 +13,20 @@ import entity.Meeting;
 public class MeetingDAOPostgresImpl implements MeetingDAO {
 
 		private Connection connection;
-		private PreparedStatement inserisciMeeting, getMeetingByCodMeet, getAllMeeting;
+		private PreparedStatement inserisciMeeting, getMeetingByCodMeet, getAllMeeting, getMeetingCodFiscale;
 		
 
 		public MeetingDAOPostgresImpl (Connection connection) throws SQLException{
 			this.connection=connection;
-			inserisciMeeting = connection.prepareStatement("INSERT INTO Meeting VALUES ( nextval(?),SUBSTR(?,1,10), SUBSTR(?,12,8),?, ?,?,?,?)");
+			inserisciMeeting = connection.prepareStatement("INSERT INTO Meeting VALUES ( nextval(?),SUBSTR(?,1,10), SUBSTR(?,12,8),?, ?,?,?,?,?)");
 			getMeetingByCodMeet = connection.prepareStatement("SELECT * FROM Meeting WHERE codMeet LIKE ?  ");
 			getAllMeeting = connection.prepareStatement("SELECT * FROM Meeting");
+			getMeetingCodFiscale=connection.prepareStatement("select nomeprogetto\n"
+					+ "from meeting\n"
+					+ "where nomeprogetto in\n"
+					+ "(SELECT nomeprogetto\n"
+					+ "FROM archiviopartecipantiprogetto\n"
+					+ "where codfiscale LIKE ?)");
 			}
 
 
@@ -29,6 +35,21 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 			return null;
 		}
 
+
+
+		@Override
+		public List<Meeting> getMeetingCodFiscale(String CF) throws SQLException {
+			getMeetingCodFiscale.setString(1, CF);
+			ResultSet rs= getMeetingCodFiscale.executeQuery();
+			List<Meeting> lista = new ArrayList<Meeting>();
+			 while(rs.next())
+		        {
+		        	Meeting s = new Meeting(CF); 
+		        	s.setNomeProgetto(rs.getString("NomeProgetto"));
+		        	lista.add(s);
+		        }
+			return lista;
+		}
 
 
 		@Override
@@ -45,6 +66,7 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 	            s.setTipologia(rs.getString("Tipologia"));
 	            s.setPiattaforma(rs.getString("NomeSala"));
 	            s.setOrganizzatore(rs.getString("Organizzatore"));
+	            s.setNomeProgetto(rs.getString("NomeProgetto"));
 	            s.setDurata(rs.getInt("Durata"));
 	            lista.add(s);
 	        }
@@ -62,7 +84,8 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 			inserisciMeeting.setString(5, meeting.getTipologia());
 			inserisciMeeting.setString(6, meeting.getNomeSala());
 			inserisciMeeting.setString(7, meeting.getOrganizzatore());
-			inserisciMeeting.setInt(8, meeting.getDurata());
+			inserisciMeeting.setString(8, meeting.getNomeProgetto());
+			inserisciMeeting.setInt(9, meeting.getDurata());
 	        int row = inserisciMeeting.executeUpdate();
 	        return row;
 		}

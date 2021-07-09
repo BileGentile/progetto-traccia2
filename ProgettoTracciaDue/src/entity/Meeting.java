@@ -11,10 +11,11 @@ public class Meeting {
     private String Tipologia;
     private String NomeSala;
     private String Organizzatore;
+    private String NomeProgetto;
     private int Durata;
     
     //COSTRUTTORI
-    public Meeting(String codMeet, String data, String oraInizio, String piattaforma, String tipologia, String nomeSala, String organizzatore, int durata) {
+    public Meeting(String codMeet, String data, String oraInizio, String piattaforma, String tipologia, String nomeSala, String organizzatore,String nomeProgetto, int durata) {
 		super();
 		CodMeet = codMeet;
 		Data = data;
@@ -23,6 +24,7 @@ public class Meeting {
 		Tipologia = tipologia;
 		NomeSala = nomeSala;
 		Organizzatore= organizzatore;
+		NomeProgetto= nomeProgetto;
 		Durata = durata;
 	}
 	
@@ -88,11 +90,19 @@ public class Meeting {
 		Organizzatore = organizzatore;
 	}
 
+	public String getNomeProgetto() {
+		return NomeProgetto;
+	}
+
+	public void setNomeProgetto(String nomeProgetto) {
+		NomeProgetto = nomeProgetto;
+	}
+
 	@Override
 	public String toString() {
 		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Piattaforma="
 				+ Piattaforma + ", Tipologia=" + Tipologia + ", NomeSala=" + NomeSala + ", Organizzatore="
-				+ Organizzatore + ", Durata=" + Durata + "]";
+				+ Organizzatore + ", NomeProgetto=" + NomeProgetto + ", Durata=" + Durata + "]";
 	}
 
 	

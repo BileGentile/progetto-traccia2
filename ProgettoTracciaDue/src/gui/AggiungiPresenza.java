@@ -50,11 +50,11 @@ public class AggiungiPresenza extends JFrame {
 		contentPane.setLayout(null);
 			
 		JLabel lblNewLabel = new JLabel("Inserisci il tuo codice fiscale");
-		lblNewLabel.setBounds(41, 59, 160, 21);
+		lblNewLabel.setBounds(41, 34, 160, 21);
 		contentPane.add(lblNewLabel);
 			
 		JLabel lblNewLabel_1 = new JLabel("Seleziona Meeting");
-		lblNewLabel_1.setBounds(41, 106, 128, 29);
+		lblNewLabel_1.setBounds(41, 85, 128, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnNewButton_1 = new JButton("Torna indietro");
@@ -83,10 +83,10 @@ public class AggiungiPresenza extends JFrame {
 						            
 					dao = new MeetingDAOPostgresImpl(connection);
 						            
-					List<Meeting> lista = dao.getAllMeeting();
+					List<Meeting> lista = dao.getMeetingCodFiscale(CfInserito.getText().toString());
 					for(Meeting m : lista)
 						{
-						ComboBoxMeeting.addItem(m.getNomeSala());
+						ComboBoxMeeting.addItem(m.getNomeProgetto());
 						}
 
 					}
@@ -99,7 +99,7 @@ public class AggiungiPresenza extends JFrame {
 		});
 		ComboBoxMeeting.setMaximumRowCount(10);
 		
-			ComboBoxMeeting.setBounds(247, 103, 155, 35);
+			ComboBoxMeeting.setBounds(247, 82, 155, 35);
 			contentPane.add(ComboBoxMeeting);
 			
 			
@@ -114,11 +114,10 @@ public class AggiungiPresenza extends JFrame {
 			contentPane.add(btnNewButton);
 			
 			
-			
 			CfInserito = new JTextField();
-			CfInserito.setBounds(247, 59, 155, 20);
+			CfInserito.setBounds(247, 34, 155, 29);
 			contentPane.add(CfInserito);
 			CfInserito.setColumns(10);
 			CfInserito.setColumns(10);
 		}
-		}
+	}

@@ -9,7 +9,7 @@ import entity.Membro;
 public interface MeetingDAO {
 	public List<Meeting> getAllMeeting()  throws SQLException;
 	public List<Meeting> getMeetingByCodMeet(String CodMeet) throws SQLException ;
-	
+	public List<Meeting> getMeetingCodFiscale(String CF)  throws SQLException;
 	public int inserisciMeeting(Meeting meeting) throws SQLException;
 	public int cancellaMeeting(Meeting meeting);
 }
