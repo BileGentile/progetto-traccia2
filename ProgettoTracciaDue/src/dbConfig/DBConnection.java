@@ -12,7 +12,7 @@ public class DBConnection {
     private static DBConnection instance;
     private Connection connection = null;
     private final String USERNAME = "postgres";
-    private final String PASSWORD = "Giusi";
+    private final String PASSWORD = "admin";
     private final String IP = "localhost";
     private final String PORT = "5432";
     private String url = "jdbc:postgresql://"+IP+":"+PORT+"/DBProgettoTracciaDue";
