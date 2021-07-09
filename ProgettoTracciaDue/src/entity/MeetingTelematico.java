@@ -8,15 +8,17 @@ public class MeetingTelematico {
 	private String Data;
     private String OraInizio;
     private String Piattaforma;
+    private String Organizzatore;
  
     //COSTRUTTORI
-    public MeetingTelematico(String nome, String codMeet, String data, String oraInizio, String piattaforma) {
+    public MeetingTelematico(String nome, String codMeet, String data, String oraInizio, String piattaforma,String organizzatore) {
 		super();
 		Nome = nome;
 		CodMeet = codMeet;
 		Data = data;
 		OraInizio = oraInizio;
 		Piattaforma = piattaforma;
+		Organizzatore= organizzatore;
 	}
 	
 	public MeetingTelematico(String codMeet) {
@@ -53,9 +55,18 @@ public class MeetingTelematico {
 		Piattaforma = piattaforma;
 	}
 	
+	public String getOrganizzatore() {
+		return Organizzatore;
+	}
+
+	public void setOrganizzatore(String organizzatore) {
+		Organizzatore = organizzatore;
+	}
+
 	@Override
 	public String toString() {
-		return "MeetingTelematico [Nome=" + Nome + ", CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Piattaforma=" + Piattaforma +"]";
+		return "MeetingTelematico [Nome=" + Nome + ", CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio="
+				+ OraInizio + ", Piattaforma=" + Piattaforma + ", Organizzatore=" + Organizzatore + "]";
 	}
 	
 

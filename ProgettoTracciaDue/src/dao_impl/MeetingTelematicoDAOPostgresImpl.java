@@ -38,6 +38,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
             s.setData(rs.getString("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setPiattaforma(rs.getString("piattaforma"));
+            s.setOrganizzatore(rs.getString("Organizzatore"));
             lista.add(s);
         }
         rs.close();
@@ -69,6 +70,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		inserisciMeetingPS.setString(3, meetingTelematico.getData());
 		inserisciMeetingPS.setString(4, meetingTelematico.getOraInizio());
 		inserisciMeetingPS.setString(5, meetingTelematico.getPiattaforma());
+		inserisciMeetingPS.setString(6, meetingTelematico.getOrganizzatore());
         int row = inserisciMeetingPS.executeUpdate();
         return row;
 	}

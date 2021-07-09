@@ -20,9 +20,6 @@ public class Starter {
         DBBuilder builder = null;
         Controller controller = null;
   
-        
-        
-        
         try
         {
             dbconn = DBConnection.getInstance();
@@ -30,6 +27,7 @@ public class Starter {
             builder = new DBBuilder(connection);
             builder.createSequenceProgetto();
             builder.createSequenceMembri();
+            builder.createSequenceMeeting();
             controller = new Controller();
           
            

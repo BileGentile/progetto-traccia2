@@ -8,17 +8,35 @@ public class MeetingFisico {
 	private String Data;
     private String OraInizio;
     private String NomeSala;
+    private String Organizzatore;
  
     //COSTRUTTORI
-    public MeetingFisico(String nome, String codMeet, String data, String oraInizio, String nomeSala) {
+    public MeetingFisico(String nome, String codMeet, String data, String oraInizio,String nomeSala, String organizzatore) {
 		super();
 		Nome = nome;
 		CodMeet = codMeet;
 		Data = data;
 		OraInizio = oraInizio;
 		NomeSala = nomeSala;
+		Organizzatore = organizzatore;
 	}
 	
+	public String getNomeSala() {
+		return NomeSala;
+	}
+
+	public void setNomeSala(String nomeSala) {
+		NomeSala = nomeSala;
+	}
+
+	public String getOrganizzatore() {
+		return Organizzatore;
+	}
+
+	public void setOrganizzatore(String organizzatore) {
+		Organizzatore = organizzatore;
+	}
+
 	public MeetingFisico(String codMeet) {
 		this.CodMeet = codMeet;
 	}
@@ -55,7 +73,8 @@ public class MeetingFisico {
 	
 	@Override
 	public String toString() {
-		return "MeetingFisico [Nome=" + Nome + ", CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", NomeSala=" + NomeSala +"]";
+		return "MeetingFisico [Nome=" + Nome + ", CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio
+				+ ", NomeSala=" + NomeSala + ", Organizzatore=" + Organizzatore + "]";
 	}
 	
 

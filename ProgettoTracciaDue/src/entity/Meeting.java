@@ -10,10 +10,11 @@ public class Meeting {
 	private String Piattaforma;
     private String Tipologia;
     private String NomeSala;
+    private String Organizzatore;
     private int Durata;
     
     //COSTRUTTORI
-    public Meeting(String codMeet, String data, String oraInizio, String piattaforma, String tipologia, String nomeSala, int durata) {
+    public Meeting(String codMeet, String data, String oraInizio, String piattaforma, String tipologia, String nomeSala, String organizzatore, int durata) {
 		super();
 		CodMeet = codMeet;
 		Data = data;
@@ -21,6 +22,7 @@ public class Meeting {
 		Piattaforma = piattaforma;
 		Tipologia = tipologia;
 		NomeSala = nomeSala;
+		Organizzatore= organizzatore;
 		Durata = durata;
 	}
 	
@@ -78,11 +80,22 @@ public class Meeting {
 		Durata = durata;
 	}
 	
-	@Override
-	public String toString() {
-		return "MeetingFisico [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ",Piattaforma=" + Piattaforma + ",  Tipologia="+ Tipologia+", NomeSala=" + NomeSala +", Durata="+ Durata+",]";
+	public String getOrganizzatore() {
+		return Organizzatore;
 	}
 
+	public void setOrganizzatore(String organizzatore) {
+		Organizzatore = organizzatore;
+	}
+
+	@Override
+	public String toString() {
+		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Piattaforma="
+				+ Piattaforma + ", Tipologia=" + Tipologia + ", NomeSala=" + NomeSala + ", Organizzatore="
+				+ Organizzatore + ", Durata=" + Durata + "]";
+	}
+
+	
 
 
 }

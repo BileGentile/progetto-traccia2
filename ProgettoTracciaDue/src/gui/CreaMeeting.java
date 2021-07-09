@@ -30,6 +30,7 @@ import java.awt.event.InputMethodEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+
 public class CreaMeeting extends JFrame {
 
 	private JPanel contentPane;
@@ -38,6 +39,7 @@ public class CreaMeeting extends JFrame {
 	Controller IlControllore; 
 	private JTextField txtNull;
 	private JTextField textField;
+	private JTextField textField_CF;
 	
 	public CreaMeeting(Controller c) {
 		IlControllore = c;
@@ -133,7 +135,7 @@ public class CreaMeeting extends JFrame {
 		JButton btnNewButton = new JButton("Crea");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.CreaMeeting(comboBox.getSelectedItem().toString(), spinner.getValue().toString(),spinner.getValue().toString(), comboBox_1.getSelectedItem().toString(),txtNull.getText().toString(), Integer.parseInt(textField.getText().toString()));
+				IlControllore.CreaMeeting(comboBox.getSelectedItem().toString(), spinner.getValue().toString(),spinner.getValue().toString(), comboBox_1.getSelectedItem().toString(), txtNull.getText().toString(),textField_CF.getText() , Integer.parseInt(textField.getText().toString()));
 			}
 		});
 		btnNewButton.setBounds(273, 231, 107, 41);
@@ -147,6 +149,15 @@ public class CreaMeeting extends JFrame {
 		textField.setColumns(10);
 		textField.setBounds(232, 119, 140, 21);
 		contentPane.add(textField);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Inserisci CF dell'organizzatore");
+		lblNewLabel_1_1.setBounds(20, 23, 172, 21);
+		contentPane.add(lblNewLabel_1_1);
+		
+		textField_CF = new JTextField();
+		textField_CF.setColumns(10);
+		textField_CF.setBounds(232, 24, 140, 21);
+		contentPane.add(textField_CF);
 		
 		
 	}

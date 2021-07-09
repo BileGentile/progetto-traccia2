@@ -37,6 +37,7 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
             s.setData(rs.getString("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setPiattaforma(rs.getString("nomeSala"));
+            s.setOrganizzatore(rs.getString("Organizzatore"));
             lista.add(s);
         }
         rs.close();
@@ -54,6 +55,7 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
             s.setData(rs.getString("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setPiattaforma(rs.getString("nomeSala"));
+            s.setOrganizzatore(rs.getString("Organizzatore"));
             lista.add(s);
         }
         rs.close();
@@ -69,6 +71,7 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 		inserisciMeetingFisico.setString(3, meetingFisico.getData());
 		inserisciMeetingFisico.setString(4, meetingFisico.getOraInizio());
 		inserisciMeetingFisico.setString(5, meetingFisico.getPiattaforma());
+		inserisciMeetingFisico.setString(6, meetingFisico.getOrganizzatore());
         int row = inserisciMeetingFisico.executeUpdate();
         return row;
 	}
@@ -80,9 +83,6 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
-
 
 
 	@Override

@@ -18,11 +18,11 @@ public class DBBuilder
         connection = null;
     }
 
-    private boolean connectionExists() {
+   private boolean connectionExists() {
         return !(connection == null);
     }
 
-    private boolean tableExists(String tbl_name) throws SQLException
+   private boolean tableExists(String tbl_name) throws SQLException
     {
         DatabaseMetaData metadata = connection.getMetaData();
         ResultSet tables = metadata.getTables(null, null, tbl_name, null);
@@ -31,9 +31,8 @@ public class DBBuilder
         return false;
 
     }
-    
-    
-    public int createSequenceProgetto() throws ConnectionException
+      
+   public int createSequenceProgetto() throws ConnectionException
     {
     	int result= -1;
     	
@@ -61,7 +60,7 @@ public class DBBuilder
     	return result;
     }
     
-    public int createSequenceMembri() throws ConnectionException
+   public int createSequenceMembri() throws ConnectionException
     {
     	int result= -1;
     	
@@ -89,7 +88,35 @@ public class DBBuilder
     	return result;
     }
     
-    public int createTableMembro() throws ConnectionException
+   public int createSequenceMeeting() throws ConnectionException
+   {
+   	int result= -1;
+   	
+   	if(connectionExists()) {
+   		try {
+   			Statement st = connection.createStatement();
+   			
+   			if(!tableExists("sequenzacodicemeeting")) {
+   				String sql = "CREATE SEQUENCE sequenzacodicemeeting " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                           "INCREMENT 1 " +
+                           " START 1000 " +
+                           " MINVALUE 1000 " +
+                           " MAXVALUE 99999;";
+   				result = st.executeUpdate(sql);
+   				st.close();
+   			} else {
+   				System.out.println("La sequenza codice meeting esiste già!");
+   			}
+   		} catch(SQLException ex) {
+   			System.out.println("SQL Exception nella creazione della sequenza codice meeting: "+ex);
+   		}
+   	} else {
+   		throw new ConnectionException("A connection must exist!");
+   	}
+   	return result;
+   }
+   
+   public int createTableMembro() throws ConnectionException
     {
     	int result= -1;
     	
@@ -121,9 +148,7 @@ public class DBBuilder
     	return result;
     }
 
-    
-	
-    public int createTableProgetto() throws ConnectionException
+   public int createTableProgetto() throws ConnectionException
     {
     	int result= -1;
     	
@@ -152,8 +177,7 @@ public class DBBuilder
     	return result;
 	}
 	
-
-public int createTableMeeting() throws ConnectionException
+   public int createTableMeeting() throws ConnectionException
   {
   	int result= -1;
   	
@@ -161,16 +185,17 @@ public int createTableMeeting() throws ConnectionException
   		try {
   			Statement st = connection.createStatement();
   			
-  			if(!tableExists("Meeting")) {
-  				String sql = "CREATE TABLE Meeting (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                          " codiceMeeting VARCHAR(255) NOT NULL, " +
-                          " data VARCHAR(200)  NOT NULL, " +
-                          " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
-                          " piattaforma VARCHAR,"+
-                          " tipologia VARCHAR CHECK (tipologia LIKE 'Fisico' OR tipologia LIKE 'Telematico')," +
-                          " nomeSala VARCHAR,"+
-                          " durata INTEGER NOT NULL,"+
-  						  " PRIMARY KEY (codiceMeeting));";
+  			if(!tableExists("Meeting")) {//DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+  				String sql = "CREATE TABLE Meeting (\n"
+  						+ "codiceMeeting VARCHAR(255) NOT NULL,\n"
+  						+ "data VARCHAR(200)  NOT NULL,\n"
+  						+ "oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,\n"
+  						+ "piattaforma VARCHAR,\n"
+  						+ "tipologia VARCHAR CHECK (tipologia LIKE 'Fisico' OR tipologia LIKE 'Telematico'),\n"
+  						+ "nomeSala VARCHAR,\n"
+  						+ "durata INTEGER NOT NULL,\n"
+  						+ "organizzatore VARCHAR(16) CHECK (organizzatore  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'),\n"
+  						+ "PRIMARY KEY (codiceMeeting));";
   				result = st.executeUpdate(sql);
   				st.close();
   			} else {
@@ -185,7 +210,7 @@ public int createTableMeeting() throws ConnectionException
   	return result;
   }
 
-public int createTableSkills() throws ConnectionException
+   public int createTableSkills() throws ConnectionException
 {
 	int result= -1;
 	
@@ -213,9 +238,7 @@ public int createTableSkills() throws ConnectionException
 	return result;
 }
 
-
-
-public int createTableArchivioPartecipantiProgetto() throws ConnectionException
+   public int createTableArchivioPartecipantiProgetto() throws ConnectionException
 {
 	int result= -1;
 	

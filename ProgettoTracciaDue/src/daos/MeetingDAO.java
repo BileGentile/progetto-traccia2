@@ -11,6 +11,5 @@ public interface MeetingDAO {
 	public List<Meeting> getMeetingByCodMeet(String CodMeet) throws SQLException ;
 	
 	public int inserisciMeeting(Meeting meeting) throws SQLException;
-	
 	public int cancellaMeeting(Meeting meeting);
 }

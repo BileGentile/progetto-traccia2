@@ -18,7 +18,7 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 
 		public MeetingDAOPostgresImpl (Connection connection) throws SQLException{
 			this.connection=connection;
-			inserisciMeeting = connection.prepareStatement("INSERT INTO Meeting VALUES ( nextval(?),SUBSTR(?,1,10), SUBSTR(?,12,8),?, ?,?,?)");
+			inserisciMeeting = connection.prepareStatement("INSERT INTO Meeting VALUES ( nextval(?),SUBSTR(?,1,10), SUBSTR(?,12,8),?, ?,?,?,?)");
 			getMeetingByCodMeet = connection.prepareStatement("SELECT * FROM Meeting WHERE codMeet LIKE ?  ");
 			getAllMeeting = connection.prepareStatement("SELECT * FROM Meeting");
 			}
@@ -40,18 +40,17 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 	        {
 	        	Meeting s = new Meeting(rs.getString("codMeet")); 
 	            s.setData(rs.getString("data"));
-	            s.setData(rs.getString("data"));
 	            s.setOraInizio(rs.getString("oraInizio"));
 	            s.setPiattaforma(rs.getString("Piattaforma"));
 	            s.setTipologia(rs.getString("Tipologia"));
 	            s.setPiattaforma(rs.getString("NomeSala"));
+	            s.setOrganizzatore(rs.getString("Organizzatore"));
 	            s.setDurata(rs.getInt("Durata"));
 	            lista.add(s);
 	        }
 	        rs.close();
 	        return lista;
 		}
-
 
 		
 		@Override
@@ -62,15 +61,13 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 			inserisciMeeting.setString(4, meeting.getPiattaforma());
 			inserisciMeeting.setString(5, meeting.getTipologia());
 			inserisciMeeting.setString(6, meeting.getNomeSala());
-			inserisciMeeting.setInt(7, meeting.getDurata());
+			inserisciMeeting.setString(7, meeting.getOrganizzatore());
+			inserisciMeeting.setInt(8, meeting.getDurata());
 	        int row = inserisciMeeting.executeUpdate();
 	        return row;
 		}
 		
-		
-
-
-
+	
 		@Override
 		public int cancellaMeeting(Meeting meeting) {
 			// TODO Auto-generated method stub
