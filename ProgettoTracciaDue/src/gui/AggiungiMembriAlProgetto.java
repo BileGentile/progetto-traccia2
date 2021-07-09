@@ -22,12 +22,15 @@ import javax.swing.border.EmptyBorder;
 import app.Controller;
 import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
+import dao_impl.SkillsDAOPostgresImpl;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
+import daos.SkillsDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Membro;
 import entity.Progetto;
+import entity.Skills;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -177,11 +180,33 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		ComboBoxMembri.setBounds(312, 293, 155, 29);
 		contentPane.add(ComboBoxMembri);
 		
-		JComboBox ComboBoxMembri_1 = new JComboBox();
-		ComboBoxMembri_1.setModel(new DefaultComboBoxModel(new String[] {"Puntualit\u00E0", "Organizzazione", "Problem Solving", "Empatia"}));
-		ComboBoxMembri_1.setMaximumRowCount(10);
-		ComboBoxMembri_1.setBounds(312, 172, 155, 29);
-		contentPane.add(ComboBoxMembri_1);
+		JComboBox ComboBoxSkills = new JComboBox();
+		ComboBoxSkills.removeAllItems();
+		
+        try
+	        {
+	            dbconn = DBConnection.getInstance();
+	            connection = dbconn.getConnection();
+	            builder = new DBBuilder(connection);
+	            SkillsDAO dao = null;
+	            
+	            dao = new SkillsDAOPostgresImpl(connection);
+	            List<Skills> listaSkill = dao.getAllSkills(); 
+	      
+	            for(Skills n : listaSkill)
+	            {
+	            	ComboBoxSkills.addItem(n.getSkill());
+	            }
+
+	        }
+		catch (SQLException exception)
+  	{
+          System.out.println("Errore SQLException: "+ exception.getMessage());
+  	}
+        
+        ComboBoxSkills.setMaximumRowCount(10);
+        ComboBoxSkills.setBounds(312, 172, 155, 29);
+		contentPane.add(ComboBoxSkills);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Seleziona membro");
 		lblNewLabel_1_1_1.setBounds(172, 293, 128, 29);
@@ -202,7 +227,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 			            MembroDAO dao = null;
 			            
 			            dao = new MembroDAOPostgresImpl(connection);
-			            List<Membro> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),comboBoxValutazione.getSelectedItem().toString(), ComboBoxMembri_1.getSelectedItem().toString(),ComboBoxProgetti.getSelectedItem().toString()); 
+			            List<Membro> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),comboBoxValutazione.getSelectedItem().toString(), ComboBoxSkills.getSelectedItem().toString(),ComboBoxProgetti.getSelectedItem().toString()); 
 			      
 			            for(Membro n : listaMembri)
 			            {
