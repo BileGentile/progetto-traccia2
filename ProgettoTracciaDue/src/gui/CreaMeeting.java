@@ -136,6 +136,7 @@ public class CreaMeeting extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.CreaMeeting(comboBox.getSelectedItem().toString(), spinner.getValue().toString(),spinner.getValue().toString(), comboBox_1.getSelectedItem().toString(), txtNull.getText().toString(),textField_CF.getText() , Integer.parseInt(textField.getText().toString()));
+				
 			}
 		});
 		btnNewButton.setBounds(273, 231, 107, 41);

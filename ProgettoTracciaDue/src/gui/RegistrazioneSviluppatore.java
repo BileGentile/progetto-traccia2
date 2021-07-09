@@ -50,7 +50,7 @@ import javax.swing.JFormattedTextField;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 
-//RegistrazioneSviluppatore
+
 public class RegistrazioneSviluppatore extends JFrame {
 	
 

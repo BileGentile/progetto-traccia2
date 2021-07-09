@@ -90,12 +90,11 @@ public class DBBuilder
     
    public int createSequenceMeeting() throws ConnectionException
    {
-   	int result= -1;
+	   int result= -1;
    	
    	if(connectionExists()) {
    		try {
    			Statement st = connection.createStatement();
-   			
    			if(!tableExists("sequenzacodicemeeting")) {
    				String sql = "CREATE SEQUENCE sequenzacodicemeeting " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
                            "INCREMENT 1 " +
@@ -104,7 +103,8 @@ public class DBBuilder
                            " MAXVALUE 99999;";
    				result = st.executeUpdate(sql);
    				st.close();
-   			} else {
+   			} 
+   			else {
    				System.out.println("La sequenza codice meeting esiste già!");
    			}
    		} catch(SQLException ex) {
@@ -193,8 +193,8 @@ public class DBBuilder
   						+ "piattaforma VARCHAR,\n"
   						+ "tipologia VARCHAR CHECK (tipologia LIKE 'Fisico' OR tipologia LIKE 'Telematico'),\n"
   						+ "nomeSala VARCHAR,\n"
-  						+ "durata INTEGER NOT NULL,\n"
   						+ "organizzatore VARCHAR(16) CHECK (organizzatore  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'),\n"
+  						+ "durata INTEGER NOT NULL,\n"
   						+ "PRIMARY KEY (codiceMeeting));";
   				result = st.executeUpdate(sql);
   				st.close();

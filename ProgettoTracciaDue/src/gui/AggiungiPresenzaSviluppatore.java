@@ -1,4 +1,4 @@
-package gui;
+/*package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -89,4 +89,4 @@ public class AggiungiPresenzaSviluppatore extends JFrame {
 	}
 	}
 
-
+*/

@@ -34,7 +34,7 @@ import entity.Skills;
 import exceptions.ConnectionException;
 import gui.AggiungiMembriAlProgetto;
 import gui.AggiungiPresenza;
-import gui.AggiungiPresenzaSviluppatore;
+//import gui.AggiungiPresenzaSviluppatore;
 import gui.AggiungiProgetto;
 import gui.AzioneAvvenutaConSuccesso;
 import gui.BenvenutoProjectManager;
