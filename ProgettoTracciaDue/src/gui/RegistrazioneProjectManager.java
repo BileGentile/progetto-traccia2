@@ -42,7 +42,6 @@ public class RegistrazioneProjectManager extends JFrame {
 	private JTextField CognomePM;
 	private JTextField SalarioMedio;
 	private JLabel InserisciSalario;
-	private JTextField skills;
 	private JLabel lblNewLabel_1;
 	
 	
@@ -52,7 +51,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		setTitle("Azienda - Registrazione Project Manager");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 90, 450, 341);
+		setBounds(100, 90, 488, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -63,7 +62,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		CodiceFiscalePM = new JTextField();
-		CodiceFiscalePM.setBounds(185, 48, 176, 19);
+		CodiceFiscalePM.setBounds(227, 47, 176, 19);
 		contentPane.add(CodiceFiscalePM);
 		CodiceFiscalePM.setColumns(10);
 		
@@ -73,7 +72,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		
 		NomePM = new JTextField();
 		NomePM.setColumns(10);
-		NomePM.setBounds(185, 77, 176, 19);
+		NomePM.setBounds(227, 76, 176, 19);
 		contentPane.add(NomePM);
 		
 		JLabel lblInserisciCognome = new JLabel("Inserisci cognome");
@@ -82,7 +81,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		
 		CognomePM = new JTextField();
 		CognomePM.setColumns(10);
-		CognomePM.setBounds(185, 106, 176, 19);
+		CognomePM.setBounds(227, 105, 176, 19);
 		contentPane.add(CognomePM);
 
 		DefaultListModel<String> demoList = new DefaultListModel<>();
@@ -112,9 +111,20 @@ public class RegistrazioneProjectManager extends JFrame {
     	}
 
 		JList<String> list = new JList<String>(demoList);
-	
-		list.setBounds(20, 190, 100, 90);
+		list.setBounds(227, 165, 176, 107);
 		contentPane.add(list);
+		
+		JTextField textFieldNuovaSkill = new JTextField();
+		textFieldNuovaSkill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				demoList.addElement(textFieldNuovaSkill.getText());
+			}
+		});
+		
+		
+		textFieldNuovaSkill.setColumns(10);
+		textFieldNuovaSkill.setBounds(20, 207, 136, 29);
+		contentPane.add(textFieldNuovaSkill);
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -123,12 +133,12 @@ public class RegistrazioneProjectManager extends JFrame {
 				IlControllore.RegistraProjectManager(CognomePM.getText(), NomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText(), list.getSelectedValuesList());
 			}
 		});
-		btnNewButton.setBounds(312, 241, 103, 39);
+		btnNewButton.setBounds(338, 297, 103, 39);
 		contentPane.add(btnNewButton);
 		
 		SalarioMedio = new JTextField();
 		SalarioMedio.setColumns(10);
-		SalarioMedio.setBounds(185, 135, 176, 19);
+		SalarioMedio.setBounds(227, 135, 176, 19);
 		contentPane.add(SalarioMedio);
 		
 		InserisciSalario = new JLabel("Inserisci salario\r\n");
@@ -144,12 +154,16 @@ public class RegistrazioneProjectManager extends JFrame {
 				IlControllore.TornaLogin(caso);
 			}
 		});
-		btnNewButton_1_1.setBounds(140, 241, 120, 39);
+		btnNewButton_1_1.setBounds(20, 297, 120, 39);
 		contentPane.add(btnNewButton_1_1);
 		
-		lblNewLabel_1 = new JLabel("Seleziona le skills");
+		lblNewLabel_1 = new JLabel("Scegli tra le skill presenti ");
 		lblNewLabel_1.setBounds(20, 169, 144, 13);
 		contentPane.add(lblNewLabel_1);
+		
+		JLabel lbl2 = new JLabel("oppure inseriscine una nuova qui");
+		lbl2.setBounds(20, 171, 168, 36);
+		contentPane.add(lbl2);
 		
 		}
 }

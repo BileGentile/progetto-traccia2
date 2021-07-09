@@ -259,7 +259,7 @@ public class Controller {
 	}
 	
 	//Creazione di un nuovo sviluppatore 
-	public void RegistraSviluppatore(JTextField cognomeS, JTextField nomeS, JTextField codiceFiscaleS,JTextField salario, List<String> list) {
+	public void RegistraSviluppatore(String cognome, String nome, String codfiscale, String salario, List<String> list ){
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -277,15 +277,16 @@ public class Controller {
             daoMembro = new MembroDAOPostgresImpl(connection);
             daoSkill = new SkillsDAOPostgresImpl(connection);		
             
-            Membro m1  =  new Membro( nomeS.getText(), cognomeS.getText(), codiceFiscaleS.getText(), "Sviluppatore", Integer.valueOf(salario.getText()), "NULL");
+            Membro m1  =  new Membro( nome, cognome, codfiscale, "Sviluppatore",Integer.valueOf(salario), "NULL");
+      
             int res =  daoMembro.inserisciMembro(m1);
-        	int i= 0;
-        	while (i<list.size()) {
-        		String s1=list.get(i);
-        		Skills s = new Skills(codiceFiscaleS.getText(),s1);
-        		int res1= daoSkill.inserisciSkills(s);
-        		i++;
-        	}
+            	int i= 0;
+            	while (i<list.size()) {
+            		String s1=list.get(i);
+            		Skills s = new Skills(codfiscale,s1);
+            		int res1= daoSkill.inserisciSkills(s);
+            		i++;
+            	}
             	
         }
         

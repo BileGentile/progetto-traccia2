@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -36,6 +37,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.JComboBox;
+import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JRadioButton;
@@ -45,9 +47,13 @@ import javax.swing.JTextArea;
 import javax.swing.JSpinner;
 import javax.swing.JScrollBar;
 import javax.swing.JFormattedTextField;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
 
+//RegistrazioneSviluppatore
 public class RegistrazioneSviluppatore extends JFrame {
 	
+
 	private JPanel contentPane;
 
 	private JTextField CodiceFiscaleS;
@@ -110,9 +116,13 @@ public class RegistrazioneSviluppatore extends JFrame {
 		salario.setBounds(420, 170, 168, 29);
 		contentPane.add(salario);
 		
-		JLabel inserisciSkills = new JLabel("Scegli tra le skill presenti oppure inseriscine una nuova");
-		inserisciSkills.setBounds(42, 219, 338, 29);
+		JLabel inserisciSkills = new JLabel("Scegli tra le skill presenti ");
+		inserisciSkills.setBounds(42, 219, 168, 36);
 		contentPane.add(inserisciSkills);
+		
+		JLabel lbl2 = new JLabel("oppure inseriscine una nuova qui");
+		lbl2.setBounds(42, 251, 168, 36);
+		contentPane.add(lbl2);
 		
 		DefaultListModel<String> demoList = new DefaultListModel<>();
 		
@@ -133,17 +143,31 @@ public class RegistrazioneSviluppatore extends JFrame {
             {
             	demoList.addElement(m.getSkill());
             }
+            
 
         }
 		catch (SQLException exception)
     	{
             System.out.println("Errore SQLException: "+ exception.getMessage());
     	}
+		
 
 		JList<String> list = new JList<String>(demoList);
-	
-		list.setBounds(420, 225, 168, 73);
+		list.setBounds(420, 225, 168, 103);
 		contentPane.add(list);
+		
+		JTextField textFieldNuovaSkill = new JTextField();
+		textFieldNuovaSkill.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				demoList.addElement(textFieldNuovaSkill.getText());
+			}
+		});
+		
+		
+		textFieldNuovaSkill.setColumns(10);
+		textFieldNuovaSkill.setBounds(42, 280, 168, 29);
+		contentPane.add(textFieldNuovaSkill);
+		
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -153,13 +177,13 @@ public class RegistrazioneSviluppatore extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				IlControllore.RegistraSviluppatore(CognomeS, NomeS, CodiceFiscaleS, salario, list.getSelectedValuesList());	
+				IlControllore.RegistraSviluppatore(CognomeS.getText(), NomeS.getText(), CodiceFiscaleS.getText(), salario.getText(), list.getSelectedValuesList());	
 				
 			}
 		});
 		
 				
-		btnNewButton.setBounds(420, 320, 136, 49);
+		btnNewButton.setBounds(420, 385, 136, 49);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("Torna indietro");
@@ -170,7 +194,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 				IlControllore.TornaLogin(caso);
 			}
 		});
-		btnNewButton_2.setBounds(55, 326, 136, 49);
+		btnNewButton_2.setBounds(42, 385, 136, 49);
 		contentPane.add(btnNewButton_2);
 		
 	}
