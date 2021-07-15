@@ -1,7 +1,6 @@
 package app;
 
 import dao_impl.MembroDAOPostgresImpl;
-import daos.MeetingDAO;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
 import dbConfig.DBBuilder;
@@ -35,7 +34,6 @@ public class Starter {
             
             MembroDAO dao = null;
             ProgettoDAO daoo = null;
-            MeetingDAO daooo=null;
            
             dao = new MembroDAOPostgresImpl(connection);
             
