@@ -472,7 +472,7 @@ public class Controller {
 		partecipantiAlProgetto.setVisible(true);
 	}
 	
-	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala, String organizzatore,  int durata) {
+	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala, String organizzatore, String NomeProgetto,  int durata) {
 		DBConnection dbconn = null;
 	    Connection connection = null;
 	    DBBuilder builder = null;
@@ -486,7 +486,7 @@ public class Controller {
             MeetingDAO dao = null;
             dao = new MeetingDAOPostgresImpl(connection);
 
-            Meeting p1  =  new Meeting("sequenzacodicemeeting" ,data, oraInizio , piattaforma ,tipologia , nomeSala, organizzatore, durata );
+            Meeting p1  =  new Meeting("sequenzacodicemeeting" ,data, oraInizio , piattaforma ,tipologia , nomeSala, organizzatore, NomeProgetto, durata );
             int res =  dao.inserisciMeeting(p1);
         }
         catch (SQLException exception)

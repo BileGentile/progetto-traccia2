@@ -194,7 +194,8 @@ public class DBBuilder
   						+ "tipologia VARCHAR CHECK (tipologia LIKE 'Fisico' OR tipologia LIKE 'Telematico'),\n"
   						+ "nomeSala VARCHAR,\n"
   						+ "organizzatore VARCHAR(16) CHECK (organizzatore  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'),\n"
-  						+ "durata INTEGER NOT NULL,\n"
+  						+ "nomeProgetto VARCHAR(255) not NULL UNIQUE,\n "
+  						+"durata INTEGER NOT NULL,\n"
   						+ "PRIMARY KEY (codiceMeeting));";
   				result = st.executeUpdate(sql);
   				st.close();
