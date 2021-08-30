@@ -1,3 +1,4 @@
+
 package gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class BenvenutoProjectManager extends JFrame {
@@ -21,7 +23,7 @@ public class BenvenutoProjectManager extends JFrame {
 
 	Controller IlControllore;
 	
-		public BenvenutoProjectManager(Controller c) {
+	public BenvenutoProjectManager(Controller c) {
 		IlControllore =c;
 		setTitle("Azienda- Benvenuto Project Manager");
 
@@ -47,8 +49,7 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 		btnNewButton.setBounds(20, 120, 168, 21);
 		contentPane.add(btnNewButton);
-		
-		
+			
 		JButton btnNewButton_1 = new JButton("Consegna progetto");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -71,7 +72,8 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton_3 = new JButton("Aggiungi Membri al progetto");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.AvviaInserimentoMembri();
+					IlControllore.AvviaInserimentoMembri();
+				
 			}
 		});
 		

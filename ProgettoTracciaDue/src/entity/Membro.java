@@ -1,14 +1,19 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class Membro {
 	
-    //ATTRIBUTI
+	//ATTRIBUTI
 	private String Nome;
 	private String Cognome;
 	private String CF;
     private String Ruolo;
     private int SalarioMedio;
     private String Valutazione;
+    private ArrayList<Skills> skills;
+    private ArrayList<Progetto> progetti;
+    private ArrayList<Meeting> meeting;
 
     
     //COSTRUTTORI
@@ -20,13 +25,12 @@ public class Membro {
 		Ruolo = ruolo;
 		SalarioMedio = salarioMedio;
 		Valutazione = valutazione;
-	
 	}
 	
 	public Membro(String CF) {
 		this.CF = CF;
 	}
-	
+
 	//GETTERS & SETTERS
 	public String getNome() {
 		return Nome;
@@ -76,16 +80,37 @@ public class Membro {
 		Valutazione = valutazione;
 	}
 	
-	@Override
-	public String toString() {
-		return Nome +" " + Cognome+ " "  + CF + "\n"+Ruolo+" Valutazione=" + Valutazione+"\n";
+	public ArrayList<Skills> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(ArrayList<Skills> skills) {
+		this.skills = skills;
 	}
 	
-//	@Override
-//	public String toString() {
-//		return "Membro [Nome=" + Nome +", Cognome=" + Cognome + ", CF=" + CF + ", Ruolo=" + Ruolo + ", SalarioMedio=" + SalarioMedio +", Valutazione=" + Valutazione +"]";
-//	}
-	
+	public ArrayList<Progetto> getProgetti() {
+		return progetti;
+	}
+
+	public void setProgetti(ArrayList<Progetto> progetti) {
+		this.progetti = progetti;
+	}
+
+	public ArrayList<Meeting> getMeeting() {
+		return meeting;
+	}
+
+	public void setMeeting(ArrayList<Meeting> meeting) {
+		this.meeting = meeting;
+	}
+
+	@Override
+	public String toString() {
+		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", Ruolo=" + Ruolo + ", SalarioMedio="
+				+ SalarioMedio + ", Valutazione=" + Valutazione + ", skills=" + skills + ", progetti=" + progetti + "]";
+	}
+
+
 	
     //METODI
 	

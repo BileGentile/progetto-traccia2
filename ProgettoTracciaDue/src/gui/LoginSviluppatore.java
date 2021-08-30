@@ -24,6 +24,7 @@ public class LoginSviluppatore extends JFrame {
 	private JTextField textField;
 	Controller 	IlControllore ;
 	private JButton btnNewButton_1;
+	
 	public LoginSviluppatore(Controller c) {
 		IlControllore= c;
 		setTitle("Azienda -Login");
@@ -76,8 +77,6 @@ public class LoginSviluppatore extends JFrame {
 	BottoneRegistrareS.setBounds(233, 85, 195, 19);
 	
 	contentPane.add(BottoneRegistrareS);
-	
-	
 	
 	}
 }

@@ -18,21 +18,59 @@ public class DBBuilder
         connection = null;
     }
 
-   private boolean connectionExists() {
+    private boolean connectionExists() {
         return !(connection == null);
     }
 
-   private boolean tableExists(String tbl_name) throws SQLException
+    private boolean tableExists(String tbl_name) throws SQLException
     {
         DatabaseMetaData metadata = connection.getMetaData();
         ResultSet tables = metadata.getTables(null, null, tbl_name, null);
         if (tables.next())
             return true;
         return false;
-
     }
-      
-   public int createSequenceProgetto() throws ConnectionException
+    
+    //CREAZIONE TIPI ENUMERATIVI
+    
+    //ENUMERAZIONE RUOLO PER I MEMBRI
+	/*
+	 * public int createEnumRuolo() throws ConnectionException { int result= -1;
+	 * 
+	 * if(connectionExists()) { try { Statement st = connection.createStatement();
+	 * 
+	 * if(!tableExists("Ruolo")) { String sql =
+	 * "CREATE TYPE ruolo AS ENUM ('Sviluppatore');"; //DA RIFARE CON TUTTI GLI
+	 * ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+	 * 
+	 * result = st.executeUpdate(sql); st.close(); } else {
+	 * System.out.println("L'enumerazione Ruolo esiste già!"); } }
+	 * catch(SQLException ex) {
+	 * System.out.println("SQL Exception nella creazione dell'enumerazione Ruolo: "
+	 * +ex); } } else { throw new ConnectionException("A connection must exist!"); }
+	 * return result; }
+	 * 
+	 * //ENUMERAZIONE TIPOLOGIA PER I PROGETTI public int createEnumTipologia()
+	 * throws ConnectionException { int result= -1;
+	 * 
+	 * if(connectionExists()) { try { Statement st = connection.createStatement();
+	 * 
+	 * if(!tableExists("Tipologia")) { String sql =
+	 * "CREATE TYPE Tipologia AS ENUM ('Ricerca di base', 'Ricerca industriale', 'Ricerca sperimentale', 'Sviluppo sperimentale');"
+	 * ; //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+	 * 
+	 * result = st.executeUpdate(sql); st.close(); } else {
+	 * System.out.println("L'enumerazione Ruolo esiste già!"); } }
+	 * catch(SQLException ex) {
+	 * System.out.println("SQL Exception nella creazione dell'enumerazione Ruolo: "
+	 * +ex); } } else { throw new ConnectionException("A connection must exist!"); }
+	 * return result; }
+	 */
+    
+    //CREAZIONE SEQUENZE
+    
+    //SEQUENZA PROGETTO
+    public int createSequenceProgetto() throws ConnectionException
     {
     	int result= -1;
     	
@@ -41,7 +79,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("sequenzacodiceprogetti")) {
-    				String sql = "CREATE SEQUENCE sequenzacodiceprogetti " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE SEQUENCE sequenzaCodiceProgetti " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
                             "INCREMENT 1 " +
                             " START 1000 " +
                             " MINVALUE 1000 " +
@@ -60,7 +98,8 @@ public class DBBuilder
     	return result;
     }
     
-   public int createSequenceMembri() throws ConnectionException
+    //SEQUENZA PROJECT MANAGER
+    public int createSequenceProjectManager() throws ConnectionException
     {
     	int result= -1;
     	
@@ -69,7 +108,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("sequenzacodicemembri")) {
-    				String sql = "CREATE SEQUENCE sequenzacodicemembri " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE SEQUENCE sequenzaCodiceProjectManager " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
                             "INCREMENT 1 " +
                             " START 1000 " +
                             " MINVALUE 1000 " +
@@ -77,10 +116,10 @@ public class DBBuilder
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
-    				System.out.println("La sequenza codice membri esiste già!");
+    				System.out.println("La sequenza codice project manager esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella creazione della sequenza codice membri: "+ex);
+    			System.out.println("SQL Exception nella creazione della sequenza codice prject manager: "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
@@ -88,35 +127,8 @@ public class DBBuilder
     	return result;
     }
     
-   public int createSequenceMeeting() throws ConnectionException
-   {
-	   int result= -1;
-   	
-   	if(connectionExists()) {
-   		try {
-   			Statement st = connection.createStatement();
-   			if(!tableExists("sequenzacodicemeeting")) {
-   				String sql = "CREATE SEQUENCE sequenzacodicemeeting " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                           "INCREMENT 1 " +
-                           " START 1000 " +
-                           " MINVALUE 1000 " +
-                           " MAXVALUE 99999;";
-   				result = st.executeUpdate(sql);
-   				st.close();
-   			} 
-   			else {
-   				System.out.println("La sequenza codice meeting esiste già!");
-   			}
-   		} catch(SQLException ex) {
-   			System.out.println("SQL Exception nella creazione della sequenza codice meeting: "+ex);
-   		}
-   	} else {
-   		throw new ConnectionException("A connection must exist!");
-   	}
-   	return result;
-   }
-   
-   public int createTableMembro() throws ConnectionException
+    //SEQUENZA SVILUPPATORE
+    public int createSequenceSviluppatore() throws ConnectionException
     {
     	int result= -1;
     	
@@ -124,23 +136,106 @@ public class DBBuilder
     		try {
     			Statement st = connection.createStatement();
     			
-    			if(!tableExists("membro")) {
-    				String sql = "CREATE TABLE membro " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                            "(nome VARCHAR(100) not NULL, " +
-                            " cognome VARCHAR(100) not NULL, " +
-                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
-                            " ruolo VARCHAR CHECK (ruolo LIKE 'ProjectManager' OR  ruolo LIKE 'Sviluppatore'),"+
-                            " salarioMedio INTEGER not NULL,"+
-                            " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
-                            " PRIMARY KEY (codFiscale));";
-    				
+    			if(!tableExists("sequenzacodicesviluppatori")) {
+    				String sql = "CREATE SEQUENCE sequenzaCodiceSviluppatori " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
-    				System.out.println("La tabella Membro esiste già!");
+    				System.out.println("La sequenza codice sviluppatori esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella crezione della tabella Membro: "+ex);
+    			System.out.println("SQL Exception nella creazione della sequenza codice sviluppatori: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //SEQUENZA MEETING FISICO
+    public int createSequenceMeetingFisico() throws ConnectionException
+    {
+ 	   int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			if(!tableExists("sequenzacodicemeetingfisico")) {
+    				String sql = "CREATE SEQUENCE sequenzaCodiceMeetingFisico " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} 
+    			else {
+    				System.out.println("La sequenza codice meeting fisico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della sequenza codice meeting fisico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //SEQUENZA MEETING TELEMATICO
+    public int createSequenceMeetingTelematico() throws ConnectionException
+    {
+ 	   int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			if(!tableExists("sequenzacodicemeetingtelematico")) {
+    				String sql = "CREATE SEQUENCE sequenzaCodiceMeetingTelematico " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} 
+    			else {
+    				System.out.println("La sequenza codice meeting telematico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della sequenza codice meeting telematico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //SEQUENZA AMBITO
+    public int createSequenceAmbito() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("sequenzacodiceambito")) {
+    				String sql = "CREATE SEQUENCE sequenzaCodiceAmbito " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La sequenza codice ambito esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della sequenza codice ambito: "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
@@ -148,7 +243,105 @@ public class DBBuilder
     	return result;
     }
 
-   public int createTableProgetto() throws ConnectionException
+    //SEQUENZA SKILLS
+    public int createSequenceSkills() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("sequenzacodiceskills")) {
+    				String sql = "CREATE SEQUENCE sequenzaCodiceSkills " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "INCREMENT 1 " +
+                            " START 1000 " +
+                            " MINVALUE 1000 " +
+                            " MAXVALUE 99999;";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La sequenza codice skills esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della sequenza codice skills: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //FUNZIONI CREAZIONE TABELLE
+    
+    //TABELLA SVILUPPATORE
+    public int createTableSviluppatore() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("sviluppatore")) {
+    				String sql = "CREATE TABLE sviluppatore " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "(nome VARCHAR(100) not NULL, " +
+                            " cognome VARCHAR(100) not NULL, " +
+                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
+                            " ruolo VARCHAR(255) CHECK (ruolo LIKE 'Sviluppatore'),"+
+                            " salarioMedio INTEGER not NULL,"+
+                            " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
+                            " PRIMARY KEY (codFiscale));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Sviluppatore esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Sviluppatore: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA PROJECT MANAGER
+    public int createTableProjectManager() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("projectmanager")) {
+    				String sql = "CREATE TABLE projectManager " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                            "(nome VARCHAR(100) not NULL, " +
+                            " cognome VARCHAR(100) not NULL, " +
+                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
+                            " ruolo VARCHAR(255) CHECK (ruolo LIKE 'ProjectManager'),"+
+                            " salarioMedio INTEGER not NULL,"+
+                            " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
+                            " PRIMARY KEY (codFiscale));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella ProjectManager esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella ProjectManager: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA PROGETTO
+    public int createTableProgetto() throws ConnectionException
     {
     	int result= -1;
     	
@@ -159,10 +352,10 @@ public class DBBuilder
     			if(!tableExists("progetto")) {
     				String sql = "CREATE TABLE progetto " +        //DA RIVEDERE
                             "(nome VARCHAR(255) not NULL UNIQUE, " +
-                            " tipo VARCHAR(255) not NULL  CHECK (tipo LIKE 'Ricerca di base' OR tipo LIKE 'Ricerca industruale' OR tipo LIKE 'Ricerca sperimentale' OR tipo LIKE 'Sviluppo sperimentale'), " +
-                            " ambito VARCHAR(255) not NULL  CHECK (ambito LIKE 'Informatico' OR ambito LIKE 'Medico' OR ambito LIKE 'Economico'),  " +
+                            " tipologia VARCHAR(255) CHECK (tipologia LIKE 'Ricerca di base' OR tipologia like 'Ricerca industriale' OR tipologia LIKE 'Ricerca sperimentale' OR tipologia like 'Sviluppo sperimentale')," +
                             " codProgetto VARCHAR(255) PRIMARY KEY, " +
-                            " stato VARCHAR(255) not NULL CHECK (stato LIKE 'Completo' OR stato LIKE 'Incompleto'));";
+                            " stato VARCHAR(255) not NULL CHECK (stato LIKE 'Completo' OR stato LIKE 'Incompleto'),"+
+                            " codfiscale VARCHAR(16) REFERENCES projectmanager(codfiscale));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -176,97 +369,348 @@ public class DBBuilder
     	}
     	return result;
 	}
-	
-   public int createTableMeeting() throws ConnectionException
-  {
-  	int result= -1;
+    
+    //TABELLA D'ASSOCIAZIONE PARTECIPANTI AI PROGETTI
+    public int createTablePartecipazioniProgetto() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("partecipazioniprogetto")) {
+    				String sql = "CREATE TABLE partecipazioniProgetto( \n"
+    						+ "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),\n"
+    						+ "codprogetto VARCHAR(255) REFERENCES progetto(codProgetto));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Partecipazioni Progetto esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Progetto: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA AMBITO
+    public int createTableAmbito() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("ambito")) {
+    				String sql = "CREATE TABLE ambito " +        //DA RIVEDERE
+                            "(nome VARCHAR(255) not NULL UNIQUE, " +
+                            " codAmbito VARCHAR(255) PRIMARY KEY);";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Ambito esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Ambito: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA CLASSE D'ASSOCIAZIONE AMBITO
+    public int createTableAssociazioneAmbito() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("associazioneambito")) {
+    				String sql = "CREATE TABLE associazioneAmbito(" +        //DA RIVEDERE
+                            "codProgetto VARCHAR(255) REFERENCES Progetto(codProgetto)," +
+                            "codAmbito VARCHAR(255) REFERENCES Ambito(codAmbito))";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Associazione Ambito esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Associazione Ambito: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+	}
+    
+    //TABELLA MEETING FISICO
+    public int createTableMeetingFisico() throws ConnectionException
+    {
+    	int result= -1;
   	
-  	if(connectionExists()) {
-  		try {
-  			Statement st = connection.createStatement();
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
   			
-  			if(!tableExists("Meeting")) {//DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-  				String sql = "CREATE TABLE Meeting (\n"
-  						+ "codiceMeeting VARCHAR(255) NOT NULL,\n"
-  						+ "data VARCHAR(200)  NOT NULL,\n"
-  						+ "oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,\n"
-  						+ "piattaforma VARCHAR,\n"
-  						+ "tipologia VARCHAR CHECK (tipologia LIKE 'Fisico' OR tipologia LIKE 'Telematico'),\n"
-  						+ "nomeSala VARCHAR,\n"
-  						+ "organizzatore VARCHAR(16) CHECK (organizzatore  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'),\n"
-  						+ "nomeProgetto VARCHAR(255) not NULL UNIQUE,\n "
-  						+"durata INTEGER NOT NULL,\n"
-  						+ "PRIMARY KEY (codiceMeeting));";
-  				result = st.executeUpdate(sql);
-  				st.close();
-  			} else {
-  				System.out.println("La tabella Meeting esiste già!");
-  			}
-  		} catch(SQLException ex) {
-  			System.out.println("SQL Exception in creation table Meeting: "+ex);
-  		}
-  	} else {
-  		throw new ConnectionException("A connection must exist!");
-  	}
-  	return result;
-  }
+    			if(!tableExists("meetingfisico")) {
+    				String sql = "CREATE TABLE meetingFisico (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                          " codiceMeeting VARCHAR(255) NOT NULL, " +
+                          " data VARCHAR(200)  NOT NULL, " +
+                          " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
+                          " luogo VARCHAR,"+
+                          " nomeSala VARCHAR,"+
+                          " durata INTEGER NOT NULL,"+
+  						  " PRIMARY KEY (codiceMeeting),"+
+  						  " codProgetto VARCHAR(255) REFERENCES progetto(codProgetto));";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Meeting Fisico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception in creation table Meeting Fisico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA D'ASSOCIAZIONE SVILUPPATORI A MEETING FISICO
+    public int createTablePartecipazioniSviluppatoreMeetingFisico() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("partecipazionisviluppatoremeetingfisico")) {
+    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingFisico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
+    						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Partecipazioni Sviluppatore Meeting Fisico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Sviluppatore Meeting Fisico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA D'ASSOCIAZIONE PROJECT MANAGER A MEETING FISICO
+    public int createTablePartecipazioniProjectManagerMeetingFisico() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("partecipazioniprojectmanagermeetingfisico")) {
+    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingFisico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
+    						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Partecipazioni Project Manager Meeting Fisico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Sviluppatore Meeting Fisico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
 
-   public int createTableSkills() throws ConnectionException
-{
-	int result= -1;
+    //TABELLA MEETING TELEMATICO
+    public int createTableMeetingTelematico() throws ConnectionException
+    {
+    	int result= -1;
 	
-	if(connectionExists()) {
-		try {
-			Statement st = connection.createStatement();
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
 			
-			if(!tableExists("skills")) {
-				String sql = "CREATE TABLE Skills " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-						 "(skill VARCHAR(100) not NULL, " +
-                        "codFiscale VARCHAR(100) not NULL, " +
-                        " PRIMARY KEY (codFiscale, skill));";
-				
-				result = st.executeUpdate(sql);
-				st.close();
-			} else {
-				System.out.println("La tabella Skills esiste già!");
-			}
-		} catch(SQLException ex) {
-			System.out.println("SQL Exception nella crezione della tabella Skills: "+ex);
-		}
-	} else {
-		throw new ConnectionException("A connection must exist!");
-	}
-	return result;
-}
+    			if(!tableExists("meetingtelematico")) {
+    				String sql = "CREATE TABLE meetingTelematico (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                        " codiceMeeting VARCHAR(255) NOT NULL, " +
+                        " data VARCHAR(200)  NOT NULL, " +
+                        " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
+                        " piattaforma VARCHAR,"+
+                        " link VARCHAR,"+
+                        " durata INTEGER NOT NULL,"+
+                        " PRIMARY KEY (codiceMeeting),"+
+						" codProgetto VARCHAR(255) REFERENCES progetto(codProgetto));";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Meeting Telematico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception in creation table Meeting Telematico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
 
-   public int createTableArchivioPartecipantiProgetto() throws ConnectionException
-{
-	int result= -1;
+    //TABELLA D'ASSOCIAZIONE SVILUPPATORI A MEETING TELEMATICO
+    public int createTablePartecipazioniSviluppatoreMeetingTelematico() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("partecipazionisviluppatoremeetingtelematico")) {
+    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingTelematico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
+    						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Partecipazioni Sviluppatore Meeting Telematico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Sviluppatore Meeting Telematico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+
+    //TABELLA D'ASSOCIAZIONE PROJECT MANAGER A MEETING TELEMATICO
+    public int createTablePartecipazioniProjectManagerMeetingTelematico() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("partecipazioniprojectmanagermeetingtelematico")) {
+    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingTelematico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
+    						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
+    				
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Partecipazioni Project Manager Meeting Telematico esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Sviluppatore Meeting Telematico: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    //TABELLA SKILLS
+    public int createTableSkills() throws ConnectionException
+    {
+    	int result= -1;
 	
-	if(connectionExists()) {
-		try {
-			Statement st = connection.createStatement();
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
 			
-			if(!tableExists("ArchivioPartecipantiProgetto")) {
-				String sql = "CREATE TABLE ArchivioPartecipantiProgetto " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-						 "(codFiscale VARCHAR(100) not NULL, " +
-                        "NomeProgetto VARCHAR(100) not NULL, " +
-						"Ruolo VARCHAR CHECK (ruolo LIKE 'ProjectManager' OR  ruolo LIKE 'Sviluppatore'),"+
-                        " PRIMARY KEY (codFiscale, NomeProgetto));";
+    			if(!tableExists("skills")) {
+    				String sql = "CREATE TABLE skills (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+						     "nomeSkill VARCHAR(100) not NULL, "+
+						    " codSkills VARCHAR(255) PRIMARY KEY);";
 				
-				result = st.executeUpdate(sql);
-				st.close();
-			} else {
-				System.out.println("La tabella ArchivioPartecipantiProgetto esiste già!");
-			}
-		} catch(SQLException ex) {
-			System.out.println("SQL Exception nella crezione della tabella ArchivioPartecipantiProgetto: "+ex);
-		}
-	} else {
-		throw new ConnectionException("A connection must exist!");
-	}
-	return result;
-}
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Skills esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Skills: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
 
+    //TABELLA D'ASSOCIAZONE SKILLS PROJECT MANAGER
+    public int createTableAssociazioneSkillsProjectManager() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+			
+    			if(!tableExists("associazioneskillsprojectmanager")) {
+    				String sql = "CREATE TABLE associazioneSkillsProjectManager(" + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+				             "codFiscale VARCHAR(16) REFERENCES projectManager(codFiscale),"+
+						     "codSkills VARCHAR(255) REFERENCES skills(codSkills));";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Associazione Skills Project Manager esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Associazione Skills Project Manager: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+
+    //TABELLA D'ASSOCIAZONE SKILLS SVILUPPATORE
+    public int createTableAssociazioneSkillsSviluppatore() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+			
+    			if(!tableExists("associazioneskillssviluppatore")) {
+    				String sql = "CREATE TABLE associazioneSkillsSviluppatore(" + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+				             "codFiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
+						     "codSkills VARCHAR(255) REFERENCES skills(codSkills));";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("La tabella Associazione Skills Sviluppatore esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella crezione della tabella Associazione Skills Sviluppatore: "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
 
 }

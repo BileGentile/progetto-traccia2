@@ -21,15 +21,15 @@ public class ErroreCodiceFiscaleSbagliato extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-
 	Controller IlControllore;
 	
 	public ErroreCodiceFiscaleSbagliato(Controller c) {
+		
 		IlControllore = c;
 		
 		setTitle("Azienda - Errore Login");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ValutazioneMembro.class.getResource("/image/ingranaggio blu.png"))); 
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setBounds(80, 80, 350, 200);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(SystemColor.activeCaption);

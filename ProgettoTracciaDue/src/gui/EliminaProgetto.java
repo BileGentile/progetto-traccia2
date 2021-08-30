@@ -54,25 +54,25 @@ public class EliminaProgetto extends JFrame {
         Connection connection = null;
         DBBuilder builder = null;
         try
+	    {
+        	dbconn = DBConnection.getInstance();
+	        connection = dbconn.getConnection();
+	        builder = new DBBuilder(connection);
+	        ProgettoDAO dao = null;
+	            
+	        dao = new ProgettoDAOPostgresImpl(connection);
+	            
+	        List<Progetto> listaProgetti = dao.getAllProgetti();
+	        for(Progetto m : listaProgetti)
 	        {
-	            dbconn = DBConnection.getInstance();
-	            connection = dbconn.getConnection();
-	            builder = new DBBuilder(connection);
-	            ProgettoDAO dao = null;
-	            
-	            dao = new ProgettoDAOPostgresImpl(connection);
-	            
-	            List<Progetto> listaProgetti = dao.getAllProgetti();
-	            for(Progetto m : listaProgetti)
-	            {
-	            	comboBox.addItem(m.getNomeProgetto());
-	            }
-
+	        	comboBox.addItem(m.getNomeProgetto());
 	        }
-    		catch (SQLException exception)
-        	{
-                System.out.println("Errore SQLException: "+ exception.getMessage());
-        	}
+
+	    }
+        catch (SQLException exception)
+    	{
+        	System.out.println("Errore SQLException: "+ exception.getMessage());
+    	}
         comboBox.setBounds(213, 38, 150, 43);
 		contentPane.add(comboBox);
 		
@@ -80,8 +80,6 @@ public class EliminaProgetto extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {  
 				IlControllore.EliminaProgetto(comboBox.getSelectedItem().toString());
-	            
-
 		}
 		});
 		btnNewButton.setBounds(246, 187, 117, 29);

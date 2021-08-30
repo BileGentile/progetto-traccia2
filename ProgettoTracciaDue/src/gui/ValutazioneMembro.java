@@ -24,19 +24,21 @@ import javax.swing.border.EmptyBorder;
 import app.Controller;
 import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
+import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
+import daos.SviluppatoreDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Membro;
 import entity.Progetto;
+import entity.Sviluppatore;
 import exceptions.ConnectionException;
 
 public class ValutazioneMembro extends JFrame {
 
 	private JPanel contentPane;
 	Controller IlControllore;
-	
 	
 	public ValutazioneMembro(Controller c) {
 		IlControllore =c;
@@ -72,7 +74,6 @@ public class ValutazioneMembro extends JFrame {
 		textField.setColumns(10);
 		textField.setBounds(200, 50, 156, 29);
 		contentPane.add(textField);
-
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Buona", "Mediocre", "Male"}));
@@ -95,12 +96,12 @@ public class ValutazioneMembro extends JFrame {
 	        dbconn = DBConnection.getInstance();     
 	        connection = dbconn.getConnection();	           
 	        builder = new DBBuilder(connection);
-	        MembroDAO dao = null;
+	        SviluppatoreDAO dao = null;
 	            
-	            dao = new MembroDAOPostgresImpl(connection);
+	            dao = new SviluppatoreDAOPostgresImpl(connection);
 	            
-			    List<Membro> lista = dao.getAllSviluppatoriProgetto(textField.getText().toString());
-			    for(Membro mm : lista)
+			    List<Sviluppatore> lista = dao.getAllSviluppatoriProgetto(textField.getText().toString());
+			    for(Sviluppatore mm : lista)
 			    {
 			    	 comboBox_1.addItem(mm.getCF());
 			    }
@@ -139,6 +140,7 @@ public class ValutazioneMembro extends JFrame {
 	btnNewButton_1.setBounds(50, 197, 129, 34);
 	contentPane.add(btnNewButton_1);
 
+
 	}
 }
-	
+

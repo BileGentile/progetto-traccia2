@@ -1,40 +1,55 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class Skills {
 
     //ATTRIBUTI
-
-	private String CodFiscale;
-	private String Skill;
-    
+	private String nomeSkill;
+	private String codSkill;
+	private ArrayList<Membro> membri;
+	
     //COSTRUTTORI
-    public Skills(String codFiscale, String skill) {
+
+	public Skills(String nomeSkill, String codSkill) {
 		super();
-		CodFiscale = codFiscale;
-		Skill = skill;
-    }
+		this.nomeSkill = nomeSkill;
+		this.codSkill = codSkill;
+	}
 	
-	
-	public String getSkill() {
-		return Skill;
+	public Skills(String nomeSkill) {
+		super();
+		this.nomeSkill = nomeSkill;
 	}
 
-	public void setSkill(String skill) {
-		Skill = skill;
+	public String getNomeSkill() {
+		return nomeSkill;
+	}
+
+
+	public void setNomeSkill(String nomeSkill) {
+		this.nomeSkill = nomeSkill;
 	}
 	
-	public String getCodFiscale() {
-		return CodFiscale;
+	public ArrayList<Membro> getMembri() {
+		return membri;
 	}
-	public void setCodFiscalea(String codFiscale) {
-		CodFiscale = codFiscale;
+
+	public void setMembri(ArrayList<Membro> membri) {
+		this.membri = membri;
 	}
-	
+
+	public String getCodSkill() {
+		return codSkill;
+	}
+
+	public void setCodSkill(String codSkill) {
+		this.codSkill = codSkill;
+	}
+
 	@Override
 	public String toString() {
-		return "Skills [CodFiscale=" + CodFiscale + ", Skill=" + Skill + ", ]";
+		return "Skills [nomeSkill=" + nomeSkill + ", codSkill=" + codSkill + "]";
 	}
-	
 
 }
-

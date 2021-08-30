@@ -1,48 +1,60 @@
 package app;
 
-import gui.Presentazione;
-import gui.RegistrazioneProjectManager;
-import gui.RegistrazioneSviluppatore;
-import gui.ValutazioneMembro;
-import gui.LoginSviluppatore;
-import gui.PartecipantiAlProgetto;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
-
 import javax.swing.JTextField;
 
-import dao_impl.ArchivioPartecipantiProgettoDAOPostgresImpl;
-import dao_impl.MeetingDAOPostgresImpl;
-import dao_impl.MembroDAOPostgresImpl;
-import dao_impl.ProgettoDAOPostgresImpl;
-import dao_impl.SkillsDAOPostgresImpl;
-import daos.ArchivioPartecipantiProgettoDAO;
-import daos.MeetingDAO;
-import daos.MembroDAO;
-import daos.ProgettoDAO;
-import daos.SkillsDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
-import entity.ArchivioPartecipantiProgetto;
+
+import dao_impl.AmbitoDAOPostgresImpl;
+import dao_impl.MeetingDAOPostgresImpl;
+import dao_impl.MeetingFisicoDAOPostgresImpl;
+import dao_impl.MeetingTelematicoDAOPostgresImpl;
+import dao_impl.MembroDAOPostgresImpl;
+import dao_impl.ProgettoDAOPostgresImpl;
+import dao_impl.ProjectManagerDAOPostgresImpl;
+import dao_impl.SkillsDAOPostgresImpl;
+import dao_impl.SviluppatoreDAOPostgresImpl;
+import daos.AmbitoDAO;
+import daos.MeetingDAO;
+import daos.MeetingFisicoDAO;
+import daos.MeetingTelematicoDAO;
+import daos.MembroDAO;
+import daos.ProgettoDAO;
+import daos.ProjectManagerDAO;
+import daos.SkillsDAO;
+import daos.SviluppatoreDAO;
+import entity.Ambito;
 import entity.Meeting;
+import entity.MeetingFisico;
+import entity.MeetingTelematico;
 import entity.Membro;
 import entity.Progetto;
+import entity.ProjectManager;
 import entity.Skills;
+import entity.Sviluppatore;
 import exceptions.ConnectionException;
+
+import gui.Presentazione;
+import gui.LoginSviluppatore;
+import gui.LoginProjectManager;
+import gui.RegistrazioneProjectManager;
+import gui.ErroreCodiceFiscaleSbagliato;
+import gui.BenvenutoProjectManager;
+import gui.BenvenutoSviluppatore;
+import gui.RegistrazioneSviluppatore;
+import gui.ValutazioneMembro;
+import gui.PartecipantiAlProgetto;
 import gui.AggiungiMembriAlProgetto;
 import gui.AggiungiPresenza;
 //import gui.AggiungiPresenzaSviluppatore;
 import gui.AggiungiProgetto;
 import gui.AzioneAvvenutaConSuccesso;
-import gui.BenvenutoProjectManager;
-import gui.BenvenutoSviluppatore;
 import gui.CreaMeeting;
 import gui.EliminaProgetto;
-import gui.ErroreCodiceFiscaleSbagliato;
-import gui.LoginProjectManager;
 
 public class Controller {
 
@@ -51,21 +63,94 @@ public class Controller {
 	LoginProjectManager loginPM;
 	LoginSviluppatore loginS;
 	RegistrazioneProjectManager registrazionePM;
+	ErroreCodiceFiscaleSbagliato erroreCodiceFiscaleSbagliato;
 	BenvenutoProjectManager benvenutoPM;
 	BenvenutoSviluppatore benvenutoS;
-	AggiungiProgetto aggiungiProgetto;
 	RegistrazioneSviluppatore registrazioneS;
+	AggiungiProgetto aggiungiProgetto;
 	ValutazioneMembro valutazioneMembro;
 	AggiungiMembriAlProgetto aggiungiMembriAlProgetto;
 	EliminaProgetto eliminaProgetto;
 	AzioneAvvenutaConSuccesso azioneAvvenutaConSuccesso;
-	ErroreCodiceFiscaleSbagliato erroreCodiceFiscaleSbagliato;
 	CreaMeeting  creaMeeting;
 	AggiungiPresenza aggiungiPresenza;
 	PartecipantiAlProgetto partecipantiAlProgetto;
 	
+	
 	public static void main(String[] args) {
+		
+		//CREAZIONE DEL DATABASE E DELLA CONNECTION
+		DBConnection dbconn = null;
+        Connection connection = null;
+        DBBuilder builder = null;
+ 
+        try
+        {
+            dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            //CREAZIONE ENUM
+            //builder.createEnumRuolo();
+            //builder.createEnumTipologia();
+            //CREAZIONE SEQUENZE
+            builder.createSequenceProgetto();
+            builder.createSequenceProjectManager();
+            builder.createSequenceSviluppatore();
+            builder.createSequenceMeetingFisico();
+            builder.createSequenceMeetingTelematico();
+            builder.createSequenceAmbito();
+            builder.createSequenceSkills();
+            
+            //CREAZIONE CLASSI 
+            builder.createTableProjectManager();
+            builder.createTableSviluppatore();
+            builder.createTableProgetto();
+            builder.createTableAmbito();
+            builder.createTableMeetingFisico();
+            builder.createTableMeetingTelematico();
+            builder.createTableSkills();
+            
+            //CREAZIONE CLASSI D'ASSOCIAZIONE
+            builder.createTablePartecipazioniProgetto();
+            builder.createTableAssociazioneAmbito();
+            builder.createTablePartecipazioniSviluppatoreMeetingFisico();
+            builder.createTablePartecipazioniProjectManagerMeetingFisico();
+            builder.createTablePartecipazioniSviluppatoreMeetingTelematico();
+            builder.createTablePartecipazioniProjectManagerMeetingTelematico();
+            builder.createTableAssociazioneSkillsProjectManager();
+            builder.createTableAssociazioneSkillsSviluppatore();
+            
+    
+            MembroDAO dao = null;
+            ProgettoDAO daoo = null;
+            MeetingDAO daooo=null;
+           
+            dao = new MembroDAOPostgresImpl(connection);
 
+            
+            //TEST PER IL DATABASE, SIMULO L'INSERIMENTO DI TRE MEMBRI, TOGLI COMMENTO PER TESTARE
+            
+//            Membro m1  =  new Membro("Mario", "Biondi", "MROVRD77L99K776J", "Schifo", "ProjectManager");
+//            Membro m2  =  new Membro("Pino", "Verdi", "PNOVRD77L99K776J", "Bravo", "Sviluppatore");
+//            Membro m3  =  new Membro("Rino", "Ceronte", "RNOVRD77L99K775P", "Eccellente", "Sviluppatore");
+//            int res =  dao.inserisciMembro(m1);
+//            System.out.println(res);
+//            int res2 = dao.inserisciMembro(m2);
+//            System.out.println(res2);
+//            int res3 = dao.inserisciMembro(m3);
+//            System.out.println(res3);
+//        
+        }
+        catch (SQLException exception)
+        {
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+        }
+        catch (ConnectionException ex)
+        {
+            System.out.println("CE: "+ex);
+        }
+        
+        //START CONTROLLER
 		Controller c = new Controller();
 	}
 
@@ -102,52 +187,47 @@ public class Controller {
 				erroreCodiceFiscaleSbagliato.setVisible(false);
 			}
 		}
-			
+		
 	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
 	public void TornaLogin(int caso) {
-	if(caso==1) {
-		erroreCodiceFiscaleSbagliato.setVisible(false);
-		if(loginPM.isVisible()) {
-			loginPM.setVisible(false);
+		if(caso==1) {
+			erroreCodiceFiscaleSbagliato.setVisible(false);
+			if(loginPM.isVisible()) {
+				loginPM.setVisible(false);
+				loginPM=new LoginProjectManager(this);
+				loginPM.setVisible(true);
+			}else{
+				loginS.setVisible(false);
+				loginS=new LoginSviluppatore(this);
+				loginS.setVisible(true);
+			}
+		}else if(caso==2) {
+			registrazionePM.setVisible(false);
 			loginPM=new LoginProjectManager(this);
 			loginPM.setVisible(true);
-		}else{
-			loginS.setVisible(false);
+		}else if(caso==3) {
+			registrazioneS.setVisible(false);
 			loginS=new LoginSviluppatore(this);
 			loginS.setVisible(true);
-		}
-	}else if(caso==2) {
-		registrazionePM.setVisible(false);
-		loginPM=new LoginProjectManager(this);
-		loginPM.setVisible(true);
-	}else if(caso==3) {
-		registrazioneS.setVisible(false);
-		loginS=new LoginSviluppatore(this);
-		loginS.setVisible(true);
-	}	
-}
-
-	public void AvviaCreaProgetto() {
-		benvenutoPM.setVisible(false);
-		aggiungiProgetto= new AggiungiProgetto(this);
-		aggiungiProgetto.setVisible(true);
+		}	
 	}
-	
+
 	//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 	public void AvviaBenvenutoPM(JTextField codiceFiscale) {
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
-        try
-	        {
-	            dbconn = DBConnection.getInstance();
-	            connection = dbconn.getConnection();
-	            builder = new DBBuilder(connection);
-	            MembroDAO dao = null;
-	            
-	            dao = new MembroDAOPostgresImpl(connection);
-	            
-	            List<Membro> lista = dao.getProjectManagerByCodFiscale(codiceFiscale.getText());
+
+		try
+        {
+			dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            ProjectManagerDAO dao = null;
+            
+            dao = new ProjectManagerDAOPostgresImpl(connection);
+            
+	            List<ProjectManager> lista = dao.getProjectManagerByCodFiscale(codiceFiscale.getText());
 	            
 	            if(lista.isEmpty()) {
 	            	erroreCodiceFiscaleSbagliato = new ErroreCodiceFiscaleSbagliato(this);
@@ -164,7 +244,7 @@ public class Controller {
 	                System.out.println("Errore SQLException: "+ exception.getMessage());
 	            }
         }
-	
+
 	//verifica se il codice fiscale inserito dallo sviluppatore risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 	public void AvviaBenvenutoS(String codiceFiscale) {
 		DBConnection dbconn = null;
@@ -176,11 +256,11 @@ public class Controller {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
-            MembroDAO dao = null;
+            SviluppatoreDAO dao = null;
             
-            dao = new MembroDAOPostgresImpl(connection);
+            dao = new SviluppatoreDAOPostgresImpl(connection);
             
-            List<Membro> lista = dao.getSviluppatoreByCodFiscale(codiceFiscale);
+            List<Sviluppatore> lista = dao.getSviluppatoreByCodFiscale(codiceFiscale);
            
             if(lista.isEmpty()) {
 
@@ -199,7 +279,7 @@ public class Controller {
                 System.out.println("Errore SQLException: "+ exception.getMessage());
             }
 		}
-	
+
 	//L'utente ha scelto di creare un nuovo account (del tipo project manager), si mostra la scheda di registrazione
 	public void AvviaRegistrazioneProjectManager() {
 		loginPM.setVisible(false);
@@ -213,53 +293,30 @@ public class Controller {
 	    registrazioneS = new RegistrazioneSviluppatore(this);
 	    registrazioneS.setVisible(true);    
 	}
-
-	//Creazione di un nuovo project manager 
-	public void RegistraProjectManager(String cognome, String nome, String codfiscale, String salario, List<String> list ) {
-        DBConnection dbconn = null;
-        Connection connection = null;
-        DBBuilder builder = null;
-        
-        try
-        {
-            dbconn = DBConnection.getInstance();
-            connection = dbconn.getConnection();
-            builder = new DBBuilder(connection);
-            builder.createTableMembro();
-            builder.createTableSkills();
-
-            MembroDAO daoMembro = null;
-            SkillsDAO daoSkill =null;
-
-            daoMembro = new MembroDAOPostgresImpl(connection);
-            daoSkill = new SkillsDAOPostgresImpl(connection);	
-            
-         	
-            Membro m1  =  new Membro( nome, cognome, codfiscale , "ProjectManager", Integer.valueOf(salario), "NULL");
-            int res =  daoMembro.inserisciMembro(m1);
-            	int i= 0;
-            	while (i<list.size()) {
-            		String s1=list.get(i);
-            		Skills s = new Skills(codfiscale,s1);
-            		int res1= daoSkill.inserisciSkills(s);
-            		i++;
-            	}
-        }
-        catch (SQLException exception)
-        {
-            System.out.println("Errore SQLException: "+ exception.getMessage());
-        } catch (ConnectionException e) {
-			// TODO Auto-generated catch block
-        	  System.out.println("CE: "+e);
+	
+	public void TornaPresentazione2(int caso) {
+		if(caso==1) {
+			loginPM.setVisible(false);	
+		}else{
+			loginS.setVisible(false);	
 		}
-        
-		registrazionePM.setVisible(false);
-		loginPM= new LoginProjectManager(this);
-		loginPM.setVisible(true);
+		presenta=new Presentazione(this);
+		presenta.setVisible(true);
 	}
 	
+	public void Logout(int caso) {
+		if(caso==1)
+		{
+			benvenutoPM.setVisible(false);
+		}else if(caso==2){
+			benvenutoS.setVisible(false);
+		}
+		presenta = new Presentazione(this);
+		presenta.setVisible(true);
+	}
+
 	//Creazione di un nuovo sviluppatore 
-	public void RegistraSviluppatore(String cognome, String nome, String codfiscale, String salario, List<String> list ){
+	public void RegistraSviluppatore(String nome, String cognome, String codfiscale, String salario, List<String> list ){
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -269,25 +326,26 @@ public class Controller {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
-            builder.createTableMembro();
+            builder.createTableSviluppatore();
             builder.createTableSkills();
-            MembroDAO daoMembro = null;
+            builder.createTableAssociazioneSkillsSviluppatore();
+            SviluppatoreDAO daoSviluppatore = null;
             SkillsDAO daoSkill =null;
             
-            daoMembro = new MembroDAOPostgresImpl(connection);
+            daoSviluppatore = new  SviluppatoreDAOPostgresImpl(connection);
             daoSkill = new SkillsDAOPostgresImpl(connection);		
             
-            Membro m1  =  new Membro( nome, cognome, codfiscale, "Sviluppatore",Integer.valueOf(salario), "NULL");
+            Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, "Sviluppatore", Integer.valueOf(salario), "NULL");
       
-            int res =  daoMembro.inserisciMembro(m1);
+            int res =  daoSviluppatore.inserisciSviluppatore(m1);
             	int i= 0;
             	while (i<list.size()) {
             		String s1=list.get(i);
-            		Skills s = new Skills(codfiscale,s1);
+            		Skills s = new Skills(s1,"sequenzacodiceskills");
             		int res1= daoSkill.inserisciSkills(s);
+            		int res2= daoSviluppatore.inserisciSkillSviluppatore(m1,s);
             		i++;
             	}
-            	
         }
         
         catch (SQLException exception)
@@ -301,76 +359,58 @@ public class Controller {
 		loginS= new LoginSviluppatore(this);
 		loginS.setVisible(true);
 	}
-
-	//Creazione di un nuovo progetto
-	public void CreaProgetto(String nomeProgetto, String tipoProgetto , String ambitoProgetto, String codiceFiscalePm) {
-			DBConnection dbconn = null;
+	
+	//Creazione di un nuovo project manager 
+	public void RegistraProjectManager(String nome, String cognome, String codfiscale, String salario, List<String> list ) {
+	        DBConnection dbconn = null;
 	        Connection connection = null;
 	        DBBuilder builder = null;
+	       
 	        try
 	        {
-	            dbconn = DBConnection.getInstance();
+	        	dbconn = DBConnection.getInstance();
 	            connection = dbconn.getConnection();
 	            builder = new DBBuilder(connection);
-	            MembroDAO dao = null;
-	            
-	            dao = new MembroDAOPostgresImpl(connection);
-	            
-	            List<Membro> lista = dao.getProjectManagerByCodFiscale(codiceFiscalePm);
-	           
-	            if(lista.isEmpty()) {
+	            builder.createTableProjectManager();
+	            builder.createTableSkills();
+	            builder.createTableAssociazioneSkillsProjectManager(); 
+	            ProjectManagerDAO daoProjectManager = null;
+	            SkillsDAO daoSkill =null;
 
-	            	erroreCodiceFiscaleSbagliato = new ErroreCodiceFiscaleSbagliato(this);
-	            	erroreCodiceFiscaleSbagliato.setVisible(true);
-	            }else {
+	            daoProjectManager = new ProjectManagerDAOPostgresImpl(connection);
+	            daoSkill = new SkillsDAOPostgresImpl(connection);	
+	            
+	            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale, "ProjectManager", Integer.valueOf(salario), "NULL");
 	           
-	            builder.createTableArchivioPartecipantiProgetto();
-	            ArchivioPartecipantiProgettoDAO dao1 =  null;
-                
-                dao1= new ArchivioPartecipantiProgettoDAOPostgresImpl(connection);
-                ArchivioPartecipantiProgetto a1 = new ArchivioPartecipantiProgetto(codiceFiscalePm,nomeProgetto,"ProjectManager");
-                int res= dao1.InserisciArchivioPartecipanti(a1);
-                
-                builder.createTableProgetto();
-	            ProgettoDAO dao2 = null;
-	            
-	            dao2 = new ProgettoDAOPostgresImpl(connection);
-	            Progetto p2  =  new Progetto(nomeProgetto, tipoProgetto, ambitoProgetto, "sequenzacodiceprogetti", "Incompleto" );
-	            int res2 =  dao2.inserisciProgetto(p2);
-	            
-	            }
-	            
-	            }
-	            catch (SQLException exception)
-	            {
-	                System.out.println("Errore SQLException: "+ exception.getMessage());
-	            }
-				
-	       
-	       
-	        catch (ConnectionException ex)
+	            int res =  daoProjectManager.inserisciProjectManager(m1);
+	            int i= 0;
+            	while (i<list.size()) {
+            		String s1=list.get(i);
+            		Skills s = new Skills(s1, "sequenzacodiceskills");
+            		int res1= daoSkill.inserisciSkills(s);
+            		int res2= daoProjectManager.inserisciSkillProjectManager(m1,s);
+            		i++;
+            	}
+        }
+	        catch (SQLException exception)
 	        {
-	            System.out.println("CE: "+ex);
-	        }
-	       
-			
-        aggiungiProgetto.setVisible(false);
-        benvenutoPM=new BenvenutoProjectManager(this);
-    	benvenutoPM.setVisible(true);
-}
-
-	public void AvviaValutazione() {
-		benvenutoPM.setVisible(false);
-		valutazioneMembro = new ValutazioneMembro(this);
-		valutazioneMembro.setVisible(true);
+	            System.out.println("Errore SQLException: "+ exception.getMessage());
+	        } catch (ConnectionException e) {
+				// TODO Auto-generated catch block
+	        	  System.out.println("CE: "+e);
+			}
+	        
+			registrazionePM.setVisible(false);
+			loginPM= new LoginProjectManager(this);
+			loginPM.setVisible(true);
 	}
-
-	public void AvviaInserimentoMembri() {
+	
+	public void AvviaCreaProgetto() {
 		benvenutoPM.setVisible(false);
-		aggiungiMembriAlProgetto = new AggiungiMembriAlProgetto(this);
-		aggiungiMembriAlProgetto.setVisible(true);
+		aggiungiProgetto= new AggiungiProgetto(this);
+		aggiungiProgetto.setVisible(true);
 	}
-
+	
 	public void RitornaBenvenutoProjectManager(int caso) {
 		if(caso== 1){
 			valutazioneMembro.setVisible(false);
@@ -388,17 +428,166 @@ public class Controller {
 		}else if(caso==7) {
 			partecipantiAlProgetto.setVisible(false);
 		}
-		
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
 	}
+	
+	//Creazione di un nuovo progetto
+	public void CreaProgetto(String nomeProgetto, String tipoProgetto , List<String> list, String codiceFiscalePm) {
+			DBConnection dbconn = null;
+	        Connection connection = null;
+	        DBBuilder builder = null;
+	        try
+	        {
+	            dbconn = DBConnection.getInstance();
+	            connection = dbconn.getConnection();
+	            builder = new DBBuilder(connection);
+	            ProjectManagerDAO dao = null;
+	            
+	            dao = new ProjectManagerDAOPostgresImpl(connection);
+	            
+	            List<ProjectManager> lista = dao.getProjectManagerByCodFiscale(codiceFiscalePm);
+		           
+	            if(lista.isEmpty()) {
 
+	            	erroreCodiceFiscaleSbagliato = new ErroreCodiceFiscaleSbagliato(this);
+	            	erroreCodiceFiscaleSbagliato.setVisible(true);
+	            }else {	
+	            	builder.createTableProgetto();
+	            	ProgettoDAO dao1 = null;
+	            	dao1 = new ProgettoDAOPostgresImpl(connection);
+	            	Progetto p2  =  new Progetto (nomeProgetto, tipoProgetto, "sequenzacodiceprogetti", "Incompleto", lista.get(0));
+	            	int res =  dao1.inserisciProgetto(p2);
+	          	
+	            	builder.createTableAmbito();
+	            	AmbitoDAO dao3 = null;
+	            	dao3 = new AmbitoDAOPostgresImpl(connection);
+	            	int i= 0;
+	            	while (i<list.size()) {
+	            		String s1=list.get(i);
+	            		Ambito a  =  new Ambito (s1, "sequenzacodiceambito");
+	            		//int res2 =  dao3.inserisciAmbito(a);
+	            		int res3= dao3.inserisciAmbitoProgetto(p2.getCodiceProgetto(),a.getCodAmbito());
+	            		i++;
+	            	}
+	            	
+	            }
+	            
+	        }
+	        catch (SQLException exception)
+	        {
+	        	System.out.println("Errore SQLException: "+ exception.getMessage());
+	        }
+	        catch (ConnectionException ex)
+	        {
+	            System.out.println("CE: "+ex);
+	        } 
+			
+	        aggiungiProgetto.setVisible(false);
+	        benvenutoPM=new BenvenutoProjectManager(this);
+    		benvenutoPM.setVisible(true);
+    	
+	}
+	
+	public void AvviaInserimentoMembri() {
+		benvenutoPM.setVisible(false);
+		aggiungiMembriAlProgetto = new AggiungiMembriAlProgetto(this);
+		aggiungiMembriAlProgetto.setVisible(true);
+	}
+	
+	public void CreaArchivioPartecipanti(String codiceFiscale, String codProgetto) {
+		DBConnection dbconn = null;
+	    Connection connection = null;
+	    DBBuilder builder = null;
+	    
+	    try
+	    {
+	    	dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            builder.createTablePartecipazioniProgetto();
+            ProgettoDAO dao =  null;
+            
+            dao= new ProgettoDAOPostgresImpl(connection);
+            int res= dao.inserisciArchivioPartecipantiProgettoPS(codiceFiscale, codProgetto);
+            
+        }
+	    catch (SQLException exception)
+    	{
+	    	System.out.println("Errore SQLException: "+ exception.getMessage());
+    	}
+	    catch (ConnectionException ex)
+    	{
+	    	System.out.println("CE: "+ex);
+    	}
+	    aggiungiMembriAlProgetto.setVisible(false);
+		
+	    benvenutoPM = new BenvenutoProjectManager (this);
+	    benvenutoPM.setVisible(true); 
+	}
+	
+	public void AvviaValutazione() {
+		benvenutoPM.setVisible(false);
+		valutazioneMembro = new ValutazioneMembro(this);
+		valutazioneMembro.setVisible(true);
+	}
+	
+	public void ValutazioneMembro(String valutazione, String codicefiscale) {
+		DBConnection dbconn = null;
+		Connection connection = null;
+		DBBuilder builder = null;
+		try
+		{
+			dbconn = DBConnection.getInstance();
+			connection = dbconn.getConnection();
+			builder = new DBBuilder(connection);
+			SviluppatoreDAO dao = null;
+        
+			dao = new SviluppatoreDAOPostgresImpl(connection);
+        
+			dao.inserisciValutazione(valutazione , codicefiscale );
+			
+		}
+		catch (SQLException exception)
+		{
+			System.out.println("Errore SQLException: "+ exception.getMessage());
+		}
+		azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
+		azioneAvvenutaConSuccesso.setVisible(true);
+	}
+	
+	public void AvviaPartecipantiAlProgetto() {
+		benvenutoPM.setVisible(false);
+		partecipantiAlProgetto = new PartecipantiAlProgetto(this);
+		partecipantiAlProgetto.setVisible(true);
+	}
+	
 	public void AvviaEliminaProgetto() {
 		benvenutoPM.setVisible(false);
 		eliminaProgetto = new EliminaProgetto(this);
 		eliminaProgetto.setVisible(true);
 	}
+	
+	public void AvviaCreaMeeting() {
+		benvenutoPM.setVisible(false);
+		creaMeeting = new CreaMeeting(this);
+		creaMeeting.setVisible(true);
+	}
 
+	public void AvviaAggiungiPresenza() {
+	    benvenutoS.setVisible(false);
+	    aggiungiPresenza = new AggiungiPresenza(this);
+	    aggiungiPresenza.setVisible(true);
+	}
+	
+	public void RitornaBenvenutoSviluppatore(int caso) {
+		if(caso== 1){
+			aggiungiPresenza.setVisible(false);
+		}	
+		benvenutoS = new BenvenutoSviluppatore(this);
+	    benvenutoS.setVisible(true);
+	}
+	
 	public void EliminaProgetto(String nomeProgetto) {
 		DBConnection dbconn = null;
         Connection connection = null;
@@ -414,80 +603,57 @@ public class Controller {
             dao = new ProgettoDAOPostgresImpl(connection);
             
             dao.cambiaStatoProgetto(nomeProgetto);
+        }
            
-        }
-        catch (SQLException exception)
-        {
-            System.out.println("Errore SQLException: "+ exception.getMessage());
-        }
-        azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
-        azioneAvvenutaConSuccesso.setVisible(true);
-        
-	}
-	
-	public void Logout(int caso) {
-		if(caso==1)
-		{
-			benvenutoPM.setVisible(false);
-		}else if(caso==2){
-			benvenutoS.setVisible(false);
-		}
-		presenta = new Presentazione(this);
-		presenta.setVisible(true);
-	}
-
-	public void ValutazioneMembro(String valutazione, String codicefiscale) {
-	DBConnection dbconn = null;
-    Connection connection = null;
-    DBBuilder builder = null;
-    try
-    {
-        dbconn = DBConnection.getInstance();
-        connection = dbconn.getConnection();
-        builder = new DBBuilder(connection);
-        MembroDAO dao = null;
-        
-        dao = new MembroDAOPostgresImpl(connection);
-        
-        dao.inserisciValutazione(valutazione , codicefiscale );
-       
-    }
-    catch (SQLException exception)
-    {
-        System.out.println("Errore SQLException: "+ exception.getMessage());
-    }
-    azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
-    azioneAvvenutaConSuccesso.setVisible(true);
-}
-
-	public void AvviaCreaMeeting() {
-		benvenutoPM.setVisible(false);
-		creaMeeting = new CreaMeeting(this);
-		creaMeeting.setVisible(true);
-	}
-
-	public void AvviaPartecipantiAlProgetto() {
-		benvenutoPM.setVisible(false);
-		partecipantiAlProgetto = new PartecipantiAlProgetto(this);
-		partecipantiAlProgetto.setVisible(true);
-	}
+            catch (SQLException exception)
+            {
+                System.out.println("Errore SQLException: "+ exception.getMessage());
+            }
+            azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
+            azioneAvvenutaConSuccesso.setVisible(true);
+            
+    	}
 	
 	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala, String organizzatore, String NomeProgetto,  int durata) {
 		DBConnection dbconn = null;
 	    Connection connection = null;
 	    DBBuilder builder = null;
-
+	    String codiceProgetto;
+	    Progetto p;
         try
         {
-        	dbconn = DBConnection.getInstance();
-            connection = dbconn.getConnection();
-            builder = new DBBuilder(connection);
-            builder.createTableMeeting();
-            MeetingDAO dao = null;
-            dao = new MeetingDAOPostgresImpl(connection);
-
-            Meeting p1  =  new Meeting("sequenzacodicemeeting" ,data, oraInizio , piattaforma ,tipologia , nomeSala, organizzatore, NomeProgetto, durata );
-            int res =  dao.inserisciMeeting(p1);
+            	
+            	dbconn = DBConnection.getInstance();
+            	connection = dbconn.getConnection();
+            	builder = new DBBuilder(connection);
+            	ProgettoDAO dao = null;			            
+            	dao = new ProgettoDAOPostgresImpl(connection);
+            	codiceProgetto= dao.getProgettoByNome(NomeProgetto);
+            	p= new Progetto(codiceProgetto);
+//            }
+//            catch (SQLException exception)
+//            {
+//            	System.out.println("Errore SQLException: "+ exception.getMessage());
+//            }
+            	dbconn = DBConnection.getInstance();
+                connection = dbconn.getConnection();
+                builder = new DBBuilder(connection);
+                
+            	if(tipologia.equals("Telematico")) {
+            		builder.createTableMeetingTelematico();
+            		MeetingTelematicoDAO dao1 = null;
+            		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
+            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico" ,data, oraInizio , durata, p, piattaforma );
+            		//aggiungere link
+            		int res =  dao1.inserisciMeetingTelematico(p1);
+            	}else if (tipologia.equals("Fisico")) {
+            		builder.createTableMeetingFisico(); 
+            		MeetingFisicoDAO dao1 = null;
+            		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
+            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico" ,data, oraInizio , durata , p ,nomeSala);//aggiungere luogo
+            		int res =  dao1.inserisciMeetingFisicoPS(p1);
+            	}
+        
         }
         catch (SQLException exception)
         {
@@ -501,64 +667,6 @@ public class Controller {
         benvenutoPM = new BenvenutoProjectManager(this);
         benvenutoPM.setVisible(true);
 		
-	}
 
-	public void CreaArchivioPartecipanti(String codiceFiscale, String NomeProgetto) {
-	DBConnection dbconn = null;
-    Connection connection = null;
-    DBBuilder builder = null;
-    try
-        {
-            dbconn = DBConnection.getInstance();
-            connection = dbconn.getConnection();
-            builder = new DBBuilder(connection);
-            builder.createTableArchivioPartecipantiProgetto();
-            ArchivioPartecipantiProgettoDAO dao =  null;
-            
-            dao= new ArchivioPartecipantiProgettoDAOPostgresImpl(connection);
-            ArchivioPartecipantiProgetto a1 = new ArchivioPartecipantiProgetto(codiceFiscale,NomeProgetto, "Sviluppatore");
-            int res= dao.InserisciArchivioPartecipanti(a1);
-            
-        }
-    catch (SQLException exception)
-    	{
-        System.out.println("Errore SQLException: "+ exception.getMessage());
-    	}
-    catch (ConnectionException ex)
-    	{
-        System.out.println("CE: "+ex);
-    	}
-    aggiungiMembriAlProgetto.setVisible(false);
-	
-    benvenutoPM = new BenvenutoProjectManager (this);
-    benvenutoPM.setVisible(true); 
-}
-
-	public void TornaPresentazione2(int caso) {
-	if(caso==1) {
-		loginPM.setVisible(false);
-		
-	}else{
-		loginS.setVisible(false);
-		
 	}
-	presenta=new Presentazione(this);
-	presenta.setVisible(true);
-	}
-
-	public void AvviaAggiungiPresenza() {
-	    benvenutoS.setVisible(false);
-	    aggiungiPresenza = new AggiungiPresenza(this);
-	    aggiungiPresenza.setVisible(true);
-	}
-	
-	public void RitornaBenvenutoSviluppatore(int caso) {
-		if(caso== 1){
-			aggiungiPresenza.setVisible(false);
-		}
-		
-		benvenutoS = new BenvenutoSviluppatore(this);
-	    benvenutoS.setVisible(true);
-	}
-
 }

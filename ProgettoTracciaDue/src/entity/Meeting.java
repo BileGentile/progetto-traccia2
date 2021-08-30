@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 public class Meeting {
 
     //ATTRIBUTI
@@ -7,106 +9,76 @@ public class Meeting {
 	private String CodMeet;
 	private String Data;
     private String OraInizio;
-	private String Piattaforma;
-    private String Tipologia;
-    private String NomeSala;
-    private String Organizzatore;
-    private String NomeProgetto;
     private int Durata;
+    private Progetto progettoMeeting;
+    private ArrayList<Membro> partecipanti;
     
     //COSTRUTTORI
-    public Meeting(String codMeet, String data, String oraInizio, String piattaforma, String tipologia, String nomeSala, String organizzatore,String nomeProgetto, int durata) {
+    
+    public Meeting(String codMeet, String data, String oraInizio, int durata, Progetto progettoMeeting) {
 		super();
 		CodMeet = codMeet;
 		Data = data;
 		OraInizio = oraInizio;
-		Piattaforma = piattaforma;
-		Tipologia = tipologia;
-		NomeSala = nomeSala;
-		Organizzatore= organizzatore;
-		NomeProgetto= nomeProgetto;
 		Durata = durata;
+		this.progettoMeeting = progettoMeeting;
 	}
-	
-	public Meeting(String CodMeet) {
-		this.CodMeet = CodMeet;
-	}
-	
 
 	public String getCodMeet() {
 		return CodMeet;
 	}
+
 	public void setCodMeet(String codMeet) {
 		CodMeet = codMeet;
+	}
+
+	public String getData() {
+		return Data;
 	}
 
 	public void setData(String data) {
 		Data = data;
 	}
-	
-	public String getData() {
-		return Data;
-	}
+
 	public String getOraInizio() {
 		return OraInizio;
 	}
+
 	public void setOraInizio(String oraInizio) {
 		OraInizio = oraInizio;
 	}
-	public String getPiattaforma() {
-		return Piattaforma;
-	}
-	public void setPiattaforma(String piattaforma) {
-		Piattaforma = piattaforma;
-	}
-	public String getTipologia() {
-		return Tipologia;
-	}
-	public void setTipologia(String tipologia) {
-		Tipologia = tipologia ;
 
-	}
-
-	public String getNomeSala() {
-		return NomeSala;
-	}
-	public void setNomeSala(String nomeSala) {
-		NomeSala = nomeSala;
-	}
-	
 	public int getDurata() {
 		return Durata;
 	}
-	
-	public void setDurata(int durata){
+
+	public void setDurata(int durata) {
 		Durata = durata;
 	}
+
+	public Progetto getProgettoMeeting() {
+		return progettoMeeting;
+	}
+
+	public void setProgettoMeeting(Progetto progettoMeeting) {
+		this.progettoMeeting = progettoMeeting;
+	}
 	
-	public String getOrganizzatore() {
-		return Organizzatore;
+	public ArrayList<Membro> getPartecipanti() {
+		return partecipanti;
 	}
 
-	public void setOrganizzatore(String organizzatore) {
-		Organizzatore = organizzatore;
-	}
-
-	public String getNomeProgetto() {
-		return NomeProgetto;
-	}
-
-	public void setNomeProgetto(String nomeProgetto) {
-		NomeProgetto = nomeProgetto;
+	public void setPartecipanti(ArrayList<Membro> partecipanti) {
+		this.partecipanti = partecipanti;
 	}
 
 	@Override
 	public String toString() {
-		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Piattaforma="
-				+ Piattaforma + ", Tipologia=" + Tipologia + ", NomeSala=" + NomeSala + ", Organizzatore="
-				+ Organizzatore + ", NomeProgetto=" + NomeProgetto + ", Durata=" + Durata + "]";
+		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Durata=" + Durata
+				+ ", progettoMeeting=" + progettoMeeting + "]";
 	}
-
-	
-
-
+    
+    //METODI
+    
 }
 

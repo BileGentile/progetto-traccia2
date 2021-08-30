@@ -53,19 +53,15 @@ import java.awt.event.InputMethodEvent;
 
 public class RegistrazioneSviluppatore extends JFrame {
 	
-
 	private JPanel contentPane;
-
 	private JTextField CodiceFiscaleS;
-
 	private JButton btnNewButton_1;
 	Controller IlControllore;
 	private JLabel lblInserisciNome;
 	private JTextField NomeS;
 	private JTextField CognomeS;
 	private JTextField salario;
-	
-	
+
 	public RegistrazioneSviluppatore(Controller c) {
 
 		IlControllore =c;
@@ -96,7 +92,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 		NomeS.setColumns(10);
 		NomeS.setBounds(420, 81, 168, 29);
 		contentPane.add(NomeS);
-		
 		
 		JLabel lblInserisciCognome = new JLabel("Inserisci cognome");
 		lblInserisciCognome.setBounds(42, 131, 183, 19);
@@ -131,7 +126,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 		DBBuilder builder = null;
 		try
         {
-            dbconn = DBConnection.getInstance();
+			dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
             SkillsDAO dao = null;
@@ -141,10 +136,8 @@ public class RegistrazioneSviluppatore extends JFrame {
             List<Skills> listaSkills = dao.getAllSkills();
             for(Skills m : listaSkills)
             {
-            	demoList.addElement(m.getSkill());
+            	demoList.addElement(m.getNomeSkill());
             }
-            
-
         }
 		catch (SQLException exception)
     	{
@@ -163,7 +156,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 			}
 		});
 		
-		
 		textFieldNuovaSkill.setColumns(10);
 		textFieldNuovaSkill.setBounds(42, 280, 168, 29);
 		contentPane.add(textFieldNuovaSkill);
@@ -181,7 +173,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 				
 			}
 		});
-		
 				
 		btnNewButton.setBounds(420, 385, 136, 49);
 		contentPane.add(btnNewButton);

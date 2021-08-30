@@ -22,15 +22,21 @@ import javax.swing.border.EmptyBorder;
 import app.Controller;
 import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
+import dao_impl.ProjectManagerDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
+import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
+import daos.ProjectManagerDAO;
 import daos.SkillsDAO;
+import daos.SviluppatoreDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Membro;
 import entity.Progetto;
+import entity.ProjectManager;
 import entity.Skills;
+import entity.Sviluppatore;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -45,6 +51,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 	private JComboBox ComboBoxMembri;
 	private JTextField Salario;
 	private JTextField textField;
+	private String codiceProgetto;
 	
 	public AggiungiMembriAlProgetto(Controller c) {
 		IlControllore = c;
@@ -82,91 +89,120 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		comboBoxValutazione.setMaximumRowCount(10);
 		contentPane.add(comboBoxValutazione);
 		
-		
 		JComboBox ComboBoxProgetti = new JComboBox();
 		ComboBoxProgetti.addMouseListener(new MouseAdapter() {
 		
 			@Override
 			public void mouseReleased(MouseEvent e) {
 
-								   		DBConnection dbconn = null;
-								        Connection connection = null;
-								        DBBuilder builder = null;
-												   try
-											        {
-													   ComboBoxProgetti.removeAllItems();
-											            dbconn = DBConnection.getInstance();
-											            connection = dbconn.getConnection();
-											            builder = new DBBuilder(connection);
-											            MembroDAO dao = null;
-											            
-											            dao = new MembroDAOPostgresImpl(connection);
-											            
-											            List<Membro> lista = dao.getProjectManagerByCodFiscale(textField.getText().toString());
-											            
-											            if(lista.isEmpty()) {
-											            	ComboBoxProgetti.addItem("Non esistono progetti per il codicefiscale inserito");
-
-											            }else {
-											            	 try
-														        {
-														            dbconn = DBConnection.getInstance();
-														            connection = dbconn.getConnection();
-														            builder = new DBBuilder(connection);
-														            ProgettoDAO dao1 = null;
-														            
-														            dao1 = new ProgettoDAOPostgresImpl(connection);
-														            
-														            List<Progetto> listaProgetti = dao1.getProgettoProjectManager(textField.getText().toString());
-														            for(Progetto m : listaProgetti)
-														            {
-														            
-														            	 ComboBoxProgetti.addItem(m.getNomeProgetto());
-														            }
-
-														        }
-											            	 	catch (SQLException exception)
-													        	{
-													                System.out.println("Errore SQLException: "+ exception.getMessage());
-													        	}
-											            	}
-											        }catch (SQLException exception)
-												   	{
-											        	System.out.println("Errore SQLException: "+ exception.getMessage());
-												   	}
-					}
-
-			
-		});
-		
-					       
-		ComboBoxProgetti.setMaximumRowCount(10);
 				DBConnection dbconn = null;
-		        Connection connection = null;
-		        DBBuilder builder = null;
-		       
-	        		
-		ComboBoxProgetti.setBounds(312, 88, 155, 35);
-		contentPane.add(ComboBoxProgetti);
+				Connection connection = null;
+				DBBuilder builder = null;
+				try
+				{
+					ComboBoxProgetti.removeAllItems();
+					dbconn = DBConnection.getInstance();
+					connection = dbconn.getConnection();
+					builder = new DBBuilder(connection);
+					ProgettoDAO dao = null;
+											            
+					dao = new ProgettoDAOPostgresImpl(connection);
+											            
+					List<Progetto> lista = dao.getProgettoProjectManager(textField.getText().toString());
+					
+					if(lista.isEmpty()) {
+						ComboBoxProgetti.addItem("Non esistono progetti per il codicefiscale inserito");
+						
+					}else {
+//						try
+//						{
+//							dbconn = DBConnection.getInstance();
+//							connection = dbconn.getConnection();
+//							builder = new DBBuilder(connection);
+//							ProgettoDAO dao1 = null;
+//							
+//							dao1 = new ProgettoDAOPostgresImpl(connection);							            
+//
+//							List<Progetto> listaProgetti = dao1.getProgettoProjectManager(textField.getText().toString());
+							for(Progetto m : lista)
+							{
+								
+								ComboBoxProgetti.addItem(m.getNomeProgetto());
+							}
+							
+//						}
+//						catch (SQLException exception)
+//						{
+//							System.out.println("Errore SQLException: "+ exception.getMessage());
+//						}
+					}
+				}
+				catch (SQLException exception)
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+				}
+			}
+			
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				super.mouseClicked(e);
+//				DBConnection dbconn = null;
+//				Connection connection = null;
+//				DBBuilder builder = null;
+//				try
+//				{
+//					dbconn = DBConnection.getInstance();
+//					connection = dbconn.getConnection();
+//					builder = new DBBuilder(connection);
+//					ProgettoDAO dao = null;			            
+//					dao = new ProgettoDAOPostgresImpl(connection);
+//					codiceProgetto= dao.getProgettoByNome(ComboBoxProgetti.getSelectedItem().toString());
+//	        
+//					System.out.println(codiceProgetto);
+//				}
+//				catch (SQLException exception)
+//				{
+//					System.out.println("Errore SQLException: "+ exception.getMessage());
+//				}
+//			}
+		});
+						       
+		ComboBoxProgetti.setMaximumRowCount(10);
 		
-		
-		Salario = new JTextField();
-		Salario.setBounds(311, 133, 156, 29);
-		contentPane.add(Salario);
-		Salario.setColumns(10);
+        ComboBoxProgetti.setBounds(312, 88, 155, 35);
+        contentPane.add(ComboBoxProgetti);
 
-		
-		JButton btnNewButton = new JButton("Aggiungi");
-		btnNewButton.addActionListener(new ActionListener() {
+        Salario = new JTextField();
+        Salario.setBounds(311, 133, 156, 29);
+        contentPane.add(Salario);
+        Salario.setColumns(10);
+
+        JButton btnNewButton = new JButton("Aggiungi");
+		btnNewButton.addActionListener(new ActionListener() {				
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.CreaArchivioPartecipanti(ComboBoxMembri.getSelectedItem().toString(),ComboBoxProgetti.getSelectedItem().toString());
+				DBConnection dbconn = null;
+				Connection connection = null;
+				DBBuilder builder = null;
+				try
+				{
+					dbconn = DBConnection.getInstance();
+					connection = dbconn.getConnection();
+					builder = new DBBuilder(connection);
+					ProgettoDAO dao = null;			            
+					dao = new ProgettoDAOPostgresImpl(connection);
+					codiceProgetto= dao.getProgettoByNome(ComboBoxProgetti.getSelectedItem().toString());
+				}
+				catch (SQLException exception)
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+				}
+				IlControllore.CreaArchivioPartecipanti(ComboBoxMembri.getSelectedItem().toString(), codiceProgetto);
 				
 			}
 		});
 		btnNewButton.setBounds(371, 348, 119, 46);
 		contentPane.add(btnNewButton);
-		
-		
+
 		JLabel lblSalarioMedioDel = new JLabel("Salario medio del membro");
 		lblSalarioMedioDel.setBounds(62, 137, 146, 21);
 		contentPane.add(lblSalarioMedioDel);
@@ -182,29 +218,30 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		
 		JComboBox ComboBoxSkills = new JComboBox();
 		ComboBoxSkills.removeAllItems();
-		
-        try
-	        {
-	            dbconn = DBConnection.getInstance();
-	            connection = dbconn.getConnection();
-	            builder = new DBBuilder(connection);
-	            SkillsDAO dao = null;
-	            
-	            dao = new SkillsDAOPostgresImpl(connection);
-	            List<Skills> listaSkill = dao.getAllSkills(); 
-	      
-	            for(Skills n : listaSkill)
-	            {
-	            	ComboBoxSkills.addItem(n.getSkill());
-	            }
+		DBConnection dbconn = null;
+		Connection connection = null;
+		DBBuilder builder = null;
+		try
+        {
+            dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            SkillsDAO dao1 = null;
+            
+            dao1 = new SkillsDAOPostgresImpl(connection);
+            List<Skills> listaSkill = dao1.getAllSkills(); 
+      
+            for(Skills n : listaSkill)
+            {
+            	ComboBoxSkills.addItem(n.getNomeSkill());
+            }
 
-	        }
-		catch (SQLException exception)
-  	{
-          System.out.println("Errore SQLException: "+ exception.getMessage());
-  	}
-        
-        ComboBoxSkills.setMaximumRowCount(10);
+        }
+	catch (SQLException exception)
+	{
+      System.out.println("Errore SQLException: "+ exception.getMessage());
+	}
+		ComboBoxSkills.setMaximumRowCount(10);
         ComboBoxSkills.setBounds(312, 172, 155, 29);
 		contentPane.add(ComboBoxSkills);
 		
@@ -224,12 +261,12 @@ public class AggiungiMembriAlProgetto extends JFrame {
 			            dbconn = DBConnection.getInstance();
 			            connection = dbconn.getConnection();
 			            builder = new DBBuilder(connection);
-			            MembroDAO dao = null;
+			            SviluppatoreDAO dao = null;
 			            
-			            dao = new MembroDAOPostgresImpl(connection);
-			            List<Membro> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),comboBoxValutazione.getSelectedItem().toString(), ComboBoxSkills.getSelectedItem().toString(),ComboBoxProgetti.getSelectedItem().toString()); 
-			      
-			            for(Membro n : listaMembri)
+			            dao = new SviluppatoreDAOPostgresImpl(connection);
+			            int valore=ComboBoxProgetti.getSelectedIndex();
+			            List<Sviluppatore> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),ComboBoxSkills.getSelectedItem().toString(), comboBoxValutazione.getSelectedItem().toString(), codiceProgetto ); 
+			            for(Sviluppatore n : listaMembri)
 			            {
 			            	ComboBoxMembri.addItem(n.getCF());
 			            }
@@ -251,7 +288,8 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		JLabel lblNewLabel_3 = new JLabel("aziendale minima richiesta");
 		lblNewLabel_3.setBounds(62, 226, 128, 14);
 		contentPane.add(lblNewLabel_3);
-		
+
+
 		JLabel lblNewLabel_1_2 = new JLabel("Inserisci il tuo codice fiscale");
 		lblNewLabel_1_2.setBounds(62, 45, 146, 29);
 		contentPane.add(lblNewLabel_1_2);
@@ -259,8 +297,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(311, 49, 156, 29);
-		contentPane.add(textField);
-		
+		contentPane.add(textField);		
 		
 	}
 }

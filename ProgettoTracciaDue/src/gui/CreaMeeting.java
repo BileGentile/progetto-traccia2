@@ -14,12 +14,15 @@ import javax.swing.border.EmptyBorder;
 import app.Controller;
 import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
+import dao_impl.ProjectManagerDAOPostgresImpl;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
+import daos.ProjectManagerDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Membro;
 import entity.Progetto;
+import entity.ProjectManager;
 
 import javax.swing.JTextField;
 import javax.swing.JTable;
@@ -41,7 +44,6 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-
 
 public class CreaMeeting extends JFrame {
 
@@ -101,12 +103,10 @@ public class CreaMeeting extends JFrame {
 		comboBox_1.setToolTipText("\n");
 		comboBox_1.setBounds(232, 178, 140, 26);
 		contentPane.add(comboBox_1);
-		
-		
+			
 		JLabel lblNewLabel_2_1 = new JLabel("Seleziona piattaforma");
 		lblNewLabel_2_1.setBounds(17, 185, 143, 13);
-		contentPane.add(lblNewLabel_2_1);
-		
+		contentPane.add(lblNewLabel_2_1);		
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Inserisci nome della sala");
 		lblNewLabel_2_1_1.setBounds(20, 215, 172, 19);
@@ -131,7 +131,6 @@ public class CreaMeeting extends JFrame {
 					comboBox_1.addItem("Teams");
 					comboBox_1.addItem("Zoom");
 					txtNull.setText("NULL");
-				
 		
 					}
 			}
@@ -148,96 +147,96 @@ public class CreaMeeting extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 
-								   		DBConnection dbconn = null;
-								        Connection connection = null;
-								        DBBuilder builder = null;
-												   try
-											        {
-													   comboBox_Progetto.removeAllItems();
-											            dbconn = DBConnection.getInstance();
-											            connection = dbconn.getConnection();
-											            builder = new DBBuilder(connection);
-											            MembroDAO dao = null;
-											            
-											            dao = new MembroDAOPostgresImpl(connection);
-											            
-											            List<Membro> lista = dao.getProjectManagerByCodFiscale(textField_CF.getText().toString());
-											            
-											            if(lista.isEmpty()) {
-											            	comboBox_Progetto.addItem("Non esistono progetti per il codicefiscale inserito");
 
-											            }else {
-											            	 try
-														        {
-														            dbconn = DBConnection.getInstance();
-														            connection = dbconn.getConnection();
-														            builder = new DBBuilder(connection);
-														            ProgettoDAO dao1 = null;
-														            
-														            dao1 = new ProgettoDAOPostgresImpl(connection);
-														            
-														            List<Progetto> listaProgetti = dao1.getProgettoProjectManager(textField_CF.getText().toString());
-														            for(Progetto m : listaProgetti)
-														            {
-														            
-														            	comboBox_Progetto.addItem(m.getNomeProgetto());
-														            }
+		   		DBConnection dbconn = null;
+		        Connection connection = null;
+		        DBBuilder builder = null;
+						   try
+					        {
+							   comboBox_Progetto.removeAllItems();
+					            dbconn = DBConnection.getInstance();
+					            connection = dbconn.getConnection();
+					            builder = new DBBuilder(connection);
+					            ProjectManagerDAO dao = null;
+					            
+					            dao = new ProjectManagerDAOPostgresImpl(connection);
+					            
+					            List<ProjectManager> lista = dao.getProjectManagerByCodFiscale(textField_CF.getText().toString());
+					            
+					            if(lista.isEmpty()) {
+					            	comboBox_Progetto.addItem("Non esistono progetti per il codicefiscale inserito");
 
-														        }
-											            	 	catch (SQLException exception)
-													        	{
-													                System.out.println("Errore SQLException: "+ exception.getMessage());
-													        	}
-											            	}
-											        }catch (SQLException exception)
-												   	{
-											        	System.out.println("Errore SQLException: "+ exception.getMessage());
-												   	}
-					}
+					            }else {
+					            	 try
+								        {
+								            dbconn = DBConnection.getInstance();
+								            connection = dbconn.getConnection();
+								            builder = new DBBuilder(connection);
+								            ProgettoDAO dao1 = null;
+								            
+								            dao1 = new ProgettoDAOPostgresImpl(connection);
+								            
+								            List<Progetto> listaProgetti = dao1.getProgettoProjectManager(textField_CF.getText().toString());
+								            for(Progetto m : listaProgetti)
+								            {
+								            
+								            	comboBox_Progetto.addItem(m.getNomeProgetto());
+								            }
 
-			
-		});
-		
-					       
+								        }
+					            	 	catch (SQLException exception)
+							        	{
+							                System.out.println("Errore SQLException: "+ exception.getMessage());
+							        	}
+					            	}
+					        }catch (SQLException exception)
+						   	{
+					        	System.out.println("Errore SQLException: "+ exception.getMessage());
+						   	}
+}
+
+
+});
+
+   
 		comboBox_Progetto.setMaximumRowCount(10);
 		comboBox_Progetto.setToolTipText("");
 		comboBox_Progetto.setBounds(232, 43, 140, 21);
 		contentPane.add(comboBox_Progetto);
-		
-		
+
+
 		System.out.println(spinner.getValue().toString());
 		JButton btnNewButton = new JButton("Crea");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				IlControllore.CreaMeeting(comboBox.getSelectedItem().toString(), spinner.getValue().toString(),spinner.getValue().toString(), comboBox_1.getSelectedItem().toString(), txtNull.getText().toString(),textField_CF.getText(),comboBox_Progetto.getSelectedItem().toString() , Integer.parseInt(textField.getText().toString()));
-				
-			}
+				public void actionPerformed(ActionEvent e) {
+					IlControllore.CreaMeeting(comboBox.getSelectedItem().toString(), spinner.getValue().toString(),spinner.getValue().toString(), comboBox_1.getSelectedItem().toString(), txtNull.getText().toString(),textField_CF.getText(),comboBox_Progetto.getSelectedItem().toString() , Integer.parseInt(textField.getText().toString()));
+
+				}
 		});
 		btnNewButton.setBounds(304, 256, 107, 41);
 		contentPane.add(btnNewButton);
-		
+
 		JLabel lblNewLabel_2_2 = new JLabel("Inserisci durata in ore");
 		lblNewLabel_2_2.setBounds(20, 145, 159, 22);
 		contentPane.add(lblNewLabel_2_2);
-		
+
 		textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(232, 146, 140, 21);
 		contentPane.add(textField);
-		
+
 		JLabel lblNewLabel_1_1 = new JLabel("Inserisci CF dell'organizzatore");
 		lblNewLabel_1_1.setBounds(20, 23, 172, 21);
 		contentPane.add(lblNewLabel_1_1);
-		
+
 		textField_CF = new JTextField();
 		textField_CF.setColumns(10);
 		textField_CF.setBounds(232, 11, 140, 21);
 		contentPane.add(textField_CF);
-		
+
 		JLabel lblNewLabel_1_2 = new JLabel("Seleziona il Progetto");
 		lblNewLabel_1_2.setBounds(20, 55, 140, 21);
 		contentPane.add(lblNewLabel_1_2);
-		
-		
+
 	}
 }

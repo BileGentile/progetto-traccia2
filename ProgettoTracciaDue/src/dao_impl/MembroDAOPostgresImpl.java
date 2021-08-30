@@ -13,211 +13,153 @@ import entity.Membro;
 public class MembroDAOPostgresImpl implements MembroDAO {
 	
 	private Connection connection;
-	private PreparedStatement getAllMembriPS, inserisciMembroPS, getProjectManagerByCodFiscalePS, getSviluppatoreByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgetto,getAllSviluppatoriProgetto;
+	
+	private PreparedStatement  getAllMembriPS, getProjectManagerByCodFiscalePS, getSviluppatoreByValutazionePS ,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriPS, inserisciValutazionePS,getPartecipantiProgettoPS, getAllSviluppatoriProgettoPS ,InserisciArchivioPartecipantiPS;
+
+	
 	public MembroDAOPostgresImpl (Connection connection) throws SQLException{
-		this.connection=connection;
-		getAllMembriPS = connection.prepareStatement("SELECT * FROM membro");
-		inserisciMembroPS = connection.prepareStatement("INSERT INTO membro VALUES (?,?,UPPER(?), ?, ?,?)");
-		getProjectManagerByCodFiscalePS = connection.prepareStatement("SELECT * FROM membro WHERE codFiscale LIKE UPPER(?) AND ruolo LIKE 'ProjectManager' ");
-		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM membro WHERE codFiscale LIKE UPPER(?) AND ruolo LIKE 'Sviluppatore' ");
-		getSviluppatoreByValutazionePS = connection.prepareStatement("SELECT * FROM membro WHERE Valutazione LIKE ? AND ruolo LIKE 'Sviluppatore' ");
-		getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\n"
-				+ "FROM membro \n"
-				+ "WHERE  salariomedio > ? \n"
-				+ "	AND ruolo LIKE 'Sviluppatore' \n"
-				+ "	AND valutazione LIKE ? \n"
-				+ "	AND codFiscale IN ((SELECT DISTINCT codfiscale \n"
-				+ "						FROM skills AS S \n"
-				+ "						Where S.skill LIKE ?)\n"
-				+ "							except\n"
-				+ "						(select codfiscale\n"
-				+ "						from archiviopartecipantiprogetto\n"
-				+ "						where nomeprogetto like ?)))");
-		getAllSviluppatoriPS = connection.prepareStatement("SELECT * FROM membro WHERE ruolo LIKE 'Sviluppatore' ");
-		inserisciValutazionePS = connection.prepareStatement("UPDATE membro SET valutazione  = ? WHERE codfiscale LIKE ?");
-		getPartecipantiProgetto = connection.prepareStatement("select codfiscale,nome, cognome,ruolo, valutazione\n"
-				+ "from archiviopartecipantiprogetto natural join membro \n"
-				+ "where nomeprogetto= ?;");
-		getAllSviluppatoriProgetto=connection.prepareStatement("select distinct codfiscale\n"
-				+ "from archiviopartecipantiprogetto\n"
-				+ "where nomeprogetto in (SELECT nomeprogetto\n"
-				+ "						FROM archiviopartecipantiprogetto \n"
-				+ "						WHERE codFiscale LIKE UPPER (?) \n"
-				+ "					   AND ruolo LIKE 'ProjectManager') AND ruolo LIKE 'Sviluppatore'");
-	}
+			this.connection=connection;
+//			getAllMembriPS = connection.prepareStatement("SELECT * FROM membro");
+//			getSviluppatoreByValutazionePS = connection.prepareStatement("SELECT * FROM membro WHERE Valutazione LIKE ? AND ruolo LIKE 'Sviluppatore' ");
+//			getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\n"
+//					+ "FROM membro \n"
+//					+ "WHERE  salariomedio > ? \n"
+//					+ "	AND ruolo LIKE 'Sviluppatore' \n"
+//					+ "	AND valutazione LIKE ? \n"
+//					+ "	AND codFiscale IN ((SELECT DISTINCT codfiscale \n"
+//					+ "						FROM skills AS S \n"
+//					+ "						Where S.skill LIKE ?)\n"
+//					+ "							except\n"
+//					+ "						(select codfiscale\n"
+//					+ "						from archiviopartecipantiprogetto\n"
+//					+ "						where nomeprogetto like ?)))");
+//			getAllSviluppatoriPS = connection.prepareStatement("SELECT * FROM membro WHERE ruolo LIKE 'Sviluppatore' ");
+			inserisciValutazionePS = connection.prepareStatement("UPDATE membro SET valutazione  = ? WHERE codfiscale LIKE ?");
+			getPartecipantiProgettoPS = connection.prepareStatement("select codfiscale,nome, cognome,ruolo, valutazione\n"
+					+ "from archiviopartecipantiprogetto natural join membro \n"
+					+ "where nomeprogetto= ?;");
+			
+			InserisciArchivioPartecipantiPS=connection.prepareStatement("INSERT INTO partecipazioniprogetto VALUES (?,?);");
+		}
 	
-	@Override
-	public List<Membro>  getAllMembri() throws SQLException {
-        ResultSet rs= getAllMembriPS.executeQuery();
-        List<Membro> lista = new ArrayList<Membro>();
-        while(rs.next())
-        {
-            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
-            s.setNome(rs.getString("nome"));
-            s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
-            s.setSalarioMedio(rs.getInt("SalarioMedio"));
-            s.setValutazione(rs.getString("valutazione"));
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
-	}
+////fare
+//	@Override
+//	public List<Membro>  getAllMembri() throws SQLException {
+//        ResultSet rs= getAllMembriPS.executeQuery();
+//        List<Membro> lista = new ArrayList<Membro>();
+//        while(rs.next())
+//        {
+//            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
+//            s.setNome(rs.getString("nome"));
+//            s.setCognome(rs.getString("cognome"));
+//            s.setRuolo(rs.getString("ruolo"));
+//            s.setSalarioMedio(rs.getInt("SalarioMedio"));
+//            s.setValutazione(rs.getString("valutazione"));
+//            lista.add(s);
+//        }
+//        rs.close();
+//        return lista;
+//	}
+//	
+//	@Override
+//	public List<Membro>  getPartecipantiProgetto(String nomeprogetto) throws SQLException {
+//		getPartecipantiProgetto.setString(1, nomeprogetto);
+//        ResultSet rs= getPartecipantiProgetto.executeQuery();
+//        List<Membro> lista = new ArrayList<Membro>();
+//        while(rs.next())
+//        {
+//            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
+//            s.setNome(rs.getString("nome"));
+//            s.setCognome(rs.getString("cognome"));
+//            s.setRuolo(rs.getString("ruolo"));
+//            s.setValutazione(rs.getString("valutazione"));
+//            lista.add(s);
+//        }
+//        rs.close();
+//        return lista;
+//	}
+//
+//	@Override
+//	public List<Membro> getMembroByRuolo(String ruolo) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Membro> getMembroByCognome(String cognome) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Membro> getSviluppatoreBySalarioESkillsEValutazionePS(int salario, String valutazione, String skills, String progetto) throws SQLException{
+//		getSviluppatoreBySalarioESkillsEValutazionePS.setInt(1, salario);
+//		getSviluppatoreBySalarioESkillsEValutazionePS.setString(2, valutazione);
+//		getSviluppatoreBySalarioESkillsEValutazionePS.setString(3, skills);
+//		getSviluppatoreBySalarioESkillsEValutazionePS.setString(4, progetto);
+//        ResultSet rs= getSviluppatoreBySalarioESkillsEValutazionePS.executeQuery();
+//        List<Membro> lista = new ArrayList<Membro>();
+//        while(rs.next())
+//        {
+//            Membro s = new Membro(rs.getString("codFiscale")); 
+//            s.setNome(rs.getString("nome"));
+//            s.setCognome(rs.getString("cognome"));
+//            s.setRuolo(rs.getString("ruolo"));
+//            s.setSalarioMedio(rs.getInt("SalarioMedio"));
+//            s.setValutazione(rs.getString("Valutazione"));
+//            lista.add(s);
+//        }
+//        rs.close();
+//        return lista;
+//	}
 	
-	@Override
-	public List<Membro>  getPartecipantiProgetto(String nomeprogetto) throws SQLException {
-		getPartecipantiProgetto.setString(1, nomeprogetto);
-        ResultSet rs= getPartecipantiProgetto.executeQuery();
-        List<Membro> lista = new ArrayList<Membro>();
-        while(rs.next())
-        {
-            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
-            s.setNome(rs.getString("nome"));
-            s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
-            s.setValutazione(rs.getString("valutazione"));
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
-	}
-
-	@Override
-	public List<Membro> getMembroByRuolo(String ruolo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Membro> getMembroByCognome(String cognome) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	
-	public List<Membro> getProjectManagerByCodFiscale(String codfiscale) throws SQLException {
-		getProjectManagerByCodFiscalePS.setString(1, codfiscale);
-        ResultSet rs= getProjectManagerByCodFiscalePS.executeQuery();
-        List<Membro> lista = new ArrayList<Membro>();
-        while(rs.next())
-        {
-            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
-            s.setNome(rs.getString("nome"));
-            s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
-            s.setSalarioMedio(rs.getInt("SalarioMedio"));
-            s.setValutazione(rs.getString("Valutazione"));
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
-	}
-
-	@Override
-	public List<Membro> getSviluppatoreByCodFiscale(String codfiscale) throws SQLException {
-		getSviluppatoreByCodFiscalePS.setString(1, codfiscale);
-        ResultSet rs= getSviluppatoreByCodFiscalePS.executeQuery();
-        List<Membro> lista = new ArrayList<Membro>();
-        while(rs.next())
-        {
-            Membro s = new Membro(rs.getString("codFiscale")); //rs.getString(1)
-            s.setNome(rs.getString("nome"));
-            s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
-            s.setSalarioMedio(rs.getInt("SalarioMedio"));
-            s.setValutazione(rs.getString("Valutazione"));
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
-	}
-
-	@Override
-	public List<Membro> getSviluppatoreBySalarioESkillsEValutazionePS(int salario, String valutazione, String skills, String progetto) throws SQLException{
-		getSviluppatoreBySalarioESkillsEValutazionePS.setInt(1, salario);
-		getSviluppatoreBySalarioESkillsEValutazionePS.setString(2, valutazione);
-		getSviluppatoreBySalarioESkillsEValutazionePS.setString(3, skills);
-		getSviluppatoreBySalarioESkillsEValutazionePS.setString(4, progetto);
-        ResultSet rs= getSviluppatoreBySalarioESkillsEValutazionePS.executeQuery();
-        List<Membro> lista = new ArrayList<Membro>();
-        while(rs.next())
-        {
-            Membro s = new Membro(rs.getString("codFiscale")); 
-            s.setNome(rs.getString("nome"));
-            s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
-            s.setSalarioMedio(rs.getInt("SalarioMedio"));
-            s.setValutazione(rs.getString("Valutazione"));
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
-	}
-	
-	@Override
-	public int inserisciMembro(Membro membro) throws SQLException {
-		inserisciMembroPS.setString(1, membro.getNome());
-        inserisciMembroPS.setString(2, membro.getCognome());
-        inserisciMembroPS.setString(3, membro.getCF());
-        inserisciMembroPS.setString(4, membro.getRuolo());
-        inserisciMembroPS.setInt(5, membro.getSalarioMedio());
-        inserisciMembroPS.setString(6, membro.getValutazione());
-        int row = inserisciMembroPS.executeUpdate();
-        System.out.print(row); 
-
-        return row;
-	}
-
 	@Override
 	public int  inserisciValutazione(String valutazione, String codfiscale) throws SQLException {
 		inserisciValutazionePS.setString(1, valutazione);
 		inserisciValutazionePS.setString(2, codfiscale);
-		
         int row = inserisciValutazionePS.executeUpdate();
-	
         return row;
 	}
-
-	@Override
-	public List<Membro> getMembroByNome(String nome) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Membro> getAllSviluppatori() throws SQLException {
-		ResultSet rs = getAllSviluppatoriPS.executeQuery();
-	    List<Membro> lista = new ArrayList<Membro>();
-	    while(rs.next())
-	    {
-	            Membro s = new Membro(rs.getString("codFiscale"));
-	            s.setNome(rs.getString("nome"));
-	            s.setCognome(rs.getString("cognome"));
-	            s.setRuolo(rs.getString("ruolo"));
-	            s.setSalarioMedio(rs.getInt("SalarioMedio"));
-	            s.setValutazione(rs.getString("Valutazione"));
-	            lista.add(s);
-	    }
-	        rs.close();
-	        return lista;
-		}
-	
-	@Override
-	public int cancellaMembro(Membro membro) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Membro> getSviluppatoreByValutazione(String valutazione) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//
+//	@Override
+//	public List<Membro> getMembroByNome(String nome) throws SQLException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Membro> getAllSviluppatori() throws SQLException {
+//		ResultSet rs = getAllSviluppatoriPS.executeQuery();
+//	    List<Membro> lista = new ArrayList<Membro>();
+//	    while(rs.next())
+//	    {
+//	            Membro s = new Membro(rs.getString("codFiscale"));
+//	            s.setNome(rs.getString("nome"));
+//	            s.setCognome(rs.getString("cognome"));
+//	            s.setRuolo(rs.getString("ruolo"));
+//	            s.setSalarioMedio(rs.getInt("SalarioMedio"));
+//	            s.setValutazione(rs.getString("Valutazione"));
+//	            lista.add(s);
+//	    }
+//	        rs.close();
+//	        return lista;
+//		}
+//	
+//	@Override
+//	public int cancellaMembro(Membro membro) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//	@Override
+//	public List<Membro> getSviluppatoreByValutazione(String valutazione) throws SQLException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	public List<Membro> getAllSviluppatoriProgetto (String codfiscale) throws SQLException {
-		getAllSviluppatoriProgetto.setString(1, codfiscale);
-        ResultSet rs= getAllSviluppatoriProgetto.executeQuery();
+		getAllSviluppatoriProgettoPS.setString(1, codfiscale);
+        ResultSet rs= getAllSviluppatoriProgettoPS.executeQuery();
         List<Membro> lista = new ArrayList<Membro>();
         while(rs.next())
         {
@@ -227,5 +169,20 @@ public class MembroDAOPostgresImpl implements MembroDAO {
         rs.close();
         return lista;
 	}
+
+	@Override
+	public List<Membro> getPartecipantiProgetto(String nomeprogetto) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+	public int InserisciArchivioPartecipanti(String codiceFiscale, String codiceprogetti) throws SQLException{
+		InserisciArchivioPartecipantiPS.setString(1, codiceFiscale);
+		InserisciArchivioPartecipantiPS.setString(2, codiceprogetti);
+        int row = InserisciArchivioPartecipantiPS.executeUpdate();
+        System.out.print(row); 
+        return row;
+        
+	}
+
 }

@@ -27,13 +27,11 @@ public class DBConnection {
         {
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-
         }
         catch (ClassNotFoundException ex)
         {
             System.out.println("Database Connection Creation Failed : " + ex.getMessage());
         }
-
     }
 
     public Connection getConnection() {
@@ -50,7 +48,6 @@ public class DBConnection {
             {
                 instance = new DBConnection();
             }
-
         return instance;
     }
 

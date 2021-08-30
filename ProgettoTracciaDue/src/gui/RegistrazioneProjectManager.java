@@ -31,7 +31,6 @@ import javax.swing.AbstractListModel;
 
 public class RegistrazioneProjectManager extends JFrame {
 
-
 	private JPanel contentPane;
 	private JTextField CodiceFiscalePM;
 
@@ -101,7 +100,7 @@ public class RegistrazioneProjectManager extends JFrame {
             List<Skills> listaSkills = dao.getAllSkills();
             for(Skills m : listaSkills)
             {
-            	demoList.addElement(m.getSkill());
+            	demoList.addElement(m.getNomeSkill());
             }
 
         }
@@ -121,7 +120,6 @@ public class RegistrazioneProjectManager extends JFrame {
 			}
 		});
 		
-		
 		textFieldNuovaSkill.setColumns(10);
 		textFieldNuovaSkill.setBounds(20, 207, 136, 29);
 		contentPane.add(textFieldNuovaSkill);
@@ -130,7 +128,7 @@ public class RegistrazioneProjectManager extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 	
-				IlControllore.RegistraProjectManager(CognomePM.getText(), NomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText(), list.getSelectedValuesList());
+				IlControllore.RegistraProjectManager( NomePM.getText(),CognomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText(), list.getSelectedValuesList());
 			}
 		});
 		btnNewButton.setBounds(338, 297, 103, 39);
@@ -145,13 +143,12 @@ public class RegistrazioneProjectManager extends JFrame {
 		InserisciSalario.setBounds(20, 130, 163, 29);
 		contentPane.add(InserisciSalario);
 		
-		
 		JButton btnNewButton_1_1 = new JButton("Torna indietro");
 		btnNewButton_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso;
 				caso=2;
-				IlControllore.TornaLogin(caso);
+				IlControllore.TornaLogin (caso);
 			}
 		});
 		btnNewButton_1_1.setBounds(20, 297, 120, 39);
@@ -164,6 +161,6 @@ public class RegistrazioneProjectManager extends JFrame {
 		JLabel lbl2 = new JLabel("oppure inseriscine una nuova qui");
 		lbl2.setBounds(20, 171, 168, 36);
 		contentPane.add(lbl2);
-		
+
 		}
 }

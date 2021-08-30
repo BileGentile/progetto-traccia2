@@ -5,27 +5,31 @@ import java.util.ArrayList;
 public class Progetto {
 	
     //	attributi
+	
 	private String NomeProgetto;
 	private String CodiceProgetto;
-	private String AmbitoProgetto;
 	private String TipoProgetto;
 	private String Stato;
+	private ArrayList<Sviluppatore> membriProgetto;
+	private ProjectManager projectManagerProgetto;
+	private ArrayList<Ambito> ambitiProgetto;
+	private ArrayList<Meeting> meetingProgetto;
+	
 	//	costruttori
 	
-
-	public Progetto(String nomeProgetto, String tipoProgetto, String ambitoProgetto, String stato, String codiceProgetto) {
+	public Progetto(String nomeProgetto, String tipoProgetto, String codiceProgetto,  String stato,
+		 ProjectManager projectManagerProgetto) {
 		super();
 		NomeProgetto = nomeProgetto;
-		TipoProgetto = tipoProgetto;
-		AmbitoProgetto = ambitoProgetto;
-		Stato = stato;
 		CodiceProgetto = codiceProgetto;
-		}
-	
+		TipoProgetto = tipoProgetto;
+		Stato = stato;
+		this.projectManagerProgetto = projectManagerProgetto;
+	}
+
 	public Progetto(String CodiceProgetto) {
 		this.CodiceProgetto = CodiceProgetto;
 	}
-	
 	
 	public String getNomeProgetto() {
 		return NomeProgetto;
@@ -39,12 +43,6 @@ public class Progetto {
 	public void setTipoProgetto(String tipoProgetto) {
 		TipoProgetto = tipoProgetto;
 	}
-	public String getAmbitoProgetto() {
-		return AmbitoProgetto;
-	}
-	public void setAmbitoProgetto(String ambitoProgetto) {
-		AmbitoProgetto = ambitoProgetto;
-	}
 	public String getStato() {
 		return Stato;
 	}
@@ -57,14 +55,47 @@ public class Progetto {
 	public void setCodiceProgetto(String codiceProgetto) {
 		CodiceProgetto = codiceProgetto;
 	}
-	
-	
+
+	public ArrayList<Sviluppatore> getMembriProgetto() {
+		return membriProgetto;
+	}
+
+	public void setMembriProgetto(ArrayList<Sviluppatore> membriProgetto) {
+		this.membriProgetto = membriProgetto;
+	}
+
+	public ProjectManager getProjectManagerProgetto() {
+		return projectManagerProgetto;
+	}
+
+	public void setProjectManagerProgetto(ProjectManager projectManagerProgetto) {
+		this.projectManagerProgetto = projectManagerProgetto;
+	}
+
+	public ArrayList<Ambito> getAmbitiProgetto() {
+		return ambitiProgetto;
+	}
+
+	public void setAmbitiProgetto(ArrayList<Ambito> ambitiProgetto) {
+		this.ambitiProgetto = ambitiProgetto;
+	}
+
+	public ArrayList<Meeting> getMeetingProgetto() {
+		return meetingProgetto;
+	}
+
+	public void setMeetingProgetto(ArrayList<Meeting> meetingProgetto) {
+		this.meetingProgetto = meetingProgetto;
+	}
 
 	@Override
 	public String toString() {
-		return "Progetto [Progetto=" + NomeProgetto + ", TipoProgetto=" + TipoProgetto + ", AmbitoProgetto=" + AmbitoProgetto + ", Stato="
-				+ Stato + ", CodiceProgetto=" + CodiceProgetto + "]";
+		return "Progetto [NomeProgetto=" + NomeProgetto + ", CodiceProgetto=" + CodiceProgetto + ", TipoProgetto="
+				+ TipoProgetto + ", Stato=" + Stato + ", membriProgetto=" + membriProgetto + ", projectManagerProgetto="
+				+ projectManagerProgetto + ", ambitiProgetto=" + ambitiProgetto + ", meetingProgetto=" + meetingProgetto
+				+ "]";
 	}
-//metodi
+	
+	//metodi
 	
 }

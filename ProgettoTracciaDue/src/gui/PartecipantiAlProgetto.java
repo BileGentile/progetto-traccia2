@@ -23,12 +23,15 @@ import javax.swing.border.EmptyBorder;
 import app.Controller;
 import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
+import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.MembroDAO;
 import daos.ProgettoDAO;
+import daos.SviluppatoreDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Membro;
 import entity.Progetto;
+import entity.Sviluppatore;
 
 import java.awt.FlowLayout;
 import java.awt.ScrollPane;
@@ -97,25 +100,24 @@ public class PartecipantiAlProgetto extends JFrame {
 		        Connection connection = null;
 		        DBBuilder builder = null;
 		        try
-			        {
-			            dbconn = DBConnection.getInstance();
-			            connection = dbconn.getConnection();
-			            builder = new DBBuilder(connection);
-			            ProgettoDAO dao = null;
-			            
-			            dao = new ProgettoDAOPostgresImpl(connection);
-			            
-			            List<Progetto> listaProgetti = dao.getProgettoProjectManager(cf.getText().toString());
-			            for(Progetto m : listaProgetti)
-			            {
-			            	ComboBoxProgetti.addItem(m.getNomeProgetto());
-			            }
-
-			        }
-	        		catch (SQLException exception)
-		        	{
-		                System.out.println("Errore SQLException: "+ exception.getMessage());
-		        	}
+		        {
+		        	dbconn = DBConnection.getInstance();
+		            connection = dbconn.getConnection();
+		            builder = new DBBuilder(connection);
+		            ProgettoDAO dao = null;
+		            
+		            dao = new ProgettoDAOPostgresImpl(connection);
+		            
+		            List<Progetto> listaProgetti = dao.getProgettoProjectManager(cf.getText().toString());
+		            for(Progetto m : listaProgetti)
+		            {
+		            	ComboBoxProgetti.addItem(m.getNomeProgetto());
+		            }
+			    }
+		        catch (SQLException exception)
+	        	{
+	                System.out.println("Errore SQLException: "+ exception.getMessage());
+	        	}
 			}
 		});
 		btnR.setBounds(514, 40, 175, 39);
@@ -125,7 +127,6 @@ public class PartecipantiAlProgetto extends JFrame {
 		contentPane.add(textArea);
 		textArea.setBounds(67, 212, 445, 263);
 		textArea.setEditable(false);
-		
 		
 		JButton btnR1 = new JButton("Ricerca Partecipanti");
 		btnR1.addActionListener(new ActionListener() {
@@ -137,23 +138,22 @@ public class PartecipantiAlProgetto extends JFrame {
 		        DBBuilder builder = null;
 				try
 		        {
-		            dbconn = DBConnection.getInstance();
+					dbconn = DBConnection.getInstance();
 		            connection = dbconn.getConnection();
 		            builder = new DBBuilder(connection);
-		            MembroDAOPostgresImpl dao = null;
+		            SviluppatoreDAO dao = null;
 		            
-		            dao = new MembroDAOPostgresImpl(connection);
+		            dao = new SviluppatoreDAOPostgresImpl(connection);
 		            
-		            List<Membro> listaPartecipanti = dao.getPartecipantiProgetto(ComboBoxProgetti.getSelectedItem().toString());
+		            List<Sviluppatore> listaPartecipanti = dao.getPartecipantiProgettoPS(ComboBoxProgetti.getSelectedItem().toString());
 		           
-		            for(Membro m : listaPartecipanti)
+		            for(Sviluppatore m : listaPartecipanti)
 		            {
 		            	textArea.setText(textArea.getText().concat("\n"+cont+" "+m.toString()));
 		            	cont++;
 		            }
-
 		        }
-        		catch (SQLException exception)
+				catch (SQLException exception)
 	        	{
 	                System.out.println("Errore SQLException: "+ exception.getMessage());
 	        	}
@@ -161,8 +161,6 @@ public class PartecipantiAlProgetto extends JFrame {
 		});
 		btnR1.setBounds(514, 109, 175, 39);
 		contentPane.add(btnR1);
-		
-	
 		
 	}
 }
