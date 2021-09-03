@@ -1,0 +1,15 @@
+package entity;
+
+public class Sviluppatore extends Membro {
+
+	public Sviluppatore(String CF) {
+		super(CF);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Sviluppatore(String nome, String cognome, String cF, String ruolo, int salarioMedio, String valutazione) {
+		super(nome, cognome, cF, ruolo, salarioMedio, valutazione);
+		// TODO Auto-generated constructor stub
+	}
+
+}
