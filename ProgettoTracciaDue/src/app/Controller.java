@@ -120,7 +120,12 @@ public class Controller {
             builder.createTableAssociazioneSkillsProjectManager();
             builder.createTableAssociazioneSkillsSviluppatore();
             
-    
+            //CREAZIONE TRIGGER
+
+            builder.createTriggerPartecipazioneAlProgetto();
+            
+            
+            
             MembroDAO dao = null;
             ProgettoDAO daoo = null;
             MeetingDAO daooo=null;
