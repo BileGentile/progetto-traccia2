@@ -20,7 +20,7 @@ public class ProjectManagerDAOPostgresImpl implements ProjectManagerDAO {
 	public ProjectManagerDAOPostgresImpl(Connection connection) throws SQLException {
 		this.connection=connection;
 		getProjectManagerByCodFiscalePS = connection.prepareStatement("SELECT * FROM projectmanager WHERE codFiscale LIKE UPPER(?) AND ruolo LIKE 'ProjectManager' ");
-		inserisciProjectManagerPS = connection.prepareStatement("INSERT INTO projectmanager VALUES (?,?,UPPER(?), 'ProjectManager', ?)");
+		inserisciProjectManagerPS = connection.prepareStatement("INSERT INTO projectmanager VALUES (?,?,UPPER(?), 'ProjectManager', ?,?)");
 		inserisciSkillProjectManagerPS=connection.prepareStatement("INSERT INTO associazioneskillsprojectmanager VALUES (?,?)");
 		
 	}
@@ -48,6 +48,7 @@ public class ProjectManagerDAOPostgresImpl implements ProjectManagerDAO {
 		inserisciProjectManagerPS.setString(2, membro.getCognome());
 		inserisciProjectManagerPS.setString(3, membro.getCF());
 		inserisciProjectManagerPS.setInt(4, membro.getSalarioMedio());
+		inserisciProjectManagerPS.setString(5, membro.getValutazione());
         int row = inserisciProjectManagerPS.executeUpdate();
         System.out.print(row); 
         return row;
