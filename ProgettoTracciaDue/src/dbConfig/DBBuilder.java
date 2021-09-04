@@ -323,7 +323,6 @@ public class DBBuilder
                             " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
                             " ruolo VARCHAR(255) CHECK (ruolo LIKE 'ProjectManager'),"+
                             " salarioMedio INTEGER not NULL,"+
-                            " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
                             " PRIMARY KEY (codFiscale));";
     				
     				result = st.executeUpdate(sql);

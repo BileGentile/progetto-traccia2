@@ -380,7 +380,7 @@ public class Controller {
 	            daoProjectManager = new ProjectManagerDAOPostgresImpl(connection);
 	            daoSkill = new SkillsDAOPostgresImpl(connection);	
 	            
-	            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale, "ProjectManager", Integer.valueOf(salario), "NULL");
+	            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale, "ProjectManager", Integer.valueOf(salario));
 	           
 	            int res =  daoProjectManager.inserisciProjectManager(m1);
 	            int i= 0;
