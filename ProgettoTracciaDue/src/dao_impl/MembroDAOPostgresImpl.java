@@ -34,7 +34,7 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 //					+ "						from archiviopartecipantiprogetto\n"
 //					+ "						where nomeprogetto like ?)))");
 //			getAllSviluppatoriPS = connection.prepareStatement("SELECT * FROM membro WHERE ruolo LIKE 'Sviluppatore' ");
-			//inserisciValutazionePS = connection.prepareStatement("UPDATE sviluppatore SET valutazione  = ? WHERE codfiscale LIKE ?");
+			inserisciValutazionePS = connection.prepareStatement("UPDATE membro SET valutazione  = ? WHERE codfiscale LIKE ?");
 			getPartecipantiProgettoPS = connection.prepareStatement("select codfiscale,nome, cognome,ruolo, valutazione\n"
 					+ "from archiviopartecipantiprogetto natural join membro \n"
 					+ "where nomeprogetto= ?;");
@@ -112,14 +112,14 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 //        rs.close();
 //        return lista;
 //	}
-//	
-//	@Override
-//	public int  inserisciValutazione(String valutazione, String codfiscale) throws SQLException {
-//		inserisciValutazionePS.setString(1, valutazione);
-//		inserisciValutazionePS.setString(2, codfiscale);
-//        int row = inserisciValutazionePS.executeUpdate();
-//        return row;
-//	}
+	
+	@Override
+	public int  inserisciValutazione(String valutazione, String codfiscale) throws SQLException {
+		inserisciValutazionePS.setString(1, valutazione);
+		inserisciValutazionePS.setString(2, codfiscale);
+        int row = inserisciValutazionePS.executeUpdate();
+        return row;
+	}
 //
 //	@Override
 //	public List<Membro> getMembroByNome(String nome) throws SQLException {
@@ -138,6 +138,7 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 //	            s.setCognome(rs.getString("cognome"));
 //	            s.setRuolo(rs.getString("ruolo"));
 //	            s.setSalarioMedio(rs.getInt("SalarioMedio"));
+//	            s.setValutazione(rs.getString("Valutazione"));
 //	            lista.add(s);
 //	    }
 //	        rs.close();
