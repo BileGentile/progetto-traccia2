@@ -7,8 +7,8 @@ public class ProjectManager extends Membro {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProjectManager(String nome, String cognome, String cF, String ruolo, int salarioMedio, String valutazione) {
-		super(nome, cognome, cF, ruolo, salarioMedio, valutazione);
+	public ProjectManager(String nome, String cognome, String cF, String ruolo, int salarioMedio) {
+		super(nome, cognome, cF, ruolo, salarioMedio);
 		// TODO Auto-generated constructor stub
 	}
 

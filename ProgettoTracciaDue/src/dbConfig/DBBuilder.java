@@ -30,6 +30,7 @@ public class DBBuilder
             return true;
         return false;
     }
+    
 
 	private boolean functionExists(String string)throws SQLException {
 		DatabaseMetaData metadata = connection.getMetaData();
@@ -39,7 +40,6 @@ public class DBBuilder
 		return false;
 	}
 
-    
     //CREAZIONE TIPI ENUMERATIVI
     
     //ENUMERAZIONE RUOLO PER I MEMBRI
@@ -116,7 +116,7 @@ public class DBBuilder
     		try {
     			Statement st = connection.createStatement();
     			
-    			if(!tableExists("sequenzacodiceprojectmanager")) {
+    			if(!tableExists("sequenzacodicemembri")) {
     				String sql = "CREATE SEQUENCE sequenzaCodiceProjectManager " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
                             "INCREMENT 1 " +
                             " START 1000 " +
@@ -332,7 +332,6 @@ public class DBBuilder
                             " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
                             " ruolo VARCHAR(255) CHECK (ruolo LIKE 'ProjectManager'),"+
                             " salarioMedio INTEGER not NULL,"+
-                            " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
                             " PRIMARY KEY (codFiscale));";
     				
     				result = st.executeUpdate(sql);
@@ -391,9 +390,7 @@ public class DBBuilder
     			if(!tableExists("partecipazioniprogetto")) {
     				String sql = "CREATE TABLE partecipazioniProgetto( \n"
     						+ "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),\n"
-    						+ "codprogetto VARCHAR(255) REFERENCES progetto(codProgetto));"
-    						+" PRIMARY KEY (codFiscale,codprogetto));";
-    				
+    						+ "codprogetto VARCHAR(255) REFERENCES progetto(codProgetto));";
     				
     				result = st.executeUpdate(sql);
     				st.close();
@@ -447,10 +444,9 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("associazioneambito")) {
-    				String sql = "CREATE TABLE associazioneAmbito("    
-                            +"codProgetto VARCHAR(255) REFERENCES Progetto(codProgetto)," 
-                            +"codAmbito VARCHAR(255) REFERENCES Ambito(codAmbito),"
-                            +"PRIMARY KEY (codAmbito,codProgetto));";
+    				String sql = "CREATE TABLE associazioneAmbito(" +        //DA RIVEDERE
+                            "codProgetto VARCHAR(255) REFERENCES Progetto(codProgetto)," +
+                            "codAmbito VARCHAR(255) REFERENCES Ambito(codAmbito))";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -508,8 +504,8 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazionisviluppatoremeetingfisico")) {
-    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingFisico( " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                                 "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale), "+
+    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingFisico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
     				
     				result = st.executeUpdate(sql);
@@ -536,8 +532,8 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazioniprojectmanagermeetingfisico")) {
-    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingFisico( " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale), "+
+    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingFisico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
     				
     				result = st.executeUpdate(sql);
@@ -597,8 +593,8 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazionisviluppatoremeetingtelematico")) {
-    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingTelematico( " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                                 "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale), "+
+    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingTelematico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
     				
     				result = st.executeUpdate(sql);
@@ -625,8 +621,8 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazioniprojectmanagermeetingtelematico")) {
-    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingTelematico( " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale), "+
+    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingTelematico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
     				
     				result = st.executeUpdate(sql);
@@ -655,7 +651,7 @@ public class DBBuilder
     			if(!tableExists("skills")) {
     				String sql = "CREATE TABLE skills (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
 						     "nomeSkill VARCHAR(100) not NULL, "+
-						     "codSkills VARCHAR(255) PRIMARY KEY);";
+						    " codSkills VARCHAR(255) PRIMARY KEY);";
 				
     				result = st.executeUpdate(sql);
     				st.close();
@@ -681,9 +677,9 @@ public class DBBuilder
     			Statement st = connection.createStatement();
 			
     			if(!tableExists("associazioneskillsprojectmanager")) {
-    				String sql ="CREATE TABLE associazioneSkillsProjectManager( " + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-    							"codFiscale VARCHAR(16) REFERENCES projectManager(codFiscale), "+
-    							"codSkills VARCHAR(255) REFERENCES skills(codSkills)); ";
+    				String sql = "CREATE TABLE associazioneSkillsProjectManager(" + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+				             "codFiscale VARCHAR(16) REFERENCES projectManager(codFiscale),"+
+						     "codSkills VARCHAR(255) REFERENCES skills(codSkills));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -708,9 +704,9 @@ public class DBBuilder
     			Statement st = connection.createStatement();
 			
     			if(!tableExists("associazioneskillssviluppatore")) {
-    				String sql ="CREATE TABLE associazioneSkillsSviluppatore( " + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-    							"codFiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale), "+
-    							"codSkills VARCHAR(255) REFERENCES skills(codSkills)); ";
+    				String sql = "CREATE TABLE associazioneSkillsSviluppatore(" + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+				             "codFiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
+						     "codSkills VARCHAR(255) REFERENCES skills(codSkills));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -724,8 +720,7 @@ public class DBBuilder
     	}
     	return result;
     }
-    
-    
+
     
     // TRIGGER PER GESTIRE LA PARTECIPAZIONE DI UNO STESSO MEMBRO A UN PROGETTO 
     
@@ -770,5 +765,3 @@ public class DBBuilder
 		    }
 
 	}
-
-

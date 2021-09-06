@@ -1,6 +1,8 @@
 package entity;
 
 public class Sviluppatore extends Membro {
+	
+	private String Valutazione;
 
 	public Sviluppatore(String CF) {
 		super(CF);
@@ -8,8 +10,18 @@ public class Sviluppatore extends Membro {
 	}
 
 	public Sviluppatore(String nome, String cognome, String cF, String ruolo, int salarioMedio, String valutazione) {
-		super(nome, cognome, cF, ruolo, salarioMedio, valutazione);
-		// TODO Auto-generated constructor stub
+		super(nome, cognome, cF, ruolo, salarioMedio);
+		Valutazione = valutazione;
 	}
+
+	public String getValutazione() {
+		return Valutazione;
+	}
+
+	public void setValutazione(String valutazione) {
+		Valutazione = valutazione;
+	}
+
+	
 
 }

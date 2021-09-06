@@ -15,7 +15,7 @@ public interface MembroDAO {
 //	public List<Membro> getAllSviluppatori() throws SQLException;
 	public List<Membro> getPartecipantiProgetto(String nomeprogetto) throws SQLException ;
 	public List<Membro> getAllSviluppatoriProgetto(String codfiscale)throws SQLException ;
-	public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;
+	//public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;
 //	public int cancellaMembro(Membro membro);
 	public int InserisciArchivioPartecipanti(String codiceFiscale, String codiceprogetti) throws SQLException;
 	
