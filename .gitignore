@@ -1,5 +1,4 @@
 .metadata
-ProgettoTracciaDue/bin/
 bin/
 tmp/
 *.tmp
@@ -55,3 +54,4 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+*.class
