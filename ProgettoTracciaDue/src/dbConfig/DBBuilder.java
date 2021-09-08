@@ -116,7 +116,7 @@ public class DBBuilder
     		try {
     			Statement st = connection.createStatement();
     			
-    			if(!tableExists("sequenzacodicemembri")) {
+    			if(!tableExists("sequenzacodiceprojectmanager")) {
     				String sql = "CREATE SEQUENCE sequenzaCodiceProjectManager " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
                             "INCREMENT 1 " +
                             " START 1000 " +
@@ -128,7 +128,7 @@ public class DBBuilder
     				System.out.println("La sequenza codice project manager esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella creazione della sequenza codice prject manager: "+ex);
+    			System.out.println("SQL Exception nella creazione della sequenza codice project manager: "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
@@ -651,15 +651,15 @@ public class DBBuilder
     			if(!tableExists("skills")) {
     				String sql = "CREATE TABLE skills (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
 						     "nomeSkill VARCHAR(100) not NULL, "+
-						    " codSkills VARCHAR(255) PRIMARY KEY"
-						    + "COSTRAINT UNIQUE(nomeSkill))";
+						    " codSkills VARCHAR(255) PRIMARY KEY,"
+						    + "UNIQUE(nomeSkill))";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
     				System.out.println("La tabella Skills esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella crezione della tabella Skills: "+ex);
+    			System.out.println("SQL Exception nella creazione della tabella Skills: "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
