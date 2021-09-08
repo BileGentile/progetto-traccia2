@@ -15,10 +15,14 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import app.Controller;
+import dao_impl.MeetingTelematicoDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
+import daos.MeetingTelematicoDAO;
 import daos.SkillsDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
+import entity.Ambito;
+import entity.MeetingTelematico;
 import entity.Skills;
 
 import java.awt.event.ActionListener;
@@ -113,13 +117,41 @@ public class RegistrazioneProjectManager extends JFrame {
 		list.setBounds(227, 165, 176, 107);
 		contentPane.add(list);
 		
+		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
 		JTextField textFieldNuovaSkill = new JTextField();
 		textFieldNuovaSkill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				demoList.addElement(textFieldNuovaSkill.getText());
-			}
+				
+
+			DBConnection dbconn = null;
+			Connection connection = null;
+			DBBuilder builder = null;
+			try
+	        {
+				dbconn = DBConnection.getInstance();
+	            connection = dbconn.getConnection();
+	            builder = new DBBuilder(connection);
+	            SkillsDAO dao2 = null;
+	            
+	            dao2 = new SkillsDAOPostgresImpl(connection);	
+	            Skills s = new Skills(textFieldNuovaSkill.getText(),"sequenzacodiceskills");
+        		int res1= dao2.inserisciSkills(s);
+	    		
+	           
+	        }
+			catch (SQLException exception)
+	    	{
+	            System.out.println("Errore SQLException: "+ exception.getMessage());
+	    	}
+			int i= 0;
+        	while ((i<demoList.size()) && (demoList.get(i)!=textFieldNuovaSkill.getText())) {
+        		i++;
+        	}
+        	if(i>demoList.size()) {
+        		demoList.addElement(textFieldNuovaSkill.getText());
+        	}
+		}
 		});
-		
 		textFieldNuovaSkill.setColumns(10);
 		textFieldNuovaSkill.setBounds(20, 207, 136, 29);
 		contentPane.add(textFieldNuovaSkill);
@@ -127,7 +159,6 @@ public class RegistrazioneProjectManager extends JFrame {
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	
 				IlControllore.RegistraProjectManager( NomePM.getText(),CognomePM.getText(), CodiceFiscalePM.getText(), SalarioMedio.getText(), list.getSelectedValuesList());
 			}
 		});

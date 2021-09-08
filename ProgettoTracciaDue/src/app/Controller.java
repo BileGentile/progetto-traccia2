@@ -123,7 +123,7 @@ public class Controller {
             //CREAZIONE TRIGGER 
             
             builder.createTriggerPartecipazioneAlProgetto();
-            
+            builder.createTriggerDuplicatidelleSkills();
             
             MembroDAO dao = null;
             ProgettoDAO daoo = null;
@@ -334,10 +334,9 @@ public class Controller {
             builder.createTableSkills();
             builder.createTableAssociazioneSkillsSviluppatore();
             SviluppatoreDAO daoSviluppatore = null;
-            SkillsDAO daoSkill =null;
-            
+                      
             daoSviluppatore = new  SviluppatoreDAOPostgresImpl(connection);
-            daoSkill = new SkillsDAOPostgresImpl(connection);		
+         
             
             Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, "Sviluppatore", Integer.valueOf(salario), "NULL");
       
@@ -346,7 +345,7 @@ public class Controller {
             	while (i<list.size()) {
             		String s1=list.get(i);
             		Skills s = new Skills(s1,"sequenzacodiceskills");
-            		int res1= daoSkill.inserisciSkills(s);
+            	
             		int res2= daoSviluppatore.inserisciSkillSviluppatore(m1,s);
             		i++;
             	}
@@ -382,7 +381,6 @@ public class Controller {
 	            SkillsDAO daoSkill =null;
 
 	            daoProjectManager = new ProjectManagerDAOPostgresImpl(connection);
-	            daoSkill = new SkillsDAOPostgresImpl(connection);	
 	            
 	            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale, "ProjectManager", Integer.valueOf(salario));
 	           
@@ -390,9 +388,7 @@ public class Controller {
 	            int i= 0;
             	while (i<list.size()) {
             		String s1=list.get(i);
-            		Skills s = new Skills(s1, "sequenzacodiceskills");
-            		int res1= daoSkill.inserisciSkills(s);
-            		int res2= daoProjectManager.inserisciSkillProjectManager(m1,s);
+            		int res2= daoProjectManager.inserisciSkillProjectManager(m1,s1);
             		i++;
             	}
         }
@@ -673,4 +669,5 @@ public class Controller {
 		
 
 	}
+
 }

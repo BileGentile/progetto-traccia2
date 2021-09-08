@@ -152,9 +152,40 @@ public class RegistrazioneSviluppatore extends JFrame {
 		JTextField textFieldNuovaSkill = new JTextField();
 		textFieldNuovaSkill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				demoList.addElement(textFieldNuovaSkill.getText());
-			}
+				
+
+			DBConnection dbconn = null;
+			Connection connection = null;
+			DBBuilder builder = null;
+			try
+	        {
+				dbconn = DBConnection.getInstance();
+	            connection = dbconn.getConnection();
+	            builder = new DBBuilder(connection);
+	            SkillsDAO dao2 = null;
+	            
+	            dao2 = new SkillsDAOPostgresImpl(connection);	
+	            Skills s = new Skills(textFieldNuovaSkill.getText(),"sequenzacodiceskills");
+        		int res1= dao2.inserisciSkills(s);
+	    		
+	           
+	        }
+			catch (SQLException exception)
+	    	{
+	            System.out.println("Errore SQLException: "+ exception.getMessage());
+	    	}
+			int i= 0;
+        	while ((i<demoList.size()) && (demoList.get(i)!=textFieldNuovaSkill.getText())) {
+        		i++;
+        	}
+        	if(i>demoList.size()) {
+        		demoList.addElement(textFieldNuovaSkill.getText());
+        	}
+		}
 		});
+		textFieldNuovaSkill.setColumns(10);
+		textFieldNuovaSkill.setBounds(20, 207, 136, 29);
+		contentPane.add(textFieldNuovaSkill);
 		
 		textFieldNuovaSkill.setColumns(10);
 		textFieldNuovaSkill.setBounds(42, 280, 168, 29);

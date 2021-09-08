@@ -21,19 +21,19 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		this.connection=connection;
 		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM sviluppatore WHERE codFiscale LIKE ? AND ruolo LIKE 'Sviluppatore' ");
 		inserisciSviluppatorePS = connection.prepareStatement("INSERT INTO sviluppatore VALUES (?,?,UPPER(?), 'Sviluppatore', ?,?)");
-		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore VALUES (?,?)");
+		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore(codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
 		getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\r\n"
 				+ "FROM SVILUPPATORE\r\n"
 				+ "WHERE  salariomedio > ?\r\n"
 				+ "AND ruolo LIKE 'Sviluppatore' \r\n"
 				+ "AND valutazione LIKE ? \r\n"
 				+ "AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
-				+ "					FROM skills AS S \r\n"
-				+ "					Where S.nomeskill LIKE ?)\r\n"
-				+ "					except\r\n"
-				+ "					(select codfiscale\r\n"
-				+ "					from partecipazioniprogetto\r\n"
-				+ "					where codprogetto like ?)));");
+				+ "						FROM skills AS S \r\n"
+				+ "						Where S.nomeskill LIKE ?)\r\n"
+				+ "						except\r\n"
+				+ "						(select codfiscale\r\n"
+				+ "						from partecipazioniprogetto\r\n"
+				+ "						where codprogetto like ?)));");
 		getAllSviluppatoriProgettoPS=connection.prepareStatement("select distinct codfiscale\n"
 				+ "from partecipazioniprogetto\n"
 				+ "where codprogetto in (SELECT codprogetto\n"

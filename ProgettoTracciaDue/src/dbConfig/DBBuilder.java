@@ -651,8 +651,8 @@ public class DBBuilder
     			if(!tableExists("skills")) {
     				String sql = "CREATE TABLE skills (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
 						     "nomeSkill VARCHAR(100) not NULL, "+
-						    " codSkills VARCHAR(255) PRIMARY KEY);";
-				
+						    " codSkills VARCHAR(255) PRIMARY KEY"
+						    + "COSTRAINT UNIQUE(nomeSkill))";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -724,7 +724,6 @@ public class DBBuilder
     
     // TRIGGER PER GESTIRE LA PARTECIPAZIONE DI UNO STESSO MEMBRO A UN PROGETTO 
     
-
 		 public int createTriggerPartecipazioneAlProgetto() throws ConnectionException
 		    {
 		    	int result= -1;
@@ -733,7 +732,7 @@ public class DBBuilder
 		    		try {
 		    			Statement st = connection.createStatement();
 		    			if(!functionExists("functionpartecipazionealprogetto")) {
-		    				String sql = " CREATE FUNCTION FunctionPartecipazioneAlProgetto() RETURNS TRIGGER AS $TriggerPartecipazioneAlProgetto$"
+		    				String sql = " CREATE FUNCTION functionpartecipazionealprogetto() RETURNS TRIGGER AS $TriggerPartecipazioneAlProgetto$"
 		    						+ "BEGIN "
 		    						+ "IF((SELECT P.CodFiscale "
 		    						+ "FROM progetto AS P "
@@ -763,5 +762,47 @@ public class DBBuilder
 		    	}
 		    	return result;
 		    }
+		 
+		 
+		 // TRIGGER PER EVITARE VENGANO CREATI DUE SKILL CON LO STESSO NOME 
 
-	}
+		 public int createTriggerDuplicatidelleSkills() throws ConnectionException
+		    {
+		    	int result= -1;
+		    	
+		    	if(connectionExists()) {
+		    		try {
+		    			Statement st = connection.createStatement();
+		    			if(!functionExists("functionduplicatidelleskills")) {
+		    				String sql = " CREATE FUNCTION functionduplicatidelleskills() RETURNS TRIGGER AS $TriggerDuplicatidelleSkills$"
+		    						+ "BEGIN "
+		    						+ "IF((SELECT Sk.nomeskill "
+		    						+ "FROM skills AS Sk "
+		    						+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills != New.codskills))"
+		    						+ "IS NOT NULL) THEN "
+		    						+ "DELETE FROM skills AS Sk "
+		    						+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills = New.codskills); "
+		    						+ "END IF; "
+		    						+ "Return NEW; "
+		    						+ "END; "
+		    						+ "$TriggerDuplicatidelleSkills$ LANGUAGE plpgsql; "
+		    						+ "CREATE TRIGGER TriggerDuplicatidelleSkills "
+		    						+ "AFTER INSERT OR UPDATE "
+		    						+ "ON skills "
+		    						+ "FOR EACH ROW "
+		    						+ "EXECUTE PROCEDURE FunctionDuplicatidelleSkills();";
+		    				result = st.executeUpdate(sql);
+		    				st.close();
+		    			} else {
+		    				System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
+		    			}
+		    		} catch(SQLException ex) {
+		    			System.out.println("SQL Exception nella creazione della tabella FunctionPartecipazioneAlProgetto : "+ex);
+		    		}
+		    	} else {
+		    		throw new ConnectionException("A connection must exist!");
+		    	}
+		    	return result;
+		    }
+
+}
