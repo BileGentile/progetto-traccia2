@@ -334,7 +334,8 @@ public class Controller {
             builder.createTableSkills();
             builder.createTableAssociazioneSkillsSviluppatore();
             SviluppatoreDAO daoSviluppatore = null;
-                      
+            SkillsDAO daoSkill =null;
+
             daoSviluppatore = new  SviluppatoreDAOPostgresImpl(connection);
          
             
@@ -343,10 +344,8 @@ public class Controller {
             int res =  daoSviluppatore.inserisciSviluppatore(m1);
             	int i= 0;
             	while (i<list.size()) {
-            		String s1=list.get(i);
-            		Skills s = new Skills(s1,"sequenzacodiceskills");
-            	
-            		int res2= daoSviluppatore.inserisciSkillSviluppatore(m1,s);
+            		String s1=list.get(i);         
+            		int res2= daoSviluppatore.inserisciSkillSviluppatore(m1,s1);
             		i++;
             	}
         }
@@ -433,7 +432,7 @@ public class Controller {
 	}
 	
 	//Creazione di un nuovo progetto
-	public void CreaProgetto(String nomeProgetto, String tipoProgetto , List<String> list, String codiceFiscalePm) {
+	public void CreaProgetto(String nomeProgetto, String tipoProgetto , List<String> ListaAmbiti, String codiceFiscalePm) {
 			DBConnection dbconn = null;
 	        Connection connection = null;
 	        DBBuilder builder = null;
@@ -463,11 +462,9 @@ public class Controller {
 	            	AmbitoDAO dao3 = null;
 	            	dao3 = new AmbitoDAOPostgresImpl(connection);
 	            	int i= 0;
-	            	while (i<list.size()) {
-	            		String s1=list.get(i);
-	            		Ambito a  =  new Ambito (s1, "sequenzacodiceambito");
-	            		//int res2 =  dao3.inserisciAmbito(a);
-	            		int res3= dao3.inserisciAmbitoProgetto(p2.getCodiceProgetto(),a.getCodAmbito());
+	            	while (i<ListaAmbiti.size()) {
+	            		String s1=ListaAmbiti.get(i);
+	            		int res3= dao3.inserisciAmbitoProgetto(nomeProgetto,s1);
 	            		i++;
 	            	}
 	            	

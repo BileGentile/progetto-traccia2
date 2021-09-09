@@ -21,7 +21,7 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		this.connection=connection;
 		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM sviluppatore WHERE codFiscale LIKE ? AND ruolo LIKE 'Sviluppatore' ");
 		inserisciSviluppatorePS = connection.prepareStatement("INSERT INTO sviluppatore VALUES (?,?,UPPER(?), 'Sviluppatore', ?,?)");
-		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore(codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
+		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore (codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
 		getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\r\n"
 				+ "FROM SVILUPPATORE\r\n"
 				+ "WHERE  salariomedio > ?\r\n"
@@ -77,9 +77,9 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 	}
 	
 	@Override
-	public int inserisciSkillSviluppatore(Sviluppatore membro, Skills skill) throws SQLException {
+	public int inserisciSkillSviluppatore(Sviluppatore membro,String codskill) throws SQLException {
 		inserisciSkillSviluppatorePS.setString(1, membro.getCF());
-		inserisciSkillSviluppatorePS.setString(2, skill.getCodSkill());
+		inserisciSkillSviluppatorePS.setString(2, codskill);
         int row = inserisciSkillSviluppatorePS.executeUpdate();
         System.out.print(row); 
         return row;

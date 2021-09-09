@@ -44,6 +44,7 @@ public class AggiungiProgetto extends JFrame {
 	private JTextField nomeProgetto;
 	Controller IlControllore;
 	private JTextField CodiceFiscalePm;
+	private JTextField textFieldNuovoAmbito;
 	
 	
 	public AggiungiProgetto(Controller c) {
@@ -74,7 +75,7 @@ public class AggiungiProgetto extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Seleziona ambito del progetto");
-		lblNewLabel_1_1.setBounds(23, 199, 189, 29);
+		lblNewLabel_1_1.setBounds(23, 188, 189, 29);
 		contentPane.add(lblNewLabel_1_1);
 		
 		DefaultListModel<String> demoList = new DefaultListModel<>();
@@ -108,7 +109,7 @@ public class AggiungiProgetto extends JFrame {
 		contentPane.add(list);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Ricerca di base", "Ricerca industruale", "Ricerca sperimentale", "Sviluppo sperimentale"}));
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Ricerca di base","Ricerca industriale","Ricerca sperimentale", "Sviluppo sperimentale"}));
 		comboBox_1.setBounds(235, 130, 134, 43);
 		contentPane.add(comboBox_1);
 		
@@ -140,6 +141,46 @@ public class AggiungiProgetto extends JFrame {
 		});
 		btnNewButton_1.setBounds(23, 320, 117, 36);
 		contentPane.add(btnNewButton_1);
+		
+		
+		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
+					JTextField textFieldNuovoAmbito = new JTextField();		
+					textFieldNuovoAmbito.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+
+					DBConnection dbconn = null;
+					Connection connection = null;
+					DBBuilder builder = null;
+					try
+			        {
+						dbconn = DBConnection.getInstance();
+			            connection = dbconn.getConnection();
+			            builder = new DBBuilder(connection);
+			            AmbitoDAO dao2 = null;
+			            
+			            
+			            dao2 = new AmbitoDAOPostgresImpl(connection);	
+			            Ambito a = new Ambito(textFieldNuovoAmbito.getText(),"sequenzacodiceambito");
+		        		int res1= dao2.inserisciAmbito(a);
+		        		demoList.addElement(a.getNomeAmbito());
+		        		JList<String> listsambiti1 = new JList<String>(demoList);
+		        		contentPane.add(listsambiti1);
+			        }
+					catch (SQLException exception)
+			    	{
+			            System.out.println("Errore SQLException: "+ exception.getMessage());
+			    	}
+					
+				}
+				});
+					textFieldNuovoAmbito.setBounds(23, 240, 134, 19);
+					contentPane.add(textFieldNuovoAmbito);
+					textFieldNuovoAmbito.setColumns(10);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("o creane uno nuovo:");
+		lblNewLabel_1_1_1.setBounds(23, 207, 189, 29);
+		contentPane.add(lblNewLabel_1_1_1);
 		
 	}
 }

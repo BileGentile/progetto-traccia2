@@ -8,7 +8,7 @@ import entity.Skills;
 public interface SviluppatoreDAO {
 	public List<Sviluppatore> getSviluppatoreByCodFiscale(String codfiscale) throws SQLException ;
 	public int inserisciSviluppatore(Sviluppatore membro) throws SQLException;
-	public int inserisciSkillSviluppatore(Sviluppatore membro, Skills skill) throws SQLException;
+	public int inserisciSkillSviluppatore(Sviluppatore membro, String s1) throws SQLException;
 	public List<Sviluppatore> getSviluppatoreBySalarioESkillsEValutazionePS(int salario, String valutazione, String skills, String progetto) throws SQLException;
 	public List<Sviluppatore> getAllSviluppatoriProgetto (String codfiscale) throws SQLException;
 	public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;
