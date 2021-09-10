@@ -15,7 +15,7 @@ import entity.Skills;
 public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 
 	private Connection connection;
-		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS,getPartecipantiProgettoPS;
+		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS,getPartecipantiProgettoPS, getSviluppatoreBySalarioESkillsPS;
 	
 	public SviluppatoreDAOPostgresImpl (Connection connection) throws SQLException  {
 		this.connection=connection;
@@ -34,6 +34,20 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 				+ "						(select codfiscale\r\n"
 				+ "						from partecipazioniprogetto\r\n"
 				+ "						where codprogetto like ?)));");
+		
+		getSviluppatoreBySalarioESkillsPS=connection.prepareStatement("(SELECT *\r\n"
+				+ "FROM SVILUPPATORE\r\n"
+				+ "WHERE  salariomedio > ?\r\n"
+				+ "AND ruolo LIKE 'Sviluppatore' \r\n"
+				+ "AND valutazione is null\r\n"
+				+ "AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
+				+ "					FROM skills AS S \r\n"
+				+ "					Where S.nomeskill LIKE ?)\r\n"
+				+ "					except\r\n"
+				+ "					(select codfiscale\r\n"
+				+ "					from partecipazioniprogetto\r\n"
+				+ "					where codprogetto like ?)));");
+		
 		getAllSviluppatoriProgettoPS=connection.prepareStatement("select distinct codfiscale\n"
 				+ "from partecipazioniprogetto\n"
 				+ "where codprogetto in (SELECT codprogetto\n"
@@ -92,6 +106,27 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		getSviluppatoreBySalarioESkillsEValutazionePS.setString(3, skills);
 		getSviluppatoreBySalarioESkillsEValutazionePS.setString(4, progetto);
         ResultSet rs= getSviluppatoreBySalarioESkillsEValutazionePS.executeQuery();
+        List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
+        while(rs.next())
+        {
+        	Sviluppatore s = new Sviluppatore(rs.getString("codFiscale")); 
+            s.setNome(rs.getString("nome"));
+            s.setCognome(rs.getString("cognome"));
+            s.setRuolo(rs.getString("ruolo"));
+            s.setSalarioMedio(rs.getInt("SalarioMedio"));
+            s.setValutazione(rs.getString("Valutazione"));
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+	}
+	
+	@Override
+	public List<Sviluppatore> getSviluppatoreBySalarioESkillsPS (int salario, String skills, String progetto) throws SQLException{
+		getSviluppatoreBySalarioESkillsPS.setInt(1, salario);
+		getSviluppatoreBySalarioESkillsPS.setString(2, skills);
+		getSviluppatoreBySalarioESkillsPS.setString(3, progetto);
+        ResultSet rs= getSviluppatoreBySalarioESkillsPS.executeQuery();
         List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
         while(rs.next())
         {
