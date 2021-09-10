@@ -44,7 +44,8 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton = new JButton("Aggiungi progetto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.AvviaCreaProgetto();
+				int caso=1;
+				IlControllore.AvviaCreaProgetto(caso);
 			}
 		});
 		btnNewButton.setBounds(20, 120, 168, 21);

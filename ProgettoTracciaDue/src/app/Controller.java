@@ -55,6 +55,7 @@ import gui.AggiungiProgetto;
 import gui.AzioneAvvenutaConSuccesso;
 import gui.CreaMeeting;
 import gui.EliminaProgetto;
+import gui.ErroreCreazioneProgetto;
 
 public class Controller {
 
@@ -75,6 +76,7 @@ public class Controller {
 	CreaMeeting  creaMeeting;
 	AggiungiPresenza aggiungiPresenza;
 	PartecipantiAlProgetto partecipantiAlProgetto;
+	ErroreCreazioneProgetto erroreCreazioneProgetto;
 	
 	
 	public static void main(String[] args) {
@@ -92,6 +94,7 @@ public class Controller {
             //CREAZIONE ENUM
             //builder.createEnumRuolo();
             //builder.createEnumTipologia();
+            
             //CREAZIONE SEQUENZE
             builder.createSequenceProgetto();
             builder.createSequenceProjectManager();
@@ -404,10 +407,15 @@ public class Controller {
 			loginPM.setVisible(true);
 	}
 	
-	public void AvviaCreaProgetto() {
-		benvenutoPM.setVisible(false);
-		aggiungiProgetto= new AggiungiProgetto(this);
-		aggiungiProgetto.setVisible(true);
+	public void AvviaCreaProgetto(int caso) {
+		if( caso ==1) {
+			benvenutoPM.setVisible(false);
+			aggiungiProgetto= new AggiungiProgetto(this);
+			aggiungiProgetto.setVisible(true);
+		}else {
+			erroreCreazioneProgetto.setVisible(false);
+		}
+		
 	}
 	
 	public void RitornaBenvenutoProjectManager(int caso) {
@@ -426,6 +434,9 @@ public class Controller {
 			aggiungiMembriAlProgetto.setVisible(false);
 		}else if(caso==7) {
 			partecipantiAlProgetto.setVisible(false);
+		}else if(caso==8) {
+			erroreCreazioneProgetto.setVisible(false);
+			aggiungiProgetto.setVisible(false);
 		}
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
@@ -449,8 +460,9 @@ public class Controller {
 		           
 	            if(lista.isEmpty()) {
 
-	            	erroreCodiceFiscaleSbagliato = new ErroreCodiceFiscaleSbagliato(this);
-	            	erroreCodiceFiscaleSbagliato.setVisible(true);
+	            	erroreCreazioneProgetto = new ErroreCreazioneProgetto(this);
+	            	erroreCreazioneProgetto.setVisible(true);
+	            	
 	            }else {	
 	            	builder.createTableProgetto();
 	            	ProgettoDAO dao1 = null;
@@ -467,6 +479,9 @@ public class Controller {
 	            		int res3= dao3.inserisciAmbitoProgetto(nomeProgetto,s1);
 	            		i++;
 	            	}
+	            	aggiungiProgetto.setVisible(false);
+	    	        benvenutoPM=new BenvenutoProjectManager(this);
+	        		benvenutoPM.setVisible(true);
 	            	
 	            }
 	            
@@ -479,10 +494,6 @@ public class Controller {
 	        {
 	            System.out.println("CE: "+ex);
 	        } 
-			
-	        aggiungiProgetto.setVisible(false);
-	        benvenutoPM=new BenvenutoProjectManager(this);
-    		benvenutoPM.setVisible(true);
     	
 	}
 	
