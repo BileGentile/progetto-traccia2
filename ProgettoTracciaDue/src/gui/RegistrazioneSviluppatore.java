@@ -46,6 +46,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.JSpinner;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
@@ -145,10 +146,19 @@ public class RegistrazioneSviluppatore extends JFrame {
     	}
 		
 
-		JList<String> list = new JList<String>(demoList);
-		list.setBounds(420, 225, 168, 103);
-		contentPane.add(list);
+
 		
+		JList<String> list = new JList<String>(demoList);		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(list);
+		scrollPane.setBounds(420, 225, 168, 103);
+		list.setLayoutOrientation(JList.VERTICAL);
+
+		contentPane.add(scrollPane);
+		
+
+		
+
 		JTextField textFieldNuovaSkill = new JTextField();
 		textFieldNuovaSkill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

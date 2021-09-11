@@ -11,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -32,6 +33,8 @@ import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
+import javax.swing.UIManager;
+import javax.swing.JComboBox;
 
 public class RegistrazioneProjectManager extends JFrame {
 
@@ -113,9 +116,14 @@ public class RegistrazioneProjectManager extends JFrame {
             System.out.println("Errore SQLException: "+ exception.getMessage());
     	}
 
-		JList<String> listskills = new JList<String>(demoList);
-		listskills.setBounds(227, 165, 176, 107);
-		contentPane.add(listskills);
+		
+		JList<String> listskills = new JList<String>(demoList);		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(listskills);
+		scrollPane.setBounds(227, 165, 176, 88);
+		listskills.setLayoutOrientation(JList.VERTICAL);
+		
+		contentPane.add(scrollPane);
 		
 		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
 		JTextField textFieldNuovaSkill = new JTextField();
