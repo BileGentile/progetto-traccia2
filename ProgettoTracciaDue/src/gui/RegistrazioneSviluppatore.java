@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
-
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -50,6 +50,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JFormattedTextField;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 public class RegistrazioneSviluppatore extends JFrame {
@@ -70,55 +73,36 @@ public class RegistrazioneSviluppatore extends JFrame {
 		setTitle("Azienda - Registrazione Sviluppatore");  
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneSviluppatore.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 150, 700, 500);
+		setBounds(100, 90, 388, 300);
+		setMinimumSize(new Dimension(650,550));
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		JLabel lblNewLabel = new JLabel("Inserisci codice Fiscale");
-		lblNewLabel.setBounds(42, 46, 168, 19);
-		contentPane.add(lblNewLabel);
 		
 		CodiceFiscaleS = new JTextField();
-		CodiceFiscaleS.setBounds(420, 41, 168, 29);
-		contentPane.add(CodiceFiscaleS);
 		CodiceFiscaleS.setColumns(10);
 		
 		lblInserisciNome = new JLabel("Inserisci nome");
-		lblInserisciNome.setBounds(42, 81, 163, 29);
-		contentPane.add(lblInserisciNome);
 		
 		NomeS = new JTextField();
 		NomeS.setColumns(10);
-		NomeS.setBounds(420, 81, 168, 29);
-		contentPane.add(NomeS);
 		
 		JLabel lblInserisciCognome = new JLabel("Inserisci cognome");
-		lblInserisciCognome.setBounds(42, 131, 183, 19);
-		contentPane.add(lblInserisciCognome);
 		
 		CognomeS = new JTextField();
 		CognomeS.setColumns(10);
-		CognomeS.setBounds(420, 126, 168, 29);
-		contentPane.add(CognomeS);
 		
 		JLabel lblInserisciSalario = new JLabel("Inserisci salario");
-		lblInserisciSalario.setBounds(42, 170, 163, 29);
-		contentPane.add(lblInserisciSalario);
 		
 		salario = new JTextField();
 		salario.setColumns(10);
-		salario.setBounds(420, 170, 168, 29);
-		contentPane.add(salario);
 		
 		JLabel inserisciSkills = new JLabel("Scegli tra le skill presenti ");
-		inserisciSkills.setBounds(42, 219, 168, 36);
-		contentPane.add(inserisciSkills);
 		
-		JLabel lbl2 = new JLabel("oppure inseriscine una nuova qui");
-		lbl2.setBounds(42, 251, 168, 36);
-		contentPane.add(lbl2);
+		JLabel lbl2 = new JLabel("oppure inseriscine una nuova ");
 		
 		DefaultListModel<String> demoList = new DefaultListModel<>();
 		
@@ -145,22 +129,17 @@ public class RegistrazioneSviluppatore extends JFrame {
             System.out.println("Errore SQLException: "+ exception.getMessage());
     	}
 		
-
-
-		
-		JList<String> list = new JList<String>(demoList);		
+		JList<String> list = new JList<String>(demoList);
+		list.setVisibleRowCount(6);	
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(list);
-		scrollPane.setBounds(420, 225, 168, 103);
-		list.setLayoutOrientation(JList.VERTICAL);
+		list.setLayoutOrientation(JList.VERTICAL);		
+	
+	
 
-		contentPane.add(scrollPane);
-		
-
-		
-
-		JTextField textFieldNuovaSkill = new JTextField();
-		textFieldNuovaSkill.addActionListener(new ActionListener() {
+			JTextField textFieldNuovaSkill = new JTextField();
+			textFieldNuovaSkill.setBounds(42, 286, 168, 29);
+			textFieldNuovaSkill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 
@@ -190,8 +169,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 		}
 		});		
 		textFieldNuovaSkill.setColumns(10);
-		textFieldNuovaSkill.setBounds(42, 280, 168, 29);
-		contentPane.add(textFieldNuovaSkill);
 		
 		
 		JButton btnNewButton = new JButton("Registrati");
@@ -206,9 +183,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 				
 			}
 		});
-				
-		btnNewButton.setBounds(420, 385, 136, 49);
-		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_2 = new JButton("Torna indietro");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -218,8 +192,96 @@ public class RegistrazioneSviluppatore extends JFrame {
 				IlControllore.TornaLogin(caso);
 			}
 		});
-		btnNewButton_2.setBounds(42, 385, 136, 49);
-		contentPane.add(btnNewButton_2);
+
+	
+		
+		
+		JLabel lblQuSotto = new JLabel("qu\u00EC sotto");
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(37)
+							.addComponent(lblInserisciCognome, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+							.addGap(45)
+							.addComponent(CognomeS, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(37)
+							.addComponent(lblInserisciSalario, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+							.addGap(65)
+							.addComponent(salario, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(37)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(inserisciSkills, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblQuSotto, GroupLayout.PREFERRED_SIZE, 183, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lbl2, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+							.addGap(45)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(183)
+							.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
+							.addGap(26)
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(37)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblInserisciNome, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+									.addGap(65)
+									.addComponent(NomeS, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+									.addGap(60)
+									.addComponent(CodiceFiscaleS, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(115, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(36)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(15)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
+						.addComponent(CodiceFiscaleS, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(16)
+							.addComponent(NomeS, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
+							.addComponent(lblInserisciNome, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)))
+					.addGap(14)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(lblInserisciCognome, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
+						.addComponent(CognomeS, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblInserisciSalario, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(salario, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(13)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(inserisciSkills, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblQuSotto, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(23)
+							.addComponent(lbl2, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(10)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
+					.addGap(54)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(btnNewButton_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		contentPane.setLayout(gl_contentPane);
 		
 	}
 }

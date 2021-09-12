@@ -1,6 +1,7 @@
 
 package gui;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +17,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class BenvenutoProjectManager extends JFrame {
 
@@ -30,16 +34,14 @@ public class BenvenutoProjectManager extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 380);
+		setMinimumSize(new Dimension(500,450));
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Benvenuto project manager, cosa desideri fare?");
-		lblNewLabel.setBounds(10, 25, 405, 58);
-		contentPane.add(lblNewLabel);
 
 		JButton btnNewButton = new JButton("Aggiungi progetto");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -48,8 +50,6 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.AvviaCreaProgetto(caso);
 			}
 		});
-		btnNewButton.setBounds(20, 120, 168, 21);
-		contentPane.add(btnNewButton);
 			
 		JButton btnNewButton_1 = new JButton("Consegna progetto");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -57,8 +57,6 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.AvviaEliminaProgetto();
 			}
 		});
-		btnNewButton_1.setBounds(20, 167, 168, 21);
-		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Crea Meeting");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -67,8 +65,6 @@ public class BenvenutoProjectManager extends JFrame {
 			IlControllore.AvviaCreaMeeting();
 			}
 			});
-		btnNewButton_2.setBounds(20, 215, 168, 21);
-		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Aggiungi Membri al progetto");
 		btnNewButton_3.addActionListener(new ActionListener() {
@@ -78,17 +74,12 @@ public class BenvenutoProjectManager extends JFrame {
 			}
 		});
 		
-		btnNewButton_3.setBounds(227, 120, 168, 21);
-		contentPane.add(btnNewButton_3);
-		
 		JButton btnNewButton_4 = new JButton("Valuta Membro");
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaValutazione();
 			}
 		});
-		btnNewButton_4.setBounds(227, 167, 168, 21);
-		contentPane.add(btnNewButton_4);
 
 		JButton btnNewButton_5 = new JButton("Logout");
 		btnNewButton_5.addActionListener(new ActionListener() {
@@ -97,8 +88,6 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.Logout(caso);
 			}
 		});
-		btnNewButton_5.setBounds(227, 260, 168, 21);
-		contentPane.add(btnNewButton_5);
 		
 		JButton btnNewButton_6 = new JButton("Partecipanti Progetto");
 		btnNewButton_6.addActionListener(new ActionListener() {
@@ -106,15 +95,58 @@ public class BenvenutoProjectManager extends JFrame {
 				IlControllore.AvviaPartecipantiAlProgetto();
 			}
 		});
-		btnNewButton_6.setBounds(227, 214, 168, 23);
-		contentPane.add(btnNewButton_6);
 		
 		JButton btnNewButton_7 = new JButton("Partecipanti Meeting");
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_7.setBounds(20, 259, 168, 23);
-		contentPane.add(btnNewButton_7);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(29)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(btnNewButton_7, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+								.addComponent(btnNewButton_5, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
+							.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+								.addPreferredGap(ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+									.addComponent(btnNewButton_3, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+									.addComponent(btnNewButton_4, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+									.addComponent(btnNewButton_6, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(42, Short.MAX_VALUE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGap(51)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton)
+						.addComponent(btnNewButton_3))
+					.addGap(33)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_1)
+						.addComponent(btnNewButton_4))
+					.addGap(38)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_2)
+						.addComponent(btnNewButton_6, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+					.addGap(27)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_7, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton_5))
+					.addGap(52))
+		);
+		contentPane.setLayout(gl_contentPane);
 	}
 }

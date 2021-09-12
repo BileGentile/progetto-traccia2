@@ -14,6 +14,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Dialog.ModalExclusionType;
+import java.awt.Dimension;
 
 public class Presentazione extends JFrame {
 
@@ -21,6 +26,7 @@ public class Presentazione extends JFrame {
 	Controller IlControllore;
 	
 	public Presentazione(Controller c) {
+		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 		
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
@@ -28,16 +34,14 @@ public class Presentazione extends JFrame {
 
 		setTitle("Azienda- Benvenuto");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 419, 300);
+		setMinimumSize(new Dimension(450,340));
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Benvenuto nell'APP ufficiale dell'azienda,");
-				lblNewLabel.setBounds(23, 35, 348, 42);
-				contentPane.add(lblNewLabel);
 				
 				JButton btnNewButton = new JButton("Sviluppatore");
 				btnNewButton.addActionListener(new ActionListener() {
@@ -45,8 +49,6 @@ public class Presentazione extends JFrame {
 						IlControllore.AvviaLoginSviluppatore();
 					}
 				});
-				btnNewButton.setBounds(250, 177, 121, 51);
-				contentPane.add(btnNewButton);
 				
 				JButton btnNewButton_1 = new JButton("Project Manager");
 				btnNewButton_1.addActionListener(new ActionListener() {
@@ -54,13 +56,41 @@ public class Presentazione extends JFrame {
 						IlControllore.LoginProjectManager();
 					}
 				});
-				btnNewButton_1.setBounds(39, 174, 139, 51);
-				contentPane.add(btnNewButton_1);
 				
 				JLabel lblNewLabel_1 = new JLabel("Clicca sul tuo ruolo:");
-				lblNewLabel_1.setBounds(23, 75, 155, 13);
-				contentPane.add(lblNewLabel_1);
+				GroupLayout gl_contentPane = new GroupLayout(contentPane);
+				gl_contentPane.setHorizontalGroup(
+					gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap(34, Short.MAX_VALUE)
+							.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+							.addGap(40)
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+							.addGap(46))
+				);
+				gl_contentPane.setVerticalGroup(
+					gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(30)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(40)
+									.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+									.addGap(11)))
+							.addGap(89)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
+							.addGap(30))
+				);
+				contentPane.setLayout(gl_contentPane);
 				
 	}
 }
-

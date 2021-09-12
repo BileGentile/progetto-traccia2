@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -14,6 +15,8 @@ import app.Controller;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class BenvenutoSviluppatore extends JFrame {
 
@@ -28,16 +31,15 @@ public class BenvenutoSviluppatore extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 380);
+		setMinimumSize(new Dimension(500,350));
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Benvenuto sviluppatore, cosa desideri fare?");
-		lblNewLabel.setBounds(10, 25, 405, 58);
-		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Aggiungi presenza");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -46,16 +48,12 @@ public class BenvenutoSviluppatore extends JFrame {
 				
 			}
 		});
-		btnNewButton.setBounds(10, 152, 159, 28);
-		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Mostra dati personali");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.setBounds(217, 152, 159, 28);
-		contentPane.add(btnNewButton_1);
 
 		JButton btnNewButton_2 = new JButton("Logout");
 		btnNewButton_2.addActionListener(new ActionListener() {
@@ -64,8 +62,37 @@ public class BenvenutoSviluppatore extends JFrame {
 				IlControllore.Logout(caso);
 			}
 		});
-		btnNewButton_2.setBounds(217, 215, 159, 28);
-		contentPane.add(btnNewButton_2);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(23, Short.MAX_VALUE)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
+					.addGap(30)
+					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
+					.addGap(105))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(212, Short.MAX_VALUE)
+					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
+					.addGap(105))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(20)
+					.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+					.addGap(69)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+					.addGap(35)
+					.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+					.addGap(95))
+		);
+		contentPane.setLayout(gl_contentPane);
 
 	}
 }
