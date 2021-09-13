@@ -39,6 +39,7 @@ import entity.Sviluppatore;
 import exceptions.ConnectionException;
 
 import gui.Presentazione;
+import gui.ProgettoEliminatoConSuccesso;
 import gui.LoginSviluppatore;
 import gui.LoginProjectManager;
 import gui.RegistrazioneProjectManager;
@@ -52,7 +53,7 @@ import gui.AggiungiMembriAlProgetto;
 import gui.AggiungiPresenza;
 //import gui.AggiungiPresenzaSviluppatore;
 import gui.AggiungiProgetto;
-import gui.AzioneAvvenutaConSuccesso;
+import gui.ValutazioneAvvenutaConSuccesso;
 import gui.CreaMeeting;
 import gui.EliminaProgetto;
 import gui.ErroreCreazioneProgetto;
@@ -72,11 +73,12 @@ public class Controller {
 	ValutazioneMembro valutazioneMembro;
 	AggiungiMembriAlProgetto aggiungiMembriAlProgetto;
 	EliminaProgetto eliminaProgetto;
-	AzioneAvvenutaConSuccesso azioneAvvenutaConSuccesso;
+	ProgettoEliminatoConSuccesso progettoEliminatoConSuccesso;
 	CreaMeeting  creaMeeting;
 	AggiungiPresenza aggiungiPresenza;
 	PartecipantiAlProgetto partecipantiAlProgetto;
 	ErroreCreazioneProgetto erroreCreazioneProgetto;
+	ValutazioneAvvenutaConSuccesso valutazioneAvvenutaConSuccesso;
 	
 	
 	public static void main(String[] args) {
@@ -442,8 +444,8 @@ public class Controller {
 		}else if (caso ==2){
 			eliminaProgetto.setVisible(false);
 		}else if(caso==3){
-			azioneAvvenutaConSuccesso.setVisible(false);
 			eliminaProgetto.setVisible(false);
+			progettoEliminatoConSuccesso.setVisible(false);			
 		}else if(caso==4) {
 			aggiungiProgetto.setVisible(false);
 		}else if (caso==5) {
@@ -455,6 +457,9 @@ public class Controller {
 		}else if(caso==8) {
 			erroreCreazioneProgetto.setVisible(false);
 			aggiungiProgetto.setVisible(false);
+		}else if(caso ==9) {
+			valutazioneMembro.setVisible(false);
+			valutazioneAvvenutaConSuccesso.setVisible(false);	
 		}
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
@@ -578,8 +583,8 @@ public class Controller {
 		{
 			System.out.println("Errore SQLException: "+ exception.getMessage());
 		}
-		azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
-		azioneAvvenutaConSuccesso.setVisible(true);
+		valutazioneAvvenutaConSuccesso = new ValutazioneAvvenutaConSuccesso(this);
+		valutazioneAvvenutaConSuccesso.setVisible(true);
 	}
 	
 	public void AvviaPartecipantiAlProgetto() {
@@ -635,8 +640,8 @@ public class Controller {
             {
                 System.out.println("Errore SQLException: "+ exception.getMessage());
             }
-            azioneAvvenutaConSuccesso = new AzioneAvvenutaConSuccesso(this);
-            azioneAvvenutaConSuccesso.setVisible(true);
+            progettoEliminatoConSuccesso = new ProgettoEliminatoConSuccesso(this);
+            progettoEliminatoConSuccesso.setVisible(true);
             
     	}
 	

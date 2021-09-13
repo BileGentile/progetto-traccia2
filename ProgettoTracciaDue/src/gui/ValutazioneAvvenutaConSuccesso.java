@@ -18,14 +18,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
-public class AzioneAvvenutaConSuccesso extends JDialog {
+public class ValutazioneAvvenutaConSuccesso extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	Controller IlControllore;
 	
-	public AzioneAvvenutaConSuccesso(Controller c) {
+	public  ValutazioneAvvenutaConSuccesso (Controller c) {
 		IlControllore = c;
-		setTitle("Azienda - Elimina progetto");
+		setTitle("Azienda - Valutazione Avvenuta Con Successo");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		contentPanel.setBackground(SystemColor.activeCaption);
 		setBounds(80, 80, 350, 200);
@@ -47,18 +47,13 @@ public class AzioneAvvenutaConSuccesso extends JDialog {
 				JButton okButton = new JButton("Ok");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int caso=3;
+						int caso=9;
 						IlControllore.RitornaBenvenutoProjectManager(caso);
 					}
 				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
 			}
 		}
 	}
