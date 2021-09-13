@@ -12,9 +12,10 @@ public interface ProgettoDAO {
 //	public List<Progetto> getProgettoByAmbito(String ambito);
 //	public List<Progetto> getMembroByTipo(String tipo);
 	public List<Progetto> getProgettoProjectManager(String codfiscale) throws SQLException;
+	public int inserimentoAvvenutoConSuccesso(String codFiscale, String codProgetto) throws SQLException;
 	public int inserisciProgetto(Progetto progetto) throws SQLException;
 	public int cambiaStatoProgetto(String nome) throws SQLException;
 //	public int cancellaProgetto(Progetto progetto);
-	public int inserisciArchivioPartecipantiProgettoPS(String codFiscale, String codProgetto)throws SQLException ;
+	public int inserisciArchivioPartecipantiProgettoPS(String codFiscale, String codProgetto)throws SQLException;
 
 }

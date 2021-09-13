@@ -57,6 +57,7 @@ import gui.ValutazioneAvvenutaConSuccesso;
 import gui.CreaMeeting;
 import gui.EliminaProgetto;
 import gui.ErroreCreazioneProgetto;
+import gui.ErroreInserimentoPartecipante;
 
 public class Controller {
 
@@ -79,6 +80,7 @@ public class Controller {
 	PartecipantiAlProgetto partecipantiAlProgetto;
 	ErroreCreazioneProgetto erroreCreazioneProgetto;
 	ValutazioneAvvenutaConSuccesso valutazioneAvvenutaConSuccesso;
+	ErroreInserimentoPartecipante erroreInserimentoPartecipante;
 	
 	
 	public static void main(String[] args) {
@@ -460,6 +462,8 @@ public class Controller {
 		}else if(caso ==9) {
 			valutazioneMembro.setVisible(false);
 			valutazioneAvvenutaConSuccesso.setVisible(false);	
+		}else if (caso ==10) {
+			erroreInserimentoPartecipante.setVisible(false);
 		}
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
@@ -541,7 +545,16 @@ public class Controller {
             
             dao= new ProgettoDAOPostgresImpl(connection);
             int res= dao.inserisciArchivioPartecipantiProgettoPS(codiceFiscale, codProgetto);
-            
+            int ris= dao.inserimentoAvvenutoConSuccesso(codiceFiscale, codProgetto);
+            if(ris ==-1) {
+            	erroreInserimentoPartecipante = new ErroreInserimentoPartecipante(this);
+            	erroreInserimentoPartecipante.setVisible(true);
+            }else {
+            	aggiungiMembriAlProgetto.setVisible(false);	
+        	    benvenutoPM = new BenvenutoProjectManager (this);
+        	    benvenutoPM.setVisible(true); 
+            }
+           
         }
 	    catch (SQLException exception)
     	{
@@ -551,10 +564,10 @@ public class Controller {
     	{
 	    	System.out.println("CE: "+ex);
     	}
-	    aggiungiMembriAlProgetto.setVisible(false);
-		
-	    benvenutoPM = new BenvenutoProjectManager (this);
-	    benvenutoPM.setVisible(true); 
+//	    aggiungiMembriAlProgetto.setVisible(false);
+//		
+//	    benvenutoPM = new BenvenutoProjectManager (this);
+//	    benvenutoPM.setVisible(true); 
 	}
 	
 	public void AvviaValutazione() {
@@ -587,8 +600,12 @@ public class Controller {
 		valutazioneAvvenutaConSuccesso.setVisible(true);
 	}
 	
-	public void AvviaPartecipantiAlProgetto() {
-		benvenutoPM.setVisible(false);
+	public void AvviaPartecipantiAlProgetto(int caso) {
+		if(caso ==1) {
+			erroreInserimentoPartecipante.setVisible(false);
+		}else {
+			benvenutoPM.setVisible(false);
+		}
 		partecipantiAlProgetto = new PartecipantiAlProgetto(this);
 		partecipantiAlProgetto.setVisible(true);
 	}

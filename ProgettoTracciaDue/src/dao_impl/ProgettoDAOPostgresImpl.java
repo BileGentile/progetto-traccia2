@@ -15,7 +15,7 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	
 	private Connection connection;
 
-	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS, cambiaStatoProgettoPS, getProgettoProjectManager,inserisciArchivioPartecipantiProgettoPS;
+	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS, cambiaStatoProgettoPS, getProgettoProjectManager,inserisciArchivioPartecipantiProgettoPS,inserimentoAvvenutoConSuccesso;
 
 	
 	public ProgettoDAOPostgresImpl (Connection connection) throws SQLException{
@@ -29,7 +29,8 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 				+ "from progetto \n"
 				+ "where codfiscale LIKE ? and stato LIKE 'Incompleto';");
 		inserisciArchivioPartecipantiProgettoPS = connection.prepareStatement("INSERT INTO partecipazioniprogetto VALUES (?,?)");
-}
+		inserimentoAvvenutoConSuccesso= connection.prepareStatement("select codprogetto from partecipazioniprogetto where codfiscale LIKE ? AND codprogetto LIKE ?");
+	}
 
 
 	@Override
@@ -86,7 +87,7 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
         while(rs.next())
         {
         	Progetto s = new Progetto(rs.getString("nome")); //rs.getString(1)
-        	 s.setNomeProgetto(rs.getString("nome"));
+        	s.setNomeProgetto(rs.getString("nome"));
             lista.add(s);
         }
         rs.close();
@@ -125,7 +126,22 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		int row = inserisciArchivioPartecipantiProgettoPS.executeUpdate();
 	    System.out.print(row); 
 		return row;
-	
 	}
 
+	public int inserimentoAvvenutoConSuccesso(String codFiscale, String codProgetto) throws SQLException{
+		inserimentoAvvenutoConSuccesso.setString(1, codFiscale);
+		inserimentoAvvenutoConSuccesso.setString(2,codProgetto);
+		ResultSet rs= inserimentoAvvenutoConSuccesso.executeQuery();
+        List<Progetto> lista = new ArrayList<Progetto>();
+        int ris=-1;
+        while(rs.next())
+        {
+        	ris++;
+        	Progetto s = new Progetto(rs.getString("codprogetto")); 
+            lista.add(s);
+        }
+        rs.close();
+        System.out.println(ris);
+        return ris;
+	}
 }

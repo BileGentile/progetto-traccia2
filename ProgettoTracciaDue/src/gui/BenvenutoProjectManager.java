@@ -92,7 +92,7 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton_6 = new JButton("Partecipanti Progetto");
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.AvviaPartecipantiAlProgetto();
+				IlControllore.AvviaPartecipantiAlProgetto(0);
 			}
 		});
 		
