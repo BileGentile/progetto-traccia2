@@ -41,12 +41,16 @@ import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.JTextArea;
 import java.awt.Scrollbar;
+import javax.swing.JList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class PartecipantiAlProgetto extends JFrame {
 
 	private JPanel contentPane;
 	
 	Controller IlControllore;
+	private JTable table;
 	
 	public PartecipantiAlProgetto(Controller c) {
 		IlControllore= c;
@@ -74,7 +78,7 @@ public class PartecipantiAlProgetto extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(35, 537, 103, 39);
+		btnNewButton_1.setBounds(35, 537, 173, 50);
 		contentPane.add(btnNewButton_1);
 		
 		JLabel lblCfPm = new JLabel("Codice fiscale del Project Manager");
@@ -123,19 +127,32 @@ public class PartecipantiAlProgetto extends JFrame {
 		btnR.setBounds(514, 40, 175, 39);
 		contentPane.add(btnR);
 		
-		JTextArea textArea = new JTextArea();
-		contentPane.add(textArea);
-		textArea.setBounds(67, 212, 445, 263);
-		textArea.setEditable(false);
+	      
+			table = new JTable();
+			table.setModel(new DefaultTableModel(
+				new Object[][] {
+					{"Nome", "Cognome", "Codice Fiscale"},
+				},
+				new String[] {
+					"Nome", "Cognome", "Codice Fiscale"
+				}
+			));
+			table.setBounds(46, 239, 450, 183);
+			contentPane.add(table);
 		
+			
 		JButton btnR1 = new JButton("Ricerca Partecipanti");
 		btnR1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText(""); 
-				int cont=1;
+	            
 				DBConnection dbconn = null;
 		        Connection connection = null;
 		        DBBuilder builder = null;
+		 
+		        while(table.getRowCount()!=1){
+				DefaultTableModel model1 = (DefaultTableModel) table.getModel(); 
+				model1.removeRow(1);
+		        }
 				try
 		        {
 					dbconn = DBConnection.getInstance();
@@ -147,20 +164,23 @@ public class PartecipantiAlProgetto extends JFrame {
 		            
 		            List<Sviluppatore> listaPartecipanti = dao.getPartecipantiProgettoPS(ComboBoxProgetti.getSelectedItem().toString());
 		           
-		            for(Sviluppatore m : listaPartecipanti)
-		            {
-		            	textArea.setText(textArea.getText().concat("\n"+cont+" "+m.toString()));
-		            	cont++;
-		            }
+					for(Sviluppatore m : listaPartecipanti)
+			        {
+					DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+			        model1.addRow(new Object[]{ m.getNome(), m.getCognome(), m.getCF()});
+			        }
 		        }
 				catch (SQLException exception)
-	        	{
-	                System.out.println("Errore SQLException: "+ exception.getMessage());
-	        	}
-			}
-		});
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+				}
+	            }
+			});
+		
 		btnR1.setBounds(514, 109, 175, 39);
 		contentPane.add(btnR1);
 		
-	}
+		
+		
+}
 }

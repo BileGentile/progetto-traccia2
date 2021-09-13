@@ -19,22 +19,6 @@ public class MembroDAOPostgresImpl implements MembroDAO {
 	
 	public MembroDAOPostgresImpl (Connection connection) throws SQLException{
 			this.connection=connection;
-//			getAllMembriPS = connection.prepareStatement("SELECT * FROM membro");
-//			getSviluppatoreByValutazionePS = connection.prepareStatement("SELECT * FROM membro WHERE Valutazione LIKE ? AND ruolo LIKE 'Sviluppatore' ");
-//			getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\n"
-//					+ "FROM membro \n"
-//					+ "WHERE  salariomedio > ? \n"
-//					+ "	AND ruolo LIKE 'Sviluppatore' \n"
-//					+ "	AND valutazione LIKE ? \n"
-//					+ "	AND codFiscale IN ((SELECT DISTINCT codfiscale \n"
-//					+ "						FROM skills AS S \n"
-//					+ "						Where S.skill LIKE ?)\n"
-//					+ "							except\n"
-//					+ "						(select codfiscale\n"
-//					+ "						from archiviopartecipantiprogetto\n"
-//					+ "						where nomeprogetto like ?)))");
-//			getAllSviluppatoriPS = connection.prepareStatement("SELECT * FROM membro WHERE ruolo LIKE 'Sviluppatore' ");
-			//inserisciValutazionePS = connection.prepareStatement("UPDATE sviluppatore SET valutazione  = ? WHERE codfiscale LIKE ?");
 			getPartecipantiProgettoPS = connection.prepareStatement("select codfiscale,nome, cognome,ruolo, valutazione\n"
 					+ "from archiviopartecipantiprogetto natural join membro \n"
 					+ "where nomeprogetto= ?;");

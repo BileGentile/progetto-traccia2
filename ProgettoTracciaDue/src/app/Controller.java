@@ -134,21 +134,21 @@ public class Controller {
             
           
             //INSERIRE DELLE SKILLS DI DEFAULT
-            SkillsDAO daos = null;
-            daos = new SkillsDAOPostgresImpl(connection);	
-            Skills s = new Skills("Empatia","sequenzacodiceskills");
-    		int re1= daos.inserisciSkills(s);
-    		
-    		SkillsDAO daos2 = null;
-            daos2 = new SkillsDAOPostgresImpl(connection);	
-            Skills s2 = new Skills("Puntualità","sequenzacodiceskills");
-     		int re2= daos2.inserisciSkills(s2);
-    		
-     		SkillsDAO daos3 = null;
-            daos3 = new SkillsDAOPostgresImpl(connection);	
-            Skills s3 = new Skills("ProblemSolving","sequenzacodiceskills");
-     		int re3= daos3.inserisciSkills(s3);
-    		
+//            SkillsDAO daos = null;
+//            daos = new SkillsDAOPostgresImpl(connection);	
+//            Skills s = new Skills("Empatia","sequenzacodiceskills");
+//    		int re1= daos.inserisciSkills(s);
+//    		
+//    		SkillsDAO daos2 = null;
+//            daos2 = new SkillsDAOPostgresImpl(connection);	
+//            Skills s2 = new Skills("Puntualità","sequenzacodiceskills");
+//     		int re2= daos2.inserisciSkills(s2);
+//    		
+//     		SkillsDAO daos3 = null;
+//            daos3 = new SkillsDAOPostgresImpl(connection);	
+//            Skills s3 = new Skills("ProblemSolving","sequenzacodiceskills");
+//     		int re3= daos3.inserisciSkills(s3);
+//    		
      		
      		 MembroDAO dao = null;
              ProgettoDAO daoo = null;

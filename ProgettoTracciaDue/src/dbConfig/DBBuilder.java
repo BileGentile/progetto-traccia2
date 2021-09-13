@@ -40,42 +40,6 @@ public class DBBuilder
 		return false;
 	}
 
-    //CREAZIONE TIPI ENUMERATIVI
-    
-    //ENUMERAZIONE RUOLO PER I MEMBRI
-	/*
-	 * public int createEnumRuolo() throws ConnectionException { int result= -1;
-	 * 
-	 * if(connectionExists()) { try { Statement st = connection.createStatement();
-	 * 
-	 * if(!tableExists("Ruolo")) { String sql =
-	 * "CREATE TYPE ruolo AS ENUM ('Sviluppatore');"; //DA RIFARE CON TUTTI GLI
-	 * ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-	 * 
-	 * result = st.executeUpdate(sql); st.close(); } else {
-	 * System.out.println("L'enumerazione Ruolo esiste già!"); } }
-	 * catch(SQLException ex) {
-	 * System.out.println("SQL Exception nella creazione dell'enumerazione Ruolo: "
-	 * +ex); } } else { throw new ConnectionException("A connection must exist!"); }
-	 * return result; }
-	 * 
-	 * //ENUMERAZIONE TIPOLOGIA PER I PROGETTI public int createEnumTipologia()
-	 * throws ConnectionException { int result= -1;
-	 * 
-	 * if(connectionExists()) { try { Statement st = connection.createStatement();
-	 * 
-	 * if(!tableExists("Tipologia")) { String sql =
-	 * "CREATE TYPE Tipologia AS ENUM ('Ricerca di base', 'Ricerca industriale', 'Ricerca sperimentale', 'Sviluppo sperimentale');"
-	 * ; //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-	 * 
-	 * result = st.executeUpdate(sql); st.close(); } else {
-	 * System.out.println("L'enumerazione Ruolo esiste già!"); } }
-	 * catch(SQLException ex) {
-	 * System.out.println("SQL Exception nella creazione dell'enumerazione Ruolo: "
-	 * +ex); } } else { throw new ConnectionException("A connection must exist!"); }
-	 * return result; }
-	 */
-    
     //CREAZIONE SEQUENZE
     
     //SEQUENZA PROGETTO
@@ -751,6 +715,8 @@ public class DBBuilder
 		    						+ "EXECUTE PROCEDURE FunctionPartecipazioneAlProgetto();";
 		    				result = st.executeUpdate(sql);
 		    				st.close();
+
+		    				System.out.println(" Hai inserito un membro che già faceva parte del progetto!");
 		    			} else {
 		    				System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
 		    			}
