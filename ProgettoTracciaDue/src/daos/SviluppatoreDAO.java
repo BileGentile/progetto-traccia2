@@ -13,5 +13,4 @@ public interface SviluppatoreDAO {
 	public List<Sviluppatore> getAllSviluppatoriProgetto (String codfiscale) throws SQLException;
 	public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;
 	public List<Sviluppatore> getPartecipantiProgettoPS(String nomeprogetto) throws SQLException;
-	public List<Sviluppatore> getSviluppatoreBySalarioESkillsPS (int salario, String skills, String progetto) throws SQLException;
-}
+	}

@@ -279,28 +279,17 @@ public class AggiungiMembriAlProgetto extends JFrame {
 			            
 			            dao = new SviluppatoreDAOPostgresImpl(connection);
 			            int valore=ComboBoxProgetti.getSelectedIndex();
-			            String valutazioneNull= ("NULL");
-
-			            if(comboBoxValutazione.getSelectedItem().toString().equals(valutazioneNull)) {
-			            	List<Sviluppatore> listaMembri = dao.getSviluppatoreBySalarioESkillsPS(Integer.parseInt(Salario.getText().toString()), ComboBoxSkills.getSelectedItem().toString(), codiceProgetto ); 
-			            	for(Sviluppatore n : listaMembri)
-				            {
+			            List<Sviluppatore> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),ComboBoxSkills.getSelectedItem().toString(), comboBoxValutazione.getSelectedItem().toString(), codiceProgetto ); 
+			            for(Sviluppatore n : listaMembri)
+				           {
 				            	ComboBoxMembri.addItem(n.getCF());
-				            }
-			            }else {
-
-			            	List<Sviluppatore> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazionePS(Integer.parseInt(Salario.getText().toString()),ComboBoxSkills.getSelectedItem().toString(), comboBoxValutazione.getSelectedItem().toString(), codiceProgetto ); 
-			            	for(Sviluppatore n : listaMembri)
-				            {
-				            	ComboBoxMembri.addItem(n.getCF());
-				            }
-			            }
-			            
+				           }
 			        }
-				catch (SQLException exception)
-		  	{
-		          System.out.println("Errore SQLException: "+ exception.getMessage());
-		  	}
+
+					catch (SQLException exception)
+		        {
+						System.out.println("Errore SQLException: "+ exception.getMessage());
+		        }
 			}
 		});
 		btnR.setBounds(371, 251, 146, 32);
