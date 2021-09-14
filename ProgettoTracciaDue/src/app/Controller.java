@@ -134,21 +134,21 @@ public class Controller {
             
           
             //INSERIRE DELLE SKILLS DI DEFAULT
-//            SkillsDAO daos = null;
-//            daos = new SkillsDAOPostgresImpl(connection);	
-//            Skills s = new Skills("Empatia","sequenzacodiceskills");
-//    		int re1= daos.inserisciSkills(s);
-//    		
-//    		SkillsDAO daos2 = null;
-//            daos2 = new SkillsDAOPostgresImpl(connection);	
-//            Skills s2 = new Skills("Puntualità","sequenzacodiceskills");
-//     		int re2= daos2.inserisciSkills(s2);
-//    		
-//     		SkillsDAO daos3 = null;
-//            daos3 = new SkillsDAOPostgresImpl(connection);	
-//            Skills s3 = new Skills("ProblemSolving","sequenzacodiceskills");
-//     		int re3= daos3.inserisciSkills(s3);
-//    		
+            SkillsDAO daos = null;
+            daos = new SkillsDAOPostgresImpl(connection);	
+            Skills s = new Skills("Empatia","sequenzacodiceskills");
+    		int re1= daos.inserisciSkills(s);
+    		
+    		SkillsDAO daos2 = null;
+            daos2 = new SkillsDAOPostgresImpl(connection);	
+            Skills s2 = new Skills("Puntualità","sequenzacodiceskills");
+     		int re2= daos2.inserisciSkills(s2);
+    		
+     		SkillsDAO daos3 = null;
+            daos3 = new SkillsDAOPostgresImpl(connection);	
+            Skills s3 = new Skills("ProblemSolving","sequenzacodiceskills");
+     		int re3= daos3.inserisciSkills(s3);
+   		
      		
      		 MembroDAO dao = null;
              ProgettoDAO daoo = null;
@@ -464,6 +464,7 @@ public class Controller {
 			valutazioneAvvenutaConSuccesso.setVisible(false);	
 		}else if (caso ==10) {
 			erroreInserimentoPartecipante.setVisible(false);
+			aggiungiMembriAlProgetto.setVisible(false);
 		}
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
@@ -524,10 +525,14 @@ public class Controller {
     	
 	}
 	
-	public void AvviaInserimentoMembri() {
+	public void AvviaInserimentoMembri(int caso) {
+		if (caso==0) {
 		benvenutoPM.setVisible(false);
 		aggiungiMembriAlProgetto = new AggiungiMembriAlProgetto(this);
 		aggiungiMembriAlProgetto.setVisible(true);
+		}else if(caso ==1) {
+			erroreInserimentoPartecipante.setVisible(false);
+		}
 	}
 	
 	public void CreaArchivioPartecipanti(String codiceFiscale, String codProgetto) {

@@ -69,7 +69,8 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton_3 = new JButton("Aggiungi Membri al progetto");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					IlControllore.AvviaInserimentoMembri();
+				int caso =0;
+					IlControllore.AvviaInserimentoMembri(caso);
 				
 			}
 		});

@@ -698,9 +698,9 @@ public class DBBuilder
 		    			if(!functionExists("functionpartecipazionealprogetto")) {
 		    				String sql = " CREATE FUNCTION functionpartecipazionealprogetto() RETURNS TRIGGER AS $TriggerPartecipazioneAlProgetto$"
 		    						+ "BEGIN "
-		    						+ "IF((SELECT P.CodFiscale "
+		    						+ "IF((SELECT P.codfiscale "
 		    						+ "FROM progetto AS P "
-		    						+ "WHERE (NEW.CodFiscale = P.CodFiscale AND NEW.CodProgetto = P.CodProgetto)) "
+		    						+ "WHERE (NEW.codfiscale = P.codfiscale AND NEW.codprogetto = P.codprogetto)) "
 		    						+ "IS NOT NULL) THEN "
 		    						+ "DELETE FROM partecipazioniprogetto AS PP "
 		    						+ "WHERE PP.codfiscale = NEW.codfiscale; "

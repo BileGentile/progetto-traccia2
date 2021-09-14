@@ -67,7 +67,7 @@ public class ErroreInserimentoPartecipante extends JDialog {
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						int caso=1;
-						IlControllore.AvviaPartecipantiAlProgetto(caso);
+						IlControllore.AvviaInserimentoMembri(caso);
 					}
 				});
 				cancelButton.setActionCommand("Cancel");
