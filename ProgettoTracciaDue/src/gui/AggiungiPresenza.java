@@ -83,23 +83,21 @@ public class AggiungiPresenza extends JFrame {
 						            
 					List<Progetto> lista = dao.getMeetingCodFiscale(CfInserito.getText().toString());
 					for(Progetto p : lista)
-						{
-						ComboBoxMeeting.addItem(p.getNomeProgetto());
-						}
-
-					}
-					catch (SQLException exception)
 					{
-					System.out.println("Errore SQLException: "+ exception.getMessage());
+						ComboBoxMeeting.addItem(p.getNomeProgetto());
 					}
+
+				}
+				catch (SQLException exception)
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+				}
 			}
 		});
 		ComboBoxMeeting.setMaximumRowCount(10);
 		
 		ComboBoxMeeting.setBounds(247, 82, 155, 35);
-		contentPane.add(ComboBoxMeeting);
-		
-		
+		contentPane.add(ComboBoxMeeting);	
 		
 		JButton btnNewButton = new JButton("Aggiungi");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -109,7 +107,6 @@ public class AggiungiPresenza extends JFrame {
 		});
 		btnNewButton.setBounds(306, 188, 96, 35);
 		contentPane.add(btnNewButton);
-		
 		
 		CfInserito = new JTextField();
 		CfInserito.setBounds(247, 34, 155, 29);

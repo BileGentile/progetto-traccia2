@@ -138,8 +138,7 @@ public class PartecipantiAlProgetto extends JFrame {
 				}
 			));
 			table.setBounds(46, 239, 450, 183);
-			contentPane.add(table);
-		
+			contentPane.add(table);		
 			
 		JButton btnR1 = new JButton("Ricerca Partecipanti");
 		btnR1.addActionListener(new ActionListener() {
@@ -166,8 +165,8 @@ public class PartecipantiAlProgetto extends JFrame {
 		           
 					for(Sviluppatore m : listaPartecipanti)
 			        {
-					DefaultTableModel model1 = (DefaultTableModel) table.getModel();
-			        model1.addRow(new Object[]{ m.getNome(), m.getCognome(), m.getCF()});
+						DefaultTableModel model1 = (DefaultTableModel) table.getModel();
+						model1.addRow(new Object[]{ m.getNome(), m.getCognome(), m.getCF()});
 			        }
 		        }
 				catch (SQLException exception)
@@ -178,9 +177,7 @@ public class PartecipantiAlProgetto extends JFrame {
 			});
 		
 		btnR1.setBounds(514, 109, 175, 39);
-		contentPane.add(btnR1);
+		contentPane.add(btnR1);	
 		
-		
-		
-}
+	}
 }

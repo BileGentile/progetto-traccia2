@@ -117,8 +117,7 @@ public class RegistrazioneProjectManager extends JFrame {
     	{
             System.out.println("Errore SQLException: "+ exception.getMessage());
     	}
-
-		
+	
 		JList<String> listskills = new JList<String>(demoList);		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(listskills);
@@ -130,39 +129,35 @@ public class RegistrazioneProjectManager extends JFrame {
 		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
 		JTextField textFieldNuovaSkill = new JTextField();
 		textFieldNuovaSkill.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
+			public void actionPerformed(ActionEvent e) {		
 
-			DBConnection dbconn = null;
-			Connection connection = null;
-			DBBuilder builder = null;
-			try
-	        {
-				dbconn = DBConnection.getInstance();
-	            connection = dbconn.getConnection();
-	            builder = new DBBuilder(connection);
-	            SkillsDAO dao2 = null;
+				DBConnection dbconn = null;
+				Connection connection = null;
+				DBBuilder builder = null;
+				try
+				{
+					dbconn = DBConnection.getInstance();
+					connection = dbconn.getConnection();
+					builder = new DBBuilder(connection);
+					SkillsDAO dao2 = null;     
 	            
-	            
-	            dao2 = new SkillsDAOPostgresImpl(connection);	
-	            Skills s = new Skills(textFieldNuovaSkill.getText(),"sequenzacodiceskills");
-        		int res1= dao2.inserisciSkills(s);
-        		demoList.addElement(s.getNomeSkill());
-        		JList<String> listskills1 = new JList<String>(demoList);
-        		contentPane.add(listskills1);
-	        }
-			catch (SQLException exception)
-	    	{
-	            System.out.println("Errore SQLException: "+ exception.getMessage());
-	    	}
+					dao2 = new SkillsDAOPostgresImpl(connection);	
+					Skills s = new Skills(textFieldNuovaSkill.getText(),"sequenzacodiceskills");
+					int res1= dao2.inserisciSkills(s);
+					demoList.addElement(s.getNomeSkill());
+					JList<String> listskills1 = new JList<String>(demoList);
+					contentPane.add(listskills1);
+				}
+				catch (SQLException exception)
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+				}
 			
-		}
+			}
 		});
 		textFieldNuovaSkill.setColumns(15);
 		textFieldNuovaSkill.setBounds(20, 207, 136, 29);
 		contentPane.add(textFieldNuovaSkill);         
-
-		
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {

@@ -135,13 +135,10 @@ public class RegistrazioneSviluppatore extends JFrame {
 		scrollPane.setViewportView(list);
 		list.setLayoutOrientation(JList.VERTICAL);		
 	
-	
-
-			JTextField textFieldNuovaSkill = new JTextField();
-			textFieldNuovaSkill.setBounds(42, 286, 168, 29);
-			textFieldNuovaSkill.addActionListener(new ActionListener() {
+		JTextField textFieldNuovaSkill = new JTextField();
+		textFieldNuovaSkill.setBounds(42, 286, 168, 29);
+		textFieldNuovaSkill.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 
 			DBConnection dbconn = null;
 			Connection connection = null;
@@ -152,8 +149,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 	            connection = dbconn.getConnection();
 	            builder = new DBBuilder(connection);
 	            SkillsDAO dao2 = null;
-	            
-	            
+	             
 	            dao2 = new SkillsDAOPostgresImpl(connection);	
 	            Skills s = new Skills(textFieldNuovaSkill.getText(),"sequenzacodiceskills");
         		int res1= dao2.inserisciSkills(s);
@@ -166,10 +162,9 @@ public class RegistrazioneSviluppatore extends JFrame {
 	            System.out.println("Errore SQLException: "+ exception.getMessage());
 	    	}
 			
-		}
+			}
 		});		
 		textFieldNuovaSkill.setColumns(10);
-		
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -180,7 +175,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				IlControllore.RegistraSviluppatore(CognomeS.getText(), NomeS.getText(), CodiceFiscaleS.getText(), salario.getText(), list.getSelectedValuesList());	
-				
 			}
 		});
 		
@@ -192,10 +186,7 @@ public class RegistrazioneSviluppatore extends JFrame {
 				IlControllore.TornaLogin(caso);
 			}
 		});
-
 	
-		
-		
 		JLabel lblQuSotto = new JLabel("qu\u00EC sotto");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -281,7 +272,6 @@ public class RegistrazioneSviluppatore extends JFrame {
 						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
 					.addContainerGap())
 		);
-		contentPane.setLayout(gl_contentPane);
-		
+		contentPane.setLayout(gl_contentPane);	
 	}
 }

@@ -61,8 +61,7 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton_2 = new JButton("Crea Meeting");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-			IlControllore.AvviaCreaMeeting();
+				IlControllore.AvviaCreaMeeting();
 			}
 			});
 		
@@ -71,7 +70,6 @@ public class BenvenutoProjectManager extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int caso =0;
 					IlControllore.AvviaInserimentoMembri(caso);
-				
 			}
 		});
 		

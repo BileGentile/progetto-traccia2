@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Ambito {
 
 	//	attributi
-	
+
 	private String NomeAmbito;
 	private String CodAmbito;
 	private ArrayList<Progetto> ambitiProgetto;

@@ -101,8 +101,7 @@ public class AggiungiProgetto extends JFrame {
 		catch (SQLException exception)
     	{
             System.out.println("Errore SQLException: "+ exception.getMessage());
-    	}
-		
+    	}	
 
 		JList<String> list = new JList<String>(demoList);
 		list.setBounds(235, 195, 134, 103);
@@ -115,8 +114,7 @@ public class AggiungiProgetto extends JFrame {
 		
 		JButton btnNewButton = new JButton("Crea");
 		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
+			public void actionPerformed(ActionEvent e) {		
 				IlControllore.CreaProgetto(nomeProgetto.getText(), comboBox_1.getSelectedItem().toString(),list.getSelectedValuesList(), CodiceFiscalePm.getText());
 			}
 		});
@@ -142,41 +140,38 @@ public class AggiungiProgetto extends JFrame {
 		btnNewButton_1.setBounds(23, 320, 117, 36);
 		contentPane.add(btnNewButton_1);
 		
-		
 		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
-					JTextField textFieldNuovoAmbito = new JTextField();		
-					textFieldNuovoAmbito.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
+		JTextField textFieldNuovoAmbito = new JTextField();		
+		textFieldNuovoAmbito.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			
 
-					DBConnection dbconn = null;
-					Connection connection = null;
-					DBBuilder builder = null;
-					try
-			        {
-						dbconn = DBConnection.getInstance();
-			            connection = dbconn.getConnection();
-			            builder = new DBBuilder(connection);
-			            AmbitoDAO dao2 = null;
+				DBConnection dbconn = null;
+				Connection connection = null;
+				DBBuilder builder = null;
+				try
+				{
+					dbconn = DBConnection.getInstance();
+					connection = dbconn.getConnection();
+					builder = new DBBuilder(connection);
+					AmbitoDAO dao2 = null;
 			            
-			            
-			            dao2 = new AmbitoDAOPostgresImpl(connection);	
-			            Ambito a = new Ambito(textFieldNuovoAmbito.getText(),"sequenzacodiceambito");
-		        		int res1= dao2.inserisciAmbito(a);
-		        		demoList.addElement(a.getNomeAmbito());
-		        		JList<String> listsambiti1 = new JList<String>(demoList);
-		        		contentPane.add(listsambiti1);
-			        }
-					catch (SQLException exception)
-			    	{
-			            System.out.println("Errore SQLException: "+ exception.getMessage());
-			    	}
-					
+					dao2 = new AmbitoDAOPostgresImpl(connection);	
+					Ambito a = new Ambito(textFieldNuovoAmbito.getText(),"sequenzacodiceambito");
+					int res1= dao2.inserisciAmbito(a);
+					demoList.addElement(a.getNomeAmbito());
+					JList<String> listsambiti1 = new JList<String>(demoList);
+					contentPane.add(listsambiti1);
 				}
-				});
-					textFieldNuovoAmbito.setBounds(23, 240, 134, 19);
-					contentPane.add(textFieldNuovoAmbito);
-					textFieldNuovoAmbito.setColumns(10);
+				catch (SQLException exception)
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+			    }
+				
+			}
+		});
+		textFieldNuovoAmbito.setBounds(23, 240, 134, 19);
+		contentPane.add(textFieldNuovoAmbito);
+		textFieldNuovoAmbito.setColumns(10);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("o creane uno nuovo:");
 		lblNewLabel_1_1_1.setBounds(23, 207, 189, 29);

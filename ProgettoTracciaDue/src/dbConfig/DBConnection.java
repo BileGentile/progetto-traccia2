@@ -18,9 +18,6 @@ public class DBConnection {
     private String url = "jdbc:postgresql://"+IP+":"+PORT+"/DBProgettoTracciaDue";
 
     private DBConnection() throws SQLException {
-        //Properties props = new Properties();
-        //props.setProperty("user", USERNAME);
-        //props.setProperty("pwd", PASSWORD);
         
     	//1 e 2  CARICARE IL DRIVER/OTTENERE UNA CONNESSIONE
         try
@@ -50,21 +47,4 @@ public class DBConnection {
             }
         return instance;
     }
-
-   /*private void createDatabase(String dbname)
-    {
-        Statement statement = null;
-        try {
-            statement = connection.createStatement();
-            statement.executeUpdate("CREATE DATABASE " + dbname);
-        }
-        catch (SQLException sqlException) {
-            if (sqlException.getErrorCode() == 1007) {
-                System.out.println("Database " + dbname + " already exists: " + sqlException.getMessage());
-            } else {
-                // Some other problems, e.g. Server down, no permission, etc
-                System.out.println("SqlException: " + sqlException.getMessage());
-            }
-        }
-    }*/
 }

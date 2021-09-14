@@ -6,6 +6,7 @@ import entity.Sviluppatore;
 import entity.Skills;
 
 public interface SviluppatoreDAO {
+	
 	public List<Sviluppatore> getSviluppatoreByCodFiscale(String codfiscale) throws SQLException ;
 	public int inserisciSviluppatore(Sviluppatore membro) throws SQLException;
 	public int inserisciSkillSviluppatore(Sviluppatore membro, String s1) throws SQLException;
@@ -13,4 +14,5 @@ public interface SviluppatoreDAO {
 	public List<Sviluppatore> getAllSviluppatoriProgetto (String codfiscale) throws SQLException;
 	public int inserisciValutazione(String valutazione, String codFiscale) throws SQLException;
 	public List<Sviluppatore> getPartecipantiProgettoPS(String nomeprogetto) throws SQLException;
-	}
+
+}

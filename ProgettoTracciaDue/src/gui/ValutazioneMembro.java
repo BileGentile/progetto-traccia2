@@ -86,60 +86,58 @@ public class ValutazioneMembro extends JFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 		
-			DBConnection dbconn = null;
-	        Connection connection = null;
-	        DBBuilder builder = null;
+				DBConnection dbconn = null;
+				Connection connection = null;
+				DBBuilder builder = null;
 	        
-		try
-		{
-			comboBox_1.removeAllItems();
-	        dbconn = DBConnection.getInstance();     
-	        connection = dbconn.getConnection();	           
-	        builder = new DBBuilder(connection);
-	        SviluppatoreDAO dao = null;
+				try
+				{
+					comboBox_1.removeAllItems();
+					dbconn = DBConnection.getInstance();     
+					connection = dbconn.getConnection();	           
+					builder = new DBBuilder(connection);
+					SviluppatoreDAO dao = null;
 	            
-	            dao = new SviluppatoreDAOPostgresImpl(connection);
+					dao = new SviluppatoreDAOPostgresImpl(connection);
 	            
-			    List<Sviluppatore> lista = dao.getAllSviluppatoriProgetto(textField.getText().toString());
-			    for(Sviluppatore mm : lista)
-			    {
-			    	 comboBox_1.addItem(mm.getCF());
-			    }
+					List<Sviluppatore> lista = dao.getAllSviluppatoriProgetto(textField.getText().toString());
+					for(Sviluppatore mm : lista)
+					{
+						comboBox_1.addItem(mm.getCF());
+					}
 
-		}
-	    catch (SQLException exception)
-		{
-	    	System.out.println("Errore SQLException: "+ exception.getMessage());
-		}
+				}
+				catch (SQLException exception)
+				{
+					System.out.println("Errore SQLException: "+ exception.getMessage());
+				}
 		
-	}
+			}
 		
-});
+		});
 
 		comboBox_1.setBounds(200, 100, 140, 29);
 		contentPane.add(comboBox_1);
 	
-	JButton btnNewButton = new JButton("Valuta ");
-	btnNewButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			IlControllore.ValutazioneMembro(comboBox.getSelectedItem().toString(), comboBox_1.getSelectedItem().toString());
-
-		}		
+		JButton btnNewButton = new JButton("Valuta ");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.ValutazioneMembro(comboBox.getSelectedItem().toString(), comboBox_1.getSelectedItem().toString());
+			}		
 		});
 
-	btnNewButton.setBounds(288, 197, 91, 29);
-	contentPane.add(btnNewButton);
+		btnNewButton.setBounds(288, 197, 91, 29);
+		contentPane.add(btnNewButton);
 	
-	JButton btnNewButton_1 = new JButton("Torna indietro");
-	btnNewButton_1.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			int caso=1;
-			IlControllore.RitornaBenvenutoProjectManager(caso);
-		}
-	});
-	btnNewButton_1.setBounds(50, 197, 129, 34);
-	contentPane.add(btnNewButton_1);
-
+		JButton btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int caso=1;
+				IlControllore.RitornaBenvenutoProjectManager(caso);
+			}
+		});
+		btnNewButton_1.setBounds(50, 197, 129, 34);
+		contentPane.add(btnNewButton_1);
 
 	}
 }

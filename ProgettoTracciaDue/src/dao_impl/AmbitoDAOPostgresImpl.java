@@ -18,8 +18,11 @@ public class AmbitoDAOPostgresImpl implements AmbitoDAO {
 
 	public AmbitoDAOPostgresImpl(Connection connection) throws SQLException{
 		this.connection=connection;
+		
 		getAllAmbitoPS=connection.prepareStatement("SELECT DISTINCT nome FROM ambito;");
+		
 		inserisciAmbitoPS=connection.prepareStatement("INSERT INTO ambito VALUES (?,nextval(?))");
+		
 		inserisciAmbitoProgettoPS=connection.prepareStatement("INSERT INTO associazioneambito(codprogetto,codambito) "
 				+ "	SELECT  P.Codprogetto , A.CodAmbito\n"
 				+ "	FROM progetto AS P CROSS JOIN ambito AS A \n"
@@ -54,4 +57,5 @@ public class AmbitoDAOPostgresImpl implements AmbitoDAO {
 	    System.out.print(row); 
 		return row;
 	}
+
 }

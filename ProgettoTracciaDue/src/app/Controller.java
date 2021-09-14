@@ -95,6 +95,7 @@ public class Controller {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
+            
             //CREAZIONE ENUM
             //builder.createEnumRuolo();
             //builder.createEnumTipologia();
@@ -128,7 +129,6 @@ public class Controller {
             builder.createTableAssociazioneSkillsSviluppatore();
             
             //CREAZIONE TRIGGER 
-            
             builder.createTriggerPartecipazioneAlProgetto();
             builder.createTriggerDuplicatidelleSkills();
             
@@ -146,7 +146,7 @@ public class Controller {
     		
      		SkillsDAO daos3 = null;
             daos3 = new SkillsDAOPostgresImpl(connection);	
-            Skills s3 = new Skills("ProblemSolving","sequenzacodiceskills");
+            Skills s3 = new Skills("Problem Solving","sequenzacodiceskills");
      		int re3= daos3.inserisciSkills(s3);
    		
      		
@@ -420,7 +420,6 @@ public class Controller {
 	        {
 	            System.out.println("Errore SQLException: "+ exception.getMessage());
 	        } catch (ConnectionException e) {
-				// TODO Auto-generated catch block
 	        	  System.out.println("CE: "+e);
 			}
 	        
@@ -436,8 +435,7 @@ public class Controller {
 			aggiungiProgetto.setVisible(true);
 		}else {
 			erroreCreazioneProgetto.setVisible(false);
-		}
-		
+		}	
 	}
 	
 	public void RitornaBenvenutoProjectManager(int caso) {
@@ -509,8 +507,7 @@ public class Controller {
 	            	}
 	            	aggiungiProgetto.setVisible(false);
 	    	        benvenutoPM=new BenvenutoProjectManager(this);
-	        		benvenutoPM.setVisible(true);
-	            	
+	        		benvenutoPM.setVisible(true);      	
 	            }
 	            
 	        }
@@ -527,10 +524,10 @@ public class Controller {
 	
 	public void AvviaInserimentoMembri(int caso) {
 		if (caso==0) {
-		benvenutoPM.setVisible(false);
-		aggiungiMembriAlProgetto = new AggiungiMembriAlProgetto(this);
-		aggiungiMembriAlProgetto.setVisible(true);
-		}else if(caso ==1) {
+			benvenutoPM.setVisible(false);
+			aggiungiMembriAlProgetto = new AggiungiMembriAlProgetto(this);
+			aggiungiMembriAlProgetto.setVisible(true);
+		}else if(caso==1) {
 			erroreInserimentoPartecipante.setVisible(false);
 		}
 	}
@@ -569,10 +566,6 @@ public class Controller {
     	{
 	    	System.out.println("CE: "+ex);
     	}
-//	    aggiungiMembriAlProgetto.setVisible(false);
-//		
-//	    benvenutoPM = new BenvenutoProjectManager (this);
-//	    benvenutoPM.setVisible(true); 
 	}
 	
 	public void AvviaValutazione() {
@@ -656,16 +649,14 @@ public class Controller {
             dao = new ProgettoDAOPostgresImpl(connection);
             
             dao.cambiaStatoProgetto(nomeProgetto);
+        }      
+        catch (SQLException exception)
+        {
+        	System.out.println("Errore SQLException: "+ exception.getMessage());
         }
-           
-            catch (SQLException exception)
-            {
-                System.out.println("Errore SQLException: "+ exception.getMessage());
-            }
-            progettoEliminatoConSuccesso = new ProgettoEliminatoConSuccesso(this);
-            progettoEliminatoConSuccesso.setVisible(true);
-            
-    	}
+        progettoEliminatoConSuccesso = new ProgettoEliminatoConSuccesso(this);
+        progettoEliminatoConSuccesso.setVisible(true); 
+    }
 	
 	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala, String organizzatore, String NomeProgetto,  int durata) {
 		DBConnection dbconn = null;
@@ -679,15 +670,12 @@ public class Controller {
             	dbconn = DBConnection.getInstance();
             	connection = dbconn.getConnection();
             	builder = new DBBuilder(connection);
-            	ProgettoDAO dao = null;			            
+            	ProgettoDAO dao = null;			
+            	
             	dao = new ProgettoDAOPostgresImpl(connection);
             	codiceProgetto= dao.getProgettoByNome(NomeProgetto);
             	p= new Progetto(codiceProgetto);
-//            }
-//            catch (SQLException exception)
-//            {
-//            	System.out.println("Errore SQLException: "+ exception.getMessage());
-//            }
+            	
             	dbconn = DBConnection.getInstance();
                 connection = dbconn.getConnection();
                 builder = new DBBuilder(connection);
@@ -719,7 +707,6 @@ public class Controller {
         creaMeeting.setVisible(false);
         benvenutoPM = new BenvenutoProjectManager(this);
         benvenutoPM.setVisible(true);
-		
 
 	}
 

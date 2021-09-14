@@ -15,13 +15,17 @@ import entity.Skills;
 public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 
 	private Connection connection;
-		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS,getPartecipantiProgettoPS;
+		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS, getPartecipantiProgettoPS;
 	
 	public SviluppatoreDAOPostgresImpl (Connection connection) throws SQLException  {
 		this.connection=connection;
+		
 		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM sviluppatore WHERE codFiscale LIKE ? AND ruolo LIKE 'Sviluppatore' ");
+		
 		inserisciSviluppatorePS = connection.prepareStatement("INSERT INTO sviluppatore VALUES (?,?,UPPER(?), 'Sviluppatore', ?,?)");
+		
 		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore (codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
+		
 		getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\r\n"
 				+ "FROM SVILUPPATORE\r\n"
 				+ "WHERE  salariomedio > ?\r\n"
@@ -35,14 +39,14 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 				+ "						from partecipazioniprogetto\r\n"
 				+ "						where codprogetto like ?)));");
 		
-
-		
 		getAllSviluppatoriProgettoPS=connection.prepareStatement("select distinct codfiscale\n"
 				+ "from partecipazioniprogetto\n"
 				+ "where codprogetto in (SELECT codprogetto\n"
 				+ "					   FROM progetto \n"
 				+ "					   WHERE codFiscale LIKE ?);");
+		
 		inserisciValutazionePS = connection.prepareStatement("UPDATE SVILUPPATORE SET valutazione  = ? WHERE codfiscale LIKE ?");
+		
 		getPartecipantiProgettoPS = connection.prepareStatement("select s.nome, s.cognome, s.codfiscale, s.ruolo, s.salariomedio, s.valutazione\r\n"
 				+ "from partecipazioniprogetto join sviluppatore as s on partecipazioniprogetto.codfiscale= s.codfiscale\r\n"
 				+ "where partecipazioniprogetto.codprogetto in\r\n"
@@ -134,7 +138,6 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 	@Override
 	public List<Sviluppatore> getPartecipantiProgettoPS(String nomeprogetto) throws SQLException{
 		getPartecipantiProgettoPS.setString(1,nomeprogetto);
-	
         ResultSet rs= getPartecipantiProgettoPS.executeQuery();
         List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
         while(rs.next())

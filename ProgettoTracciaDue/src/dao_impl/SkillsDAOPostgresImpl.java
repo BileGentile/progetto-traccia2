@@ -20,6 +20,7 @@ public class SkillsDAOPostgresImpl implements SkillsDAO {
 		this.connection=connection;
 
 		inserisciSkillsPS = connection.prepareStatement("INSERT INTO Skills VALUES (?, nextval(?))");
+		
 		getAllSkillsPS=connection.prepareStatement("SELECT DISTINCT nomeskill FROM SKILLS;");
 
 	}
@@ -31,7 +32,6 @@ public class SkillsDAOPostgresImpl implements SkillsDAO {
         while(rs.next())
         {
             Skills s = new Skills(rs.getString("nomeSkill"));
-         
             lista.add(s);
         }
         rs.close();
@@ -46,6 +46,5 @@ public class SkillsDAOPostgresImpl implements SkillsDAO {
 	    System.out.print(row); 
 		return row;
 	}
-	
 
 }

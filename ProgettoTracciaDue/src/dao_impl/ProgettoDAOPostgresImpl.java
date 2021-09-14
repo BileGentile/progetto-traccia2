@@ -22,13 +22,19 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		this.connection=connection;
 
 		getProgettoByNomePS = connection.prepareStatement("SELECT codprogetto FROM progetto WHERE nome LIKE ?");
+		
 		inserisciProgettoPS = connection.prepareStatement("INSERT INTO progetto VALUES (?,?,nextval(?),?, ? )");
+		
 		getAllProgettiPS = connection.prepareStatement("SELECT * FROM progetto WHERE stato LIKE 'Incompleto' ");
+		
 		cambiaStatoProgettoPS = connection.prepareStatement("UPDATE progetto SET stato = 'Completo' WHERE nome LIKE ?");
+		
 		getProgettoProjectManager =connection.prepareStatement("SELECT nome \n"
 				+ "from progetto \n"
 				+ "where codfiscale LIKE ? and stato LIKE 'Incompleto';");
+		
 		inserisciArchivioPartecipantiProgettoPS = connection.prepareStatement("INSERT INTO partecipazioniprogetto VALUES (?,?)");
+		
 		inserimentoAvvenutoConSuccesso= connection.prepareStatement("select codprogetto from partecipazioniprogetto where codfiscale LIKE ? AND codprogetto LIKE ?");
 	}
 
@@ -41,7 +47,6 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
         {
             Progetto s = new Progetto(rs.getString("codprogetto")); 
             s.setNomeProgetto(rs.getString("nome"));
-            //s.setAmbitoProgetto(rs.getString("ambito"));
             s.setTipoProgetto(rs.getString("tipo"));
             s.setStato(rs.getString("stato"));
             lista.add(s);
@@ -61,24 +66,6 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
         return s.getCodiceProgetto();
 	}
 
-//	@Override
-//	public List<Progetto> getProgettoByCodProgetto(String codice) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Progetto> getProgettoByAmbito(String ambito) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Progetto> getMembroByTipo(String tipo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-	
 	@Override
 	public List<Progetto> getProgettoProjectManager(String codfiscale) throws SQLException {
 		getProgettoProjectManager.setString(1, codfiscale);
@@ -105,12 +92,6 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
     	int row = inserisciProgettoPS.executeUpdate();
     	return row;
 	}
-
-//	@Override
-//	public int cancellaProgetto(Progetto progetto) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 	
 	@Override
 	public int cambiaStatoProgetto(String nome) throws SQLException {
@@ -144,4 +125,5 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
         System.out.println(ris);
         return ris;
 	}
+	
 }

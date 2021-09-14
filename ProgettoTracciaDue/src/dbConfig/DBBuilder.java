@@ -257,7 +257,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("sviluppatore")) {
-    				String sql = "CREATE TABLE sviluppatore " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE sviluppatore " + 
                             "(nome VARCHAR(100) not NULL, " +
                             " cognome VARCHAR(100) not NULL, " +
                             " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
@@ -290,7 +290,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("projectmanager")) {
-    				String sql = "CREATE TABLE projectManager " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE projectManager " +   
                             "(nome VARCHAR(100) not NULL, " +
                             " cognome VARCHAR(100) not NULL, " +
                             " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +
@@ -322,7 +322,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("progetto")) {
-    				String sql = "CREATE TABLE progetto " +        //DA RIVEDERE
+    				String sql = "CREATE TABLE progetto " +  
                             "(nome VARCHAR(255) not NULL UNIQUE, " +
                             " tipologia VARCHAR(255) CHECK (tipologia LIKE 'Ricerca di base' OR tipologia like 'Ricerca industriale' OR tipologia LIKE 'Ricerca sperimentale' OR tipologia like 'Sviluppo sperimentale')," +
                             " codProgetto VARCHAR(255) PRIMARY KEY, " +
@@ -380,7 +380,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("ambito")) {
-    				String sql = "CREATE TABLE ambito " +        //DA RIVEDERE
+    				String sql = "CREATE TABLE ambito " +   
                             "(nome VARCHAR(255) not NULL UNIQUE, " +
                             " codAmbito VARCHAR(255) PRIMARY KEY);";
     				
@@ -408,7 +408,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("associazioneambito")) {
-    				String sql = "CREATE TABLE associazioneAmbito(" +        //DA RIVEDERE
+    				String sql = "CREATE TABLE associazioneAmbito(" +   
                             "codProgetto VARCHAR(255) REFERENCES Progetto(codProgetto)," +
                             "codAmbito VARCHAR(255) REFERENCES Ambito(codAmbito))";
     				result = st.executeUpdate(sql);
@@ -435,7 +435,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
   			
     			if(!tableExists("meetingfisico")) {
-    				String sql = "CREATE TABLE meetingFisico (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE meetingFisico (" +    
                           " codiceMeeting VARCHAR(255) NOT NULL, " +
                           " data VARCHAR(200)  NOT NULL, " +
                           " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
@@ -468,7 +468,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazionisviluppatoremeetingfisico")) {
-    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingFisico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingFisico(" +  
                                  "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
     				
@@ -496,7 +496,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazioniprojectmanagermeetingfisico")) {
-    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingFisico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingFisico(" +    
                                  "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
     				
@@ -524,7 +524,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
 			
     			if(!tableExists("meetingtelematico")) {
-    				String sql = "CREATE TABLE meetingTelematico (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE meetingTelematico (" +        
                         " codiceMeeting VARCHAR(255) NOT NULL, " +
                         " data VARCHAR(200)  NOT NULL, " +
                         " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
@@ -557,7 +557,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazionisviluppatoremeetingtelematico")) {
-    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingTelematico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE partecipazioniSviluppatoreMeetingTelematico(" +     
                                  "codfiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
     				
@@ -585,7 +585,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("partecipazioniprojectmanagermeetingtelematico")) {
-    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingTelematico(" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingTelematico(" +       
                                  "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
     						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
     				
@@ -613,7 +613,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
 			
     			if(!tableExists("skills")) {
-    				String sql = "CREATE TABLE skills (" +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE skills (" +       
 						     "nomeSkill VARCHAR(100) not NULL, "+
 						    " codSkills VARCHAR(255) PRIMARY KEY,"
 						    + "UNIQUE(nomeSkill))";
@@ -641,7 +641,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
 			
     			if(!tableExists("associazioneskillsprojectmanager")) {
-    				String sql = "CREATE TABLE associazioneSkillsProjectManager(" + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE associazioneSkillsProjectManager(" + 
 				             "codFiscale VARCHAR(16) REFERENCES projectManager(codFiscale),"+
 						     "codSkills VARCHAR(255) REFERENCES skills(codSkills));";
     				result = st.executeUpdate(sql);
@@ -668,7 +668,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
 			
     			if(!tableExists("associazioneskillssviluppatore")) {
-    				String sql = "CREATE TABLE associazioneSkillsSviluppatore(" + //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE TABLE associazioneSkillsSviluppatore(" + 
 				             "codFiscale VARCHAR(16) REFERENCES sviluppatore(codFiscale),"+
 						     "codSkills VARCHAR(255) REFERENCES skills(codSkills));";
     				result = st.executeUpdate(sql);
@@ -686,89 +686,87 @@ public class DBBuilder
     }
 
     
-    // TRIGGER PER GESTIRE LA PARTECIPAZIONE DI UNO STESSO MEMBRO A UN PROGETTO 
-    
-		 public int createTriggerPartecipazioneAlProgetto() throws ConnectionException
-		    {
-		    	int result= -1;
+    // TRIGGER PER GESTIRE LA PARTECIPAZIONE DI UNO STESSO MEMBRO A UN PROGETTO   
+    public int createTriggerPartecipazioneAlProgetto() throws ConnectionException
+    {
+    	int result= -1;
 		    	
-		    	if(connectionExists()) {
-		    		try {
-		    			Statement st = connection.createStatement();
-		    			if(!functionExists("functionpartecipazionealprogetto")) {
-		    				String sql = " CREATE FUNCTION functionpartecipazionealprogetto() RETURNS TRIGGER AS $TriggerPartecipazioneAlProgetto$"
-		    						+ "BEGIN "
-		    						+ "IF((SELECT P.codfiscale "
-		    						+ "FROM progetto AS P "
-		    						+ "WHERE (NEW.codfiscale = P.codfiscale AND NEW.codprogetto = P.codprogetto)) "
-		    						+ "IS NOT NULL) THEN "
-		    						+ "DELETE FROM partecipazioniprogetto AS PP "
-		    						+ "WHERE PP.codfiscale = NEW.codfiscale; "
-		    						+ "END IF; "
-		    						+ "Return NEW; "
-		    						+ "END; "
-		    						+ "$TriggerPartecipazioneAlProgetto$ LANGUAGE plpgsql; "
-		    						+ "CREATE TRIGGER TriggerPartecipazioneAlProgetto "
-		    						+ "AFTER INSERT OR UPDATE "
-		    						+ "ON partecipazioniprogetto "
-		    						+ "FOR EACH ROW "
-		    						+ "EXECUTE PROCEDURE FunctionPartecipazioneAlProgetto();";
-		    				result = st.executeUpdate(sql);
-		    				st.close();
+    	if(connectionExists()) {
+    		try {
+		    	Statement st = connection.createStatement();
+		    	if(!functionExists("functionpartecipazionealprogetto")) {
+		    		String sql = " CREATE FUNCTION functionpartecipazionealprogetto() RETURNS TRIGGER AS $TriggerPartecipazioneAlProgetto$"
+		    				+ "BEGIN "
+		    				+ "IF((SELECT P.codfiscale "
+		    				+ "FROM progetto AS P "
+		    				+ "WHERE (NEW.codfiscale = P.codfiscale AND NEW.codprogetto = P.codprogetto)) "
+		 					+ "IS NOT NULL) THEN "
+		    				+ "DELETE FROM partecipazioniprogetto AS PP "
+		    				+ "WHERE PP.codfiscale = NEW.codfiscale; "
+		 					+ "END IF; "
+		 					+ "Return NEW; "
+		    				+ "END; "
+		    				+ "$TriggerPartecipazioneAlProgetto$ LANGUAGE plpgsql; "
+		    				+ "CREATE TRIGGER TriggerPartecipazioneAlProgetto "
+		    				+ "AFTER INSERT OR UPDATE "
+		    				+ "ON partecipazioniprogetto "
+		    				+ "FOR EACH ROW "
+		    				+ "EXECUTE PROCEDURE FunctionPartecipazioneAlProgetto();";
+		    		result = st.executeUpdate(sql);
+		    		st.close();
 
-		    				System.out.println(" Hai inserito un membro che già faceva parte del progetto!");
-		    			} else {
-		    				System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
-		    			}
-		    		} catch(SQLException ex) {
-		    			System.out.println("SQL Exception nella creazione della tabella FunctionPartecipazioneAlProgetto : "+ex);
-		    		}
+		    		System.out.println(" Hai inserito un membro che già faceva parte del progetto!");
 		    	} else {
-		    		throw new ConnectionException("A connection must exist!");
+		    		System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
 		    	}
-		    	return result;
-		    }
-		 
-		 
-		 // TRIGGER PER EVITARE VENGANO CREATI DUE SKILL CON LO STESSO NOME 
-
-		 public int createTriggerDuplicatidelleSkills() throws ConnectionException
-		    {
-		    	int result= -1;
 		    	
-		    	if(connectionExists()) {
-		    		try {
-		    			Statement st = connection.createStatement();
-		    			if(!functionExists("functionduplicatidelleskills")) {
-		    				String sql = " CREATE FUNCTION functionduplicatidelleskills() RETURNS TRIGGER AS $TriggerDuplicatidelleSkills$"
-		    						+ "BEGIN "
-		    						+ "IF((SELECT Sk.nomeskill "
-		    						+ "FROM skills AS Sk "
-		    						+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills != New.codskills))"
-		    						+ "IS NOT NULL) THEN "
-		    						+ "DELETE FROM skills AS Sk "
-		    						+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills = New.codskills); "
-		    						+ "END IF; "
-		    						+ "Return NEW; "
-		    						+ "END; "
-		    						+ "$TriggerDuplicatidelleSkills$ LANGUAGE plpgsql; "
-		    						+ "CREATE TRIGGER TriggerDuplicatidelleSkills "
-		    						+ "AFTER INSERT OR UPDATE "
-		    						+ "ON skills "
-		    						+ "FOR EACH ROW "
-		    						+ "EXECUTE PROCEDURE FunctionDuplicatidelleSkills();";
-		    				result = st.executeUpdate(sql);
-		    				st.close();
-		    			} else {
-		    				System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
-		    			}
-		    		} catch(SQLException ex) {
-		    			System.out.println("SQL Exception nella creazione della tabella FunctionPartecipazioneAlProgetto : "+ex);
-		    		}
-		    	} else {
-		    		throw new ConnectionException("A connection must exist!");
-		    	}
-		    	return result;
+		    } catch(SQLException ex) {
+		    	System.out.println("SQL Exception nella creazione della tabella FunctionPartecipazioneAlProgetto : "+ex);
 		    }
+		} else {
+		    throw new ConnectionException("A connection must exist!");
+		}
+    	return result;
+    }
+		 		 
+	// TRIGGER PER EVITARE VENGANO CREATI DUE SKILL CON LO STESSO NOME 
+    public int createTriggerDuplicatidelleSkills() throws ConnectionException
+    {
+    	int result= -1;
+		    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			if(!functionExists("functionduplicatidelleskills")) {
+    				String sql = " CREATE FUNCTION functionduplicatidelleskills() RETURNS TRIGGER AS $TriggerDuplicatidelleSkills$"
+    					+ "BEGIN "
+    					+ "IF((SELECT Sk.nomeskill "
+    					+ "FROM skills AS Sk "
+    					+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills != New.codskills))"
+    					+ "IS NOT NULL) THEN "
+    					+ "DELETE FROM skills AS Sk "
+    					+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills = New.codskills); "
+    					+ "END IF; "
+    					+ "Return NEW; "
+    					+ "END; "
+    					+ "$TriggerDuplicatidelleSkills$ LANGUAGE plpgsql; "
+    					+ "CREATE TRIGGER TriggerDuplicatidelleSkills "
+    					+ "AFTER INSERT OR UPDATE "
+    					+ "ON skills "
+    					+ "FOR EACH ROW "
+    					+ "EXECUTE PROCEDURE FunctionDuplicatidelleSkills();";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione della tabella FunctionPartecipazioneAlProgetto : "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
 
 }
