@@ -437,11 +437,12 @@ public class DBBuilder
     			if(!tableExists("meetingfisico")) {
     				String sql = "CREATE TABLE meetingFisico (" +    
                           " codiceMeeting VARCHAR(255) NOT NULL, " +
-                          " data VARCHAR(200)  NOT NULL, " +
-                          " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
+    					  " titolo VARCHAR(255) NOT NULL, " +
+                          " data DATE NOT NULL, " +
+                          " oraInizio TIME (0) NOT NULL,"+
+                          " oraFine TIME (0) NOT NULL,"+
                           " luogo VARCHAR,"+
                           " nomeSala VARCHAR,"+
-                          " durata INTEGER NOT NULL,"+
   						  " PRIMARY KEY (codiceMeeting),"+
   						  " codProgetto VARCHAR(255) REFERENCES progetto(codProgetto));";
     				result = st.executeUpdate(sql);
@@ -526,11 +527,11 @@ public class DBBuilder
     			if(!tableExists("meetingtelematico")) {
     				String sql = "CREATE TABLE meetingTelematico (" +        
                         " codiceMeeting VARCHAR(255) NOT NULL, " +
-                        " data VARCHAR(200)  NOT NULL, " +
-                        " oraInizio VARCHAR CHECK (oraInizio ~* '^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]') NOT NULL,"+
+    					" titolo VARCHAR(255) NOT NULL, " +
+                        " data DATE NOT NULL, " +
+                        " oraInizio TIME(0) NOT NULL,"+
+                        " oraFine TIME (0) NOT NULL, "+
                         " piattaforma VARCHAR,"+
-                        " link VARCHAR,"+
-                        " durata INTEGER NOT NULL,"+
                         " PRIMARY KEY (codiceMeeting),"+
 						" codProgetto VARCHAR(255) REFERENCES progetto(codProgetto));";
     				result = st.executeUpdate(sql);

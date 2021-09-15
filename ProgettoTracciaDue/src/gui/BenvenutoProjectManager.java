@@ -16,6 +16,7 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -27,7 +28,7 @@ public class BenvenutoProjectManager extends JFrame {
 
 	Controller IlControllore;
 	
-	public BenvenutoProjectManager(Controller c) {
+	public BenvenutoProjectManager(Controller c){
 		IlControllore =c;
 		setTitle("Azienda- Benvenuto Project Manager");
 

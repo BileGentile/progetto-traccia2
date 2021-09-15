@@ -1,28 +1,37 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Meeting {
 
     //ATTRIBUTI
 
 	private String CodMeet;
-	private String Data;
+	private String Titolo;
+	private Date Data;
     private String OraInizio;
-    private int Durata;
+    private String OraFine;
     private Progetto progettoMeeting;
+    private ProjectManager Organizzatore;
     private ArrayList<Membro> partecipanti;
     
     //COSTRUTTORI
     
-    public Meeting(String codMeet, String data, String oraInizio, int durata, Progetto progettoMeeting) {
+    public Meeting(String codMeet, String titolo, Date data, String oraInizio, String oraFine, Progetto progettoMeeting) {
 		super();
 		CodMeet = codMeet;
+		Titolo = titolo;
 		Data = data;
 		OraInizio = oraInizio;
-		Durata = durata;
+		OraFine = oraFine;
 		this.progettoMeeting = progettoMeeting;
 	}
+    
+    public Meeting(String codMeet) {
+    	super();
+    	CodMeet = codMeet;
+    }
 
 	public String getCodMeet() {
 		return CodMeet;
@@ -32,11 +41,11 @@ public class Meeting {
 		CodMeet = codMeet;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return Data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		Data = data;
 	}
 
@@ -48,12 +57,12 @@ public class Meeting {
 		OraInizio = oraInizio;
 	}
 
-	public int getDurata() {
-		return Durata;
+	public String getOraFine() {
+		return OraFine;
 	}
 
-	public void setDurata(int durata) {
-		Durata = durata;
+	public void setOraFine(String oraFine) {
+		OraFine = oraFine;
 	}
 
 	public Progetto getProgettoMeeting() {
@@ -74,8 +83,16 @@ public class Meeting {
 
 	@Override
 	public String toString() {
-		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Durata=" + Durata
+		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Durata=" + OraFine
 				+ ", progettoMeeting=" + progettoMeeting + "]";
+	}
+
+	public String getTitolo() {
+		return Titolo;
+	}
+
+	public void setTitolo(String titolo) {
+		Titolo = titolo;
 	}
     
     //METODI

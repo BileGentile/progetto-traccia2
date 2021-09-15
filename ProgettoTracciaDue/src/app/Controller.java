@@ -2,8 +2,10 @@ package app;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Date;
 import javax.swing.JTextField;
 
 import dbConfig.DBBuilder;
@@ -658,7 +660,7 @@ public class Controller {
         progettoEliminatoConSuccesso.setVisible(true); 
     }
 	
-	public void CreaMeeting(String tipologia, String data, String oraInizio, String piattaforma, String nomeSala, String organizzatore, String NomeProgetto,  int durata) {
+	public void CreaMeeting(String tipologia, String titolo, Date data, String oraInizio, String oraFine, String luogo, String nomeSala, String piattaforma, String organizzatore, String NomeProgetto) {
 		DBConnection dbconn = null;
 	    Connection connection = null;
 	    DBBuilder builder = null;
@@ -684,15 +686,15 @@ public class Controller {
             		builder.createTableMeetingTelematico();
             		MeetingTelematicoDAO dao1 = null;
             		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
-            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico" ,data, oraInizio , durata, p, piattaforma );
-            		//aggiungere link
+            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma );
+            		//AGGIUNGERE LINK??
             		int res =  dao1.inserisciMeetingTelematico(p1);
             	}else if (tipologia.equals("Fisico")) {
             		builder.createTableMeetingFisico(); 
             		MeetingFisicoDAO dao1 = null;
             		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
-            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico" ,data, oraInizio , durata , p ,nomeSala);//aggiungere luogo
-            		int res =  dao1.inserisciMeetingFisicoPS(p1);
+            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p , luogo, nomeSala);
+            		int res =  dao1.inserisciMeetingFisico(p1);
             	}
         
         }

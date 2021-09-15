@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Date;
+
 public class MeetingTelematico extends Meeting {
 	
 	//ATTRIBUTI
@@ -7,19 +9,23 @@ public class MeetingTelematico extends Meeting {
 	private String link;
 	
 	//COSTRUTTORI
-	public MeetingTelematico(String codMeet, String data, String oraInizio, int durata, Progetto progettoMeeting,
-			String piattaforma, String link) {
-		super(codMeet, data, oraInizio, durata, progettoMeeting);
+	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine, Progetto progettoMeeting, String piattaforma, String link) {
+		super(codMeet, titolo,  data, oraInizio, oraFine, progettoMeeting);
 		Piattaforma = piattaforma;
 		this.link = link;
 	}
 	
+	public MeetingTelematico(String codMeet) {
+		super(codMeet);
+	}
+	
 	//COSTRUTTORI
-		public MeetingTelematico(String codMeet, String data, String oraInizio, int durata, Progetto progettoMeeting,
-				String piattaforma) {
-			super(codMeet, data, oraInizio, durata, progettoMeeting);
+	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine, Progetto progettoMeeting, String piattaforma) {
+			super(codMeet, titolo,  data, oraInizio, oraFine, progettoMeeting);
 			Piattaforma = piattaforma;
-		}
+	}
+	
+	//GETTERS AND SETTERS
 
 	public String getPiattaforma() {
 		return Piattaforma;
