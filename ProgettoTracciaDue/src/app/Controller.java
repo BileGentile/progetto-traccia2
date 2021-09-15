@@ -135,7 +135,7 @@ public class Controller {
             builder.createTriggerDuplicatidelleSkills();
             
           
-            //INSERIRE DELLE SKILLS DI DEFAULT
+//            INSERIRE DELLE SKILLS DI DEFAULT
             SkillsDAO daos = null;
             daos = new SkillsDAOPostgresImpl(connection);	
             Skills s = new Skills("Empatia","sequenzacodiceskills");
