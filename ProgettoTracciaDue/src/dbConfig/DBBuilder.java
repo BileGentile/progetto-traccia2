@@ -730,7 +730,8 @@ public class DBBuilder
     	return result;
     }
 		 		 
-	// TRIGGER PER EVITARE VENGANO CREATI DUE SKILL CON LO STESSO NOME 
+	// TRIGGER PER EVITARE VENGANO CREATI DUE SKILL CON LO STESSO NOME E
+    //GESTIRE IL CASO IN CUI VENGA INSERITA UNA SKILL CON STESSO CODICE DI UNA GIA' PRESENTE
     public int createTriggerDuplicatidelleSkills() throws ConnectionException
     {
     	int result= -1;
@@ -742,25 +743,25 @@ public class DBBuilder
     				String sql = " CREATE FUNCTION functionduplicatidelleskills() RETURNS TRIGGER AS $TriggerDuplicatidelleSkills$"
     					+ "BEGIN "
     					+ "IF((SELECT Sk.nomeskill "
-    					+ "FROM skills AS Sk "
-    					+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills != New.codskills))"
+    					+ "		FROM skills AS Sk "
+    					+ "		WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills != New.codskills))"
     					+ "IS NOT NULL) THEN "
-    					+ "DELETE FROM skills AS Sk "
-    					+ "WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills = New.codskills); "
+    					+ "		DELETE FROM skills AS Sk "
+    					+ "		WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills = New.codskills); "
     					+ "END IF; "
     					+ "WHILE((SELECT Sk.nomeskill "
-    					+ "FROM skills AS Sk "
-    					+ "WHERE (NEW.nomeskill != Sk.nomeskill AND Sk.codskills = New.codskills))"
+    					+ "		  FROM skills AS Sk "
+    					+ "		  WHERE (NEW.nomeskill != Sk.nomeskill AND Sk.codskills = New.codskills))"
     					+ "IS NOT NULL) THEN "
-    					+ "New.codskills=nextval(New.codskills);"
-    					+ "INSERT INTO skills VALUES(NEW.nomeskill, New.codskills);  "
+    					+ "		New.codskills=nextval(New.codskills);"
+    					+ "		INSERT INTO skills VALUES(NEW.nomeskill, New.codskills);  "
     					+ "END WHILE;"    					
     					+ "Return NEW; "
     					+ "END; "
     					+ "$TriggerDuplicatidelleSkills$ LANGUAGE plpgsql; "
     					+ "CREATE TRIGGER TriggerDuplicatidelleSkills "
     					+ "AFTER INSERT OR UPDATE "
-    					+ "ON skills "
+    					+ "		ON skills "
     					+ "FOR EACH ROW "
     					+ "EXECUTE PROCEDURE FunctionDuplicatidelleSkills();";
     				result = st.executeUpdate(sql);
