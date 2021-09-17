@@ -19,17 +19,15 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 
 		public MeetingDAOPostgresImpl (Connection connection) throws SQLException{
 			this.connection=connection;
-			getMeetingCodFiscale=connection.prepareStatement("select nomeprogetto\n"
-					+ "from progetto\n"
-					+ "where codProgetto in (((select codprogetto\n"
+			getMeetingCodFiscale=connection.prepareStatement("select *\n"
+					+ "from ((select codicemeeting, titolo,codprogetto\n"
 					+ "from meetingfisico)\n"
 					+ "union\n"
-					+ "(select codprogetto\n"
-					+ "from meetingtelematico))\n"
-					+ "Where codprogetto in\n"
-					+ "(SELECT codprogetto\n"
+					+ "(select codicemeeting, titolo,codprogetto\n"
+					+ "from meetingtelematico)) as meeting\n"
+					+ "where meeting.codprogetto in (SELECT codprogetto\n"
 					+ "FROM partecipazioniprogetto\n"
-					+ "where codfiscale LIKE ?))");
+					+ "where codfiscale LIKE ?);");
 
 //			inserisciMeeting = connection.prepareStatement("INSERT INTO Meeting VALUES ( nextval(?),SUBSTR(?,1,10), SUBSTR(?,12,8),?, ?,?,?,?,?)");
 //			getMeetingByCodMeet = connection.prepareStatement("SELECT * FROM Meeting WHERE codMeet LIKE ?  ");
@@ -38,14 +36,14 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 		}
 		
 		@Override
-		public List<Progetto> getMeetingCodFiscale(String CF) throws SQLException {
+		public List<Meeting> getMeetingCodFiscale(String CF) throws SQLException {
 			getMeetingCodFiscale.setString(1, CF);
 			ResultSet rs= getMeetingCodFiscale.executeQuery();
-			List<Progetto> lista = new ArrayList<Progetto>();
+			List<Meeting> lista = new ArrayList<Meeting>();
 			 while(rs.next())
 		        {
-		        	Progetto s = new Progetto(CF); 
-		        	s.setNomeProgetto(rs.getString("NomeProgetto"));
+				 Meeting s = new Meeting(rs.getString("codicemeeting")); 
+		        	s.setTitolo(rs.getString("titolo"));
 		        	lista.add(s);
 		        }
 			return lista;

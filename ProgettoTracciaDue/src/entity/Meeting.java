@@ -80,13 +80,7 @@ public class Meeting {
 	public void setPartecipanti(ArrayList<Membro> partecipanti) {
 		this.partecipanti = partecipanti;
 	}
-
-	@Override
-	public String toString() {
-		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Durata=" + OraFine
-				+ ", progettoMeeting=" + progettoMeeting + "]";
-	}
-
+	
 	public String getTitolo() {
 		return Titolo;
 	}
@@ -94,6 +88,13 @@ public class Meeting {
 	public void setTitolo(String titolo) {
 		Titolo = titolo;
 	}
+
+	@Override
+	public String toString() {
+		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Durata=" + OraFine
+				+ ", progettoMeeting=" + progettoMeeting + "]";
+	}
+
     
     //METODI
     

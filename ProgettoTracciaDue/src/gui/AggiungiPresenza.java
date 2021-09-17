@@ -81,10 +81,10 @@ public class AggiungiPresenza extends JFrame {
 						            
 					dao = new MeetingDAOPostgresImpl(connection);
 						            
-					List<Progetto> lista = dao.getMeetingCodFiscale(CfInserito.getText().toString());
-					for(Progetto p : lista)
+					List<Meeting> lista = dao.getMeetingCodFiscale(CfInserito.getText().toString());
+					for(Meeting p : lista)
 					{
-						ComboBoxMeeting.addItem(p.getNomeProgetto());
+						ComboBoxMeeting.addItem(p.getTitolo());
 					}
 
 				}
