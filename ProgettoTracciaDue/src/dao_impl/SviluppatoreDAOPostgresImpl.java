@@ -15,7 +15,7 @@ import entity.Skills;
 public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 
 	private Connection connection;
-		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS,getSviluppatoreBySalarioESkillsEValutazionePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS, getPartecipantiProgettoPS;
+		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS, getPartecipantiProgettoPS,getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS;
 	
 	public SviluppatoreDAOPostgresImpl (Connection connection) throws SQLException  {
 		this.connection=connection;
@@ -26,18 +26,23 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		
 		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore (codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
 		
-		getSviluppatoreBySalarioESkillsEValutazionePS = connection.prepareStatement("(SELECT *\r\n"
-				+ "FROM SVILUPPATORE\r\n"
-				+ "WHERE  salariomedio > ?\r\n"
-				+ "AND ruolo LIKE 'Sviluppatore' \r\n"
-				+ "AND valutazione LIKE ? \r\n"
-				+ "AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
-				+ "						FROM skills AS S \r\n"
-				+ "						Where S.nomeskill LIKE ?)\r\n"
-				+ "						except\r\n"
-				+ "						(select codfiscale\r\n"
-				+ "						from partecipazioniprogetto\r\n"
-				+ "						where codprogetto like ?)));");
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS = connection.prepareStatement("select RISULTATO1.codfiscale, RISULTATO1.cognome, RISULTATO1.nome, RISULTATO1.ruolo,RISULTATO1.salariomedio, RISULTATO1.valutazione  \r\n"
+				+ "from (SELECT * \r\n"
+				+ "	  FROM SVILUPPATORE\r\n"
+				+ "	  WHERE  salariomedio > ? AND ruolo LIKE 'Sviluppatore' AND valutazione LIKE ?\r\n"
+				+ "	  AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
+				+ "						  FROM skills AS S \r\n"
+				+ "						  Where S.nomeskill LIKE ?)\r\n"
+				+ "						 except\r\n"
+				+ "						 (select codfiscale\r\n"
+				+ "						  from partecipazioniprogetto\r\n"
+				+ "						  where codprogetto like ?))) as RISULTATO1 \r\n"
+				+ "	LEFT outer join \r\n"
+				+ "	(SELECT PP.codfiscale, tipologia\r\n"
+				+ "	from progetto as p join partecipazioniprogetto as pp on pp.codprogetto = p.codprogetto\r\n"
+				+ "	where tipologia LIKE ?) as RISULTATO2 \r\n"
+				+ "	on RISULTATO1.codfiscale=RISULTATO2.codfiscale\r\n"
+				+ "ORDER BY tipologia ASC;");
 		
 		getAllSviluppatoriProgettoPS=connection.prepareStatement("select distinct codfiscale\n"
 				+ "from partecipazioniprogetto\n"
@@ -93,12 +98,13 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 	}
 	
 	@Override
-	public List<Sviluppatore> getSviluppatoreBySalarioESkillsEValutazionePS(int salario, String skills, String valutazione, String progetto) throws SQLException{
-		getSviluppatoreBySalarioESkillsEValutazionePS.setInt(1, salario);
-		getSviluppatoreBySalarioESkillsEValutazionePS.setString(2, valutazione);
-		getSviluppatoreBySalarioESkillsEValutazionePS.setString(3, skills);
-		getSviluppatoreBySalarioESkillsEValutazionePS.setString(4, progetto);
-        ResultSet rs= getSviluppatoreBySalarioESkillsEValutazionePS.executeQuery();
+	public List<Sviluppatore> getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS(int salario, String skills, String valutazione, String progetto, String tipologia) throws SQLException{
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setInt(1, salario);
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(2, valutazione);
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(3, skills);
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(4, progetto);
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(5, tipologia);
+        ResultSet rs= getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.executeQuery();
         List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
         while(rs.next())
         {
