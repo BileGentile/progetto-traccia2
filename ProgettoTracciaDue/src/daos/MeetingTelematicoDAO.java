@@ -17,7 +17,8 @@ public interface MeetingTelematicoDAO {
 	
 	public int cancellaMeetingTelematicoByTitolo(MeetingTelematico meetingTelematico) throws SQLException;
 	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException;
-
+	public int getInserisciPartecipazionePM(String cF, String codMeet)throws SQLException;
+		
 
 }
 

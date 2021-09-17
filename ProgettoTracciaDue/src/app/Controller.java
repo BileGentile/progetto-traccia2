@@ -689,12 +689,16 @@ public class Controller {
             		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma );
             		//AGGIUNGERE LINK??
             		int res =  dao1.inserisciMeetingTelematico(p1);
+            		MeetingTelematico m= dao1.getMeetingTelematicoByTitolo(titolo);
+            		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());
             	}else if (tipologia.equals("Fisico")) {
             		builder.createTableMeetingFisico(); 
             		MeetingFisicoDAO dao1 = null;
             		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
             		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p , luogo, nomeSala);
             		int res =  dao1.inserisciMeetingFisico(p1);
+            		MeetingFisico m= dao1.getMeetingFisicoByTitolo(titolo);
+            		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());
             	}
         
         }

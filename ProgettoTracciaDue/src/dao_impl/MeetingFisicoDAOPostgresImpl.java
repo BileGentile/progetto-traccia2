@@ -20,7 +20,7 @@ import entity.Progetto;
 public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	
 	private Connection connection;
-	private PreparedStatement getMeetingFisicoByTitoloPS,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
+	private PreparedStatement getMeetingFisicoByTitoloPS,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
 	
 
 	public MeetingFisicoDAOPostgresImpl (Connection connection) throws SQLException{
@@ -41,6 +41,8 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 				+ "					   from partecipazionisviluppatoremeetingfisico\r\n"
 				+ "					   where codfiscale LIKE ?);");
 		getInserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingfisico\r\n"
+				+ "values(?,?);");
+		getInserisciPartecipazionePM=connection.prepareStatement("insert into partecipazioniprojectmanagermeetingfisico\r\n"
 				+ "values(?,?);");
 		}
 
@@ -146,6 +148,13 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 		getInserisciPartecipazione.setString(1,cF);
 		getInserisciPartecipazione.setString(2, codMeet);
 		int row = getInserisciPartecipazione.executeUpdate();
+    	return row;
+	}
+	@Override
+	public int getInserisciPartecipazionePM(String cF, String codMeet)throws SQLException{
+		getInserisciPartecipazionePM.setString(1,cF);
+		getInserisciPartecipazionePM.setString(2, codMeet);
+		int row = getInserisciPartecipazionePM.executeUpdate();
     	return row;
 	}
 }

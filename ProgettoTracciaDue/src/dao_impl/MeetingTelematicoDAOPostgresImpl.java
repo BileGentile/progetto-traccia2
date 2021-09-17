@@ -19,7 +19,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 
 	private Connection connection;
 
-	private PreparedStatement getMeetingTelematicoByTitoloPS,getInserisciPartecipazione,getMeetingTelematicoCodFiscale, getAllMeetingTelematicoPS, inserisciMeetingPS, getMeetingTelematicoByCodMeetPS, cancellaMeetingTelematicoByTitoloPS;
+	private PreparedStatement getMeetingTelematicoByTitoloPS,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingTelematicoCodFiscale, getAllMeetingTelematicoPS, inserisciMeetingPS, getMeetingTelematicoByCodMeetPS, cancellaMeetingTelematicoByTitoloPS;
 
 	public MeetingTelematicoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
@@ -39,6 +39,8 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 				+ "					   from partecipazionisviluppatoremeetingtelematico\r\n"
 				+ "					   where codfiscale LIKE ?);");
 		getInserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingtelematico\r\n"
+				+ "values(?,?);");
+		getInserisciPartecipazionePM=connection.prepareStatement("insert into partecipazioniprojectmanagermeetingtelematico\r\n"
 				+ "values(?,?);");
 	}
 
@@ -143,6 +145,14 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		getInserisciPartecipazione.setString(1,cF);
 		getInserisciPartecipazione.setString(2, codMeet);
 		int row = getInserisciPartecipazione.executeUpdate();
+    	return row;
+	}
+	
+	@Override
+	public int getInserisciPartecipazionePM(String cF, String codMeet)throws SQLException{
+		getInserisciPartecipazionePM.setString(1,cF);
+		getInserisciPartecipazionePM.setString(2, codMeet);
+		int row = getInserisciPartecipazionePM.executeUpdate();
     	return row;
 	}
 }
