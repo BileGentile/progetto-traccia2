@@ -42,8 +42,10 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 			List<Meeting> lista = new ArrayList<Meeting>();
 			 while(rs.next())
 		        {
-				 Meeting s = new Meeting(rs.getString("codicemeeting")); 
-		        	s.setTitolo(rs.getString("titolo"));
+					Progetto p= new Progetto (rs.getString("codprogetto"));
+				 	Meeting s = new Meeting(rs.getString("codicemeeting")); 
+				 	s.setTitolo(rs.getString("titolo"));
+		        	s.setProgettoMeeting(p);
 		        	lista.add(s);
 		        }
 			return lista;

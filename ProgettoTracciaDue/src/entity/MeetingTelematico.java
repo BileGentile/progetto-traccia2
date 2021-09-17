@@ -9,20 +9,15 @@ public class MeetingTelematico extends Meeting {
 	private String link;
 	
 	//COSTRUTTORI
-	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine, Progetto progettoMeeting, String piattaforma, String link) {
-		super(codMeet, titolo,  data, oraInizio, oraFine, progettoMeeting);
+	
+	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
+			 Progetto progettoMeeting, String piattaforma) {
+		super(codMeet, titolo, data, oraInizio, oraFine, progettoMeeting);
 		Piattaforma = piattaforma;
-		this.link = link;
 	}
 	
 	public MeetingTelematico(String codMeet) {
 		super(codMeet);
-	}
-	
-	//COSTRUTTORI
-	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine, Progetto progettoMeeting, String piattaforma) {
-			super(codMeet, titolo,  data, oraInizio, oraFine, progettoMeeting);
-			Piattaforma = piattaforma;
 	}
 	
 	//GETTERS AND SETTERS

@@ -712,4 +712,35 @@ public class Controller {
 
 	}
 
+	public void AggiungiArchivioPartecipantiMeeting(String CF, String Tipologia, String titoloMeeting) {
+		DBConnection dbconn = null;
+	    Connection connection = null;
+	    DBBuilder builder = null;
+	    try
+        {
+	    	dbconn = DBConnection.getInstance();
+	    	connection = dbconn.getConnection();
+	    	builder = new DBBuilder(connection);
+	    	
+	    	if(Tipologia.equals("Telematico")) {
+	    		MeetingTelematicoDAO dao = null;
+	    		dao = new MeetingTelematicoDAOPostgresImpl(connection); 
+	    		MeetingTelematico m =dao.getMeetingTelematicoByTitolo(titoloMeeting);
+	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
+	    	}else {
+	    		MeetingFisicoDAO dao = null;
+	    		dao = new MeetingFisicoDAOPostgresImpl(connection); 
+	    		MeetingFisico m=dao.getMeetingFisicoByTitolo(titoloMeeting);
+	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
+	    	}
+	    }
+        catch (SQLException exception)
+        {
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+        } 	
+		aggiungiPresenza.setVisible(false);
+		benvenutoS = new BenvenutoSviluppatore(this);
+		benvenutoS.setVisible(true);
+	}
+
 }

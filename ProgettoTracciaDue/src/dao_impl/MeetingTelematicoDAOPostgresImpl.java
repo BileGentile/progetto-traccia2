@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import daos.MeetingTelematicoDAO;
+import entity.Meeting;
 import entity.MeetingFisico;
 import entity.MeetingTelematico;
 import entity.Progetto;
@@ -18,7 +19,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 
 	private Connection connection;
 
-	private PreparedStatement getMeetingTelematicoByTitoloPS, getAllMeetingTelematicoPS, inserisciMeetingPS, getMeetingTelematicoByCodMeetPS, cancellaMeetingTelematicoByTitoloPS;
+	private PreparedStatement getMeetingTelematicoByTitoloPS,getInserisciPartecipazione,getMeetingTelematicoCodFiscale, getAllMeetingTelematicoPS, inserisciMeetingPS, getMeetingTelematicoByCodMeetPS, cancellaMeetingTelematicoByTitoloPS;
 
 	public MeetingTelematicoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
@@ -28,31 +29,35 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		getMeetingTelematicoByCodMeetPS = connection.prepareStatement("SELECT * FROM MeetingTelematico WHERE codMeet LIKE ? ");
 		getAllMeetingTelematicoPS = connection.prepareStatement("SELECT * FROM MeetingTelematico");
 		cancellaMeetingTelematicoByTitoloPS = connection.prepareStatement("DELETE FROM MeetingTelematico WHERE titolo LIKE ?");
-
-		}
+		getMeetingTelematicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo,codprogetto\r\n"
+				+ "from meetingtelematico\r\n"
+				+ "where codprogetto in (SELECT codprogetto\r\n"
+				+ "					  FROM partecipazioniprogetto\r\n"
+				+ "					  where codfiscale LIKE ?)\r\n"
+				+ "ANd codicemeeting not in\r\n"
+				+ "					  (select codmeeting\r\n"
+				+ "					   from partecipazionisviluppatoremeetingtelematico\r\n"
+				+ "					   where codfiscale LIKE ?);");
+		getInserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingtelematico\r\n"
+				+ "values(?,?);");
+	}
 
 
 	@Override
-	public List<MeetingTelematico> getMeetingTelematicoByTitolo(String titolo) throws SQLException {
+	public MeetingTelematico getMeetingTelematicoByTitolo(String titolo) throws SQLException {
 		getMeetingTelematicoByTitoloPS.setString(1, titolo);
         ResultSet rs= getMeetingTelematicoByTitoloPS.executeQuery();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingtelematico");
-        List<MeetingTelematico> lista = new ArrayList<MeetingTelematico>();
-        while(rs.next())
-        {
-        	MeetingTelematico s = new MeetingTelematico(rs.getString("codMeet")); 
+        rs.next();
+        	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting")); 
             s.setTitolo(rs.getString("titolo"));
             s.setData(rs.getDate("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setOraFine(rs.getString("oraFine"));
             s.setPiattaforma(rs.getString("piattaforma"));
-            s.setProgettoMeeting(fks.getObject("codProgetto", Progetto.class));
-            //s.setOrganizzatore(rs.getString("Organizzatore")); DA FARE???
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
+          
+        return s;
 	}
 	
 	@Override
@@ -63,13 +68,13 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
         List<MeetingTelematico> lista = new ArrayList<MeetingTelematico>();
         while(rs.next())
         {
-        	MeetingTelematico s = new MeetingTelematico(rs.getString("codMeet"));
+        	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting"));
             s.setTitolo(rs.getString("titolo"));
             s.setData(rs.getDate("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setOraFine(rs.getString("oraFine"));
             s.setPiattaforma(rs.getString("piattaforma"));
-            s.setProgettoMeeting(fks.getObject("codProgetto", Progetto.class));
+            s.setProgettoMeeting(fks.getObject("codprogetto", Progetto.class));
             lista.add(s);
         }
         rs.close();
@@ -79,7 +84,6 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 	@Override
 	public int inserisciMeetingTelematico(MeetingTelematico meetingTelematico) throws SQLException {
 		Progetto p= meetingTelematico.getProgettoMeeting();
-	    //DA RIVEDERE
 		inserisciMeetingPS.setString(1, meetingTelematico.getCodMeet());
 		inserisciMeetingPS.setString(2, meetingTelematico.getTitolo());
 		inserisciMeetingPS.setDate(3, new java.sql.Date(meetingTelematico.getData().getTime()));
@@ -99,25 +103,46 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 	}
 
 	@Override
-	public List<MeetingTelematico> getMeetingTelematicoByCodMeet(String codMeet) throws SQLException {
+	public MeetingTelematico getMeetingTelematicoByCodMeet(String codMeet) throws SQLException {
 		getMeetingTelematicoByCodMeetPS.setString(2, codMeet);
         ResultSet rs= getMeetingTelematicoByCodMeetPS.executeQuery();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingtelematico");
-        List<MeetingTelematico> lista = new ArrayList<MeetingTelematico>();
-        while(rs.next())
-        {
-        	MeetingTelematico s = new MeetingTelematico(rs.getString("codMeet")); //rs.getString(1)
+        
+        	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting")); //rs.getString(1)
             s.setTitolo(rs.getString("titolo"));
             s.setData(rs.getDate("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setOraFine(rs.getString("oraFine"));
             s.setPiattaforma(rs.getString("piattaforma"));
-            s.setProgettoMeeting(fks.getObject("codProgetto", Progetto.class));
+            s.setProgettoMeeting(fks.getObject("codprogetto", Progetto.class));
             //s.setOrganizzatore(rs.getString("Organizzatore")); DA FARE?
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
+       
+        return s;
+	}
+	
+	@Override
+	public List<MeetingTelematico> getMeetingTelematicoCodFiscale(String CF) throws SQLException {
+		getMeetingTelematicoCodFiscale.setString(1, CF);
+		getMeetingTelematicoCodFiscale.setString(2, CF);
+		ResultSet rs= getMeetingTelematicoCodFiscale.executeQuery();
+		List<MeetingTelematico> lista = new ArrayList<MeetingTelematico>();
+		 while(rs.next())
+	        {
+				Progetto p= new Progetto (rs.getString("codprogetto"));
+			 	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting")); 
+			 	s.setTitolo(rs.getString("titolo"));
+	        	s.setProgettoMeeting(p);
+	        	lista.add(s);
+	        }
+		return lista;
+	}
+	
+	@Override
+	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException{
+		getInserisciPartecipazione.setString(1,cF);
+		getInserisciPartecipazione.setString(2, codMeet);
+		int row = getInserisciPartecipazione.executeUpdate();
+    	return row;
 	}
 }

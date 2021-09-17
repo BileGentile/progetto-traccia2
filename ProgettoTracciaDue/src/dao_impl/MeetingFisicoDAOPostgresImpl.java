@@ -13,72 +13,72 @@ import java.util.ArrayList;
 import java.util.List;
 
 import daos.MeetingFisicoDAO;
+import entity.Meeting;
 import entity.MeetingFisico;
 import entity.Progetto;
 
 public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	
 	private Connection connection;
-	private PreparedStatement getMeetingFisicoByTitoloPS, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
+	private PreparedStatement getMeetingFisicoByTitoloPS,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
 	
 
 	public MeetingFisicoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 
 		getMeetingFisicoByTitoloPS = connection.prepareStatement("SELECT * FROM MeetingFisico WHERE titolo LIKE ?");
-		inserisciMeetingFisicoPS = connection.prepareStatement("INSERT INTO MeetingFisico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?, ?)");
+		inserisciMeetingFisicoPS = connection.prepareStatement("INSERT INTO MeetingFisico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?,?)");
 		getMeetingFisicoByCodMeetPS = connection.prepareStatement("SELECT * FROM MeetingFisico WHERE codMeet LIKE ?  ");
 		cancellaMeetingFisicoByTitoloPS = connection.prepareStatement("DELETE FROM MeetingFisico WHERE titolo LIKE ?");
 		getAllMeetingFisicoPS = connection.prepareStatement("SELECT * FROM MeetingFisico");
-
+		getMeetingFisicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo,codprogetto\r\n"
+				+ "from meetingfisico\r\n"
+				+ "where codprogetto in (SELECT codprogetto\r\n"
+				+ "					  FROM partecipazioniprogetto\r\n"
+				+ "					  where codfiscale LIKE ?)\r\n"
+				+ "ANd codicemeeting not in\r\n"
+				+ "					  (select codmeeting\r\n"
+				+ "					   from partecipazionisviluppatoremeetingfisico\r\n"
+				+ "					   where codfiscale LIKE ?);");
+		getInserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingfisico\r\n"
+				+ "values(?,?);");
 		}
 
 
 	@Override
-	public List<MeetingFisico> getMeetingFisicoByTitolo(String titolo) throws SQLException {
-		getMeetingFisicoByTitoloPS.setString(2, titolo);
+	public MeetingFisico getMeetingFisicoByTitolo(String titolo) throws SQLException {
+		getMeetingFisicoByTitoloPS.setString(1, titolo);
         ResultSet rs= getMeetingFisicoByTitoloPS.executeQuery();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingfisico");
-        List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
-        while(rs.next())
-        {
-        	MeetingFisico s = new MeetingFisico(rs.getString("codMeet"));//rs.getString(1)
+        rs.next();
+        	MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting"));//rs.getString(1)
         	s.setData(rs.getDate("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setOraFine(rs.getString("oraFine"));
             s.setLuogo(rs.getString("luogo"));
             s.setNomeSala(rs.getString("nomeSala"));
-            s.setProgettoMeeting(fks.getObject("codProgetto", Progetto.class));
-            //s.setOrganizzatore(); DA FARE?
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
+         
+        return s;
 	}
 	
 	@Override
-	public List<MeetingFisico> getMeetingFisicoByCodMeet(String codMeet) throws SQLException {
-		getMeetingFisicoByCodMeetPS.setString(2, codMeet);
+	public MeetingFisico getMeetingFisicoByCodMeet(String codMeet) throws SQLException {
+		getMeetingFisicoByCodMeetPS.setString(1, codMeet);
         ResultSet rs= getMeetingFisicoByCodMeetPS.executeQuery();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingfisico");
-        List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
-        while(rs.next())
-        {
-        	MeetingFisico s = new MeetingFisico(rs.getString("codMeet")); //rs.getString(1)
+        	MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting")); //rs.getString(1)
             s.setTitolo(rs.getString("titolo"));
             s.setData(rs.getDate("data"));
             s.setOraInizio(rs.getString("oraInizio"));
             s.setOraFine(rs.getString("oraFine"));
             s.setLuogo(rs.getString("luogo"));
             s.setNomeSala(rs.getString("nomeSala"));
-            s.setProgettoMeeting(fks.getObject("codProgetto", Progetto.class));
+            s.setProgettoMeeting(fks.getObject("codprogetto", Progetto.class));
             //s.setOrganizzatore(rs.getString("Organizzatore")); DA FARE?
-            lista.add(s);
-        }
-        rs.close();
-        return lista;
+          
+        return s;
 	}
 	
 	@Override
@@ -110,18 +110,42 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
         ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingfisico");
 		List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
 		while(rs.next()) {
-			MeetingFisico s = new MeetingFisico(rs.getString("codMeet"));
+			MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting"));
 			s.setTitolo(rs.getString("titolo"));
 			s.setData(rs.getDate("data"));
 			s.setOraInizio(rs.getString("oraInizio"));
 			s.setOraFine(rs.getString("oraFine"));
 			s.setLuogo(rs.getString("luogo"));
 			s.setNomeSala(rs.getString("nomeSala"));
-			s.setProgettoMeeting(fks.getObject("codProgetto", Progetto.class));
+			s.setProgettoMeeting(fks.getObject("codprogetto", Progetto.class));
 			lista.add(s);
 		}
 		rs.close();
 		return lista;
 	}
-
+	
+	@Override
+	public List<MeetingFisico> getMeetingFisicoCodFiscale(String CF) throws SQLException {
+		getMeetingFisicoCodFiscale.setString(1, CF);
+		getMeetingFisicoCodFiscale.setString(2, CF);
+		ResultSet rs= getMeetingFisicoCodFiscale.executeQuery();
+		List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
+		 while(rs.next())
+	        {
+				Progetto p= new Progetto (rs.getString("codprogetto"));
+				MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting")); 
+			 	s.setTitolo(rs.getString("titolo"));
+	        	s.setProgettoMeeting(p);
+	        	lista.add(s);
+	        }
+		return lista;
+	}
+	
+	@Override
+	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException{
+		getInserisciPartecipazione.setString(1,cF);
+		getInserisciPartecipazione.setString(2, codMeet);
+		int row = getInserisciPartecipazione.executeUpdate();
+    	return row;
+	}
 }

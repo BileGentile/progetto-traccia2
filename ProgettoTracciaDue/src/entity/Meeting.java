@@ -18,7 +18,8 @@ public class Meeting {
     
     //COSTRUTTORI
     
-    public Meeting(String codMeet, String titolo, Date data, String oraInizio, String oraFine, Progetto progettoMeeting) {
+   public Meeting(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
+			Progetto progettoMeeting) {
 		super();
 		CodMeet = codMeet;
 		Titolo = titolo;
@@ -27,7 +28,7 @@ public class Meeting {
 		OraFine = oraFine;
 		this.progettoMeeting = progettoMeeting;
 	}
-    
+  
     public Meeting(String codMeet) {
     	super();
     	CodMeet = codMeet;
@@ -87,6 +88,14 @@ public class Meeting {
 
 	public void setTitolo(String titolo) {
 		Titolo = titolo;
+	}
+
+	public ProjectManager getOrganizzatore() {
+		return Organizzatore;
+	}
+
+	public void setOrganizzatore(ProjectManager organizzatore) {
+		Organizzatore = organizzatore;
 	}
 
 	@Override
