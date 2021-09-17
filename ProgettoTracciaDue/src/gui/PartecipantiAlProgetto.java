@@ -131,13 +131,13 @@ public class PartecipantiAlProgetto extends JFrame {
 			table = new JTable();
 			table.setModel(new DefaultTableModel(
 				new Object[][] {
-					{"Nome", "Cognome", "Codice Fiscale"},
+					{"Nome", "Cognome", "Codice Fiscale","Valutazione"},
 				},
 				new String[] {
-					"Nome", "Cognome", "Codice Fiscale"
+					"Nome", "Cognome", "Codice Fiscale","Valutazione"
 				}
 			));
-			table.setBounds(46, 239, 450, 183);
+			table.setBounds(46, 239, 553, 183);
 			contentPane.add(table);		
 			
 		JButton btnR1 = new JButton("Ricerca Partecipanti");
@@ -166,7 +166,7 @@ public class PartecipantiAlProgetto extends JFrame {
 					for(Sviluppatore m : listaPartecipanti)
 			        {
 						DefaultTableModel model1 = (DefaultTableModel) table.getModel();
-						model1.addRow(new Object[]{ m.getNome(), m.getCognome(), m.getCF()});
+						model1.addRow(new Object[]{ m.getNome(), m.getCognome(), m.getCF(),m.getValutazione()});
 			        }
 		        }
 				catch (SQLException exception)
