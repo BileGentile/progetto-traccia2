@@ -70,65 +70,7 @@ public class DBBuilder
     	}
     	return result;
     }
-    
-    //SEQUENZA PROJECT MANAGER
-    public int createSequenceProjectManager() throws ConnectionException
-    {
-    	int result= -1;
-    	
-    	if(connectionExists()) {
-    		try {
-    			Statement st = connection.createStatement();
-    			
-    			if(!tableExists("sequenzacodiceprojectmanager")) {
-    				String sql = "CREATE SEQUENCE sequenzaCodiceProjectManager " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                            "INCREMENT 1 " +
-                            " START 1000 " +
-                            " MINVALUE 1000 " +
-                            " MAXVALUE 99999;";
-    				result = st.executeUpdate(sql);
-    				st.close();
-    			} else {
-    				System.out.println("La sequenza codice project manager esiste già!");
-    			}
-    		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella creazione della sequenza codice project manager: "+ex);
-    		}
-    	} else {
-    		throw new ConnectionException("A connection must exist!");
-    	}
-    	return result;
-    }
-    
-    //SEQUENZA SVILUPPATORE
-    public int createSequenceSviluppatore() throws ConnectionException
-    {
-    	int result= -1;
-    	
-    	if(connectionExists()) {
-    		try {
-    			Statement st = connection.createStatement();
-    			
-    			if(!tableExists("sequenzacodicesviluppatori")) {
-    				String sql = "CREATE SEQUENCE sequenzaCodiceSviluppatori " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                            "INCREMENT 1 " +
-                            " START 1000 " +
-                            " MINVALUE 1000 " +
-                            " MAXVALUE 99999;";
-    				result = st.executeUpdate(sql);
-    				st.close();
-    			} else {
-    				System.out.println("La sequenza codice sviluppatori esiste già!");
-    			}
-    		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella creazione della sequenza codice sviluppatori: "+ex);
-    		}
-    	} else {
-    		throw new ConnectionException("A connection must exist!");
-    	}
-    	return result;
-    }
-    
+
     //SEQUENZA MEETING FISICO
     public int createSequenceMeetingFisico() throws ConnectionException
     {

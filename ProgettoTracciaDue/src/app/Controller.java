@@ -105,8 +105,6 @@ public class Controller {
             
             //CREAZIONE SEQUENZE
             builder.createSequenceProgetto();
-            builder.createSequenceProjectManager();
-            builder.createSequenceSviluppatore();
             builder.createSequenceMeetingFisico();
             builder.createSequenceMeetingTelematico();
             builder.createSequenceAmbito();
