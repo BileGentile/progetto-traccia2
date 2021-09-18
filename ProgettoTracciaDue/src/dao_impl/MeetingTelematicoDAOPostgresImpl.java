@@ -14,12 +14,13 @@ import entity.Meeting;
 import entity.MeetingFisico;
 import entity.MeetingTelematico;
 import entity.Progetto;
+import entity.Sviluppatore;
 
 public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 
 	private Connection connection;
 
-	private PreparedStatement getMeetingTelematicoByTitoloPS,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingTelematicoCodFiscale, getAllMeetingTelematicoPS, inserisciMeetingPS, getMeetingTelematicoByCodMeetPS, cancellaMeetingTelematicoByTitoloPS;
+	private PreparedStatement getMeetingTelematicoByTitoloPS,cercaPartecipantiMeeting,getMeetingTelematicoProjectManager,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingTelematicoCodFiscale, getAllMeetingTelematicoPS, inserisciMeetingPS, getMeetingTelematicoByCodMeetPS, cancellaMeetingTelematicoByTitoloPS;
 
 	public MeetingTelematicoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
@@ -42,6 +43,19 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 				+ "values(?,?);");
 		getInserisciPartecipazionePM=connection.prepareStatement("insert into partecipazioniprojectmanagermeetingtelematico\r\n"
 				+ "values(?,?);");
+		getMeetingTelematicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
+				+ "FROM MEETINGTELEMATICO\r\n"
+				+ "WHERE CODICEMEETING IN \r\n"
+				+ "(select CODMEETING\r\n"
+				+ "FROM partecipazioniprojectmanagermeetingtelematico\r\n"
+				+ "where codfiscale LIKE ?));\r\n"
+				+ "");
+		cercaPartecipantiMeeting=connection.prepareStatement("select *\r\n"
+				+ "from sviluppatore\r\n"
+				+ "where codfiscale in \r\n"
+				+ "(select codfiscale\r\n"
+				+ "from partecipazionisviluppatoremeetingtelematico\r\n"
+				+ "where codmeeting like ?);");
 	}
 
 
@@ -110,7 +124,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
         ResultSet rs= getMeetingTelematicoByCodMeetPS.executeQuery();
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingtelematico");
-        
+        rs.next();
         	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting")); //rs.getString(1)
             s.setTitolo(rs.getString("titolo"));
             s.setData(rs.getDate("data"));
@@ -141,6 +155,21 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 	}
 	
 	@Override
+	public List<MeetingTelematico> getMeetingTelematicoProjectManager(String CF) throws SQLException{
+	getMeetingTelematicoProjectManager.setString(1, CF);
+	ResultSet rs= getMeetingTelematicoProjectManager.executeQuery();
+	List<MeetingTelematico> lista = new ArrayList<MeetingTelematico>();
+	 while(rs.next())
+        {
+			Progetto p= new Progetto (rs.getString("codprogetto"));
+		 	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting")); 
+		 	s.setTitolo(rs.getString("titolo"));
+        	s.setProgettoMeeting(p);
+        	lista.add(s);
+        }
+	return lista;
+}
+	@Override
 	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException{
 		getInserisciPartecipazione.setString(1,cF);
 		getInserisciPartecipazione.setString(2, codMeet);
@@ -154,5 +183,19 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		getInserisciPartecipazionePM.setString(2, codMeet);
 		int row = getInserisciPartecipazionePM.executeUpdate();
     	return row;
+	}
+	
+	public List<Sviluppatore> cercaPartecipantiMeeting(String codMeet)throws SQLException{
+		cercaPartecipantiMeeting.setString(1, codMeet);
+		ResultSet rs= cercaPartecipantiMeeting.executeQuery();
+		List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
+		 while(rs.next())
+	        {
+			 	Sviluppatore p= new Sviluppatore (rs.getString("codfiscale"));
+			 	p.setCognome(rs.getString("cognome"));
+	        	p.setNome(rs.getString("nome"));
+	        	lista.add(p);
+	        }
+		return lista;
 	}
 }

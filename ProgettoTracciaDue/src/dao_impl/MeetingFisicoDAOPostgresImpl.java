@@ -16,11 +16,12 @@ import daos.MeetingFisicoDAO;
 import entity.Meeting;
 import entity.MeetingFisico;
 import entity.Progetto;
+import entity.Sviluppatore;
 
 public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	
 	private Connection connection;
-	private PreparedStatement getMeetingFisicoByTitoloPS,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
+	private PreparedStatement getMeetingFisicoByTitoloPS,cercaPartecipantiMeeting,getMeetingTelematicoProjectManager,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
 	
 
 	public MeetingFisicoDAOPostgresImpl (Connection connection) throws SQLException{
@@ -44,7 +45,21 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 				+ "values(?,?);");
 		getInserisciPartecipazionePM=connection.prepareStatement("insert into partecipazioniprojectmanagermeetingfisico\r\n"
 				+ "values(?,?);");
-		}
+		getMeetingTelematicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
+				+ "FROM MEETINGFISICO\r\n"
+				+ "WHERE CODICEMEETING IN \r\n"
+				+ "(select CODMEETING\r\n"
+				+ "from partecipazioniprojectmanagermeetingfisico\r\n"
+				+ "where codfiscale LIKE ?));");
+		cercaPartecipantiMeeting=connection.prepareStatement("select *\r\n"
+				+ "from sviluppatore\r\n"
+				+ "where codfiscale in \r\n"
+				+ "(select codfiscale\r\n"
+				+ "from partecipazionisviluppatoremeetingfisico\r\n"
+				+ "where codmeeting like ?);");
+	
+	}
+	
 
 
 	@Override
@@ -144,17 +159,48 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	}
 	
 	@Override
+	public List<MeetingFisico> getMeetingTelematicoProjectManager(String CF) throws SQLException{
+		getMeetingTelematicoProjectManager.setString(1, CF);
+		ResultSet rs= getMeetingTelematicoProjectManager.executeQuery();
+		List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
+		 while(rs.next())
+	        {
+				Progetto p= new Progetto (rs.getString("codprogetto"));
+				MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting")); 
+			 	s.setTitolo(rs.getString("titolo"));
+	        	s.setProgettoMeeting(p);
+	        	lista.add(s);
+	        }
+		return lista;
+	}
+	
+	@Override
 	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException{
 		getInserisciPartecipazione.setString(1,cF);
 		getInserisciPartecipazione.setString(2, codMeet);
 		int row = getInserisciPartecipazione.executeUpdate();
     	return row;
 	}
+	
 	@Override
 	public int getInserisciPartecipazionePM(String cF, String codMeet)throws SQLException{
 		getInserisciPartecipazionePM.setString(1,cF);
 		getInserisciPartecipazionePM.setString(2, codMeet);
 		int row = getInserisciPartecipazionePM.executeUpdate();
     	return row;
+	}
+	
+	public List<Sviluppatore> cercaPartecipantiMeeting(String codMeet)throws SQLException{
+		cercaPartecipantiMeeting.setString(1, codMeet);
+		ResultSet rs= cercaPartecipantiMeeting.executeQuery();
+		List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
+		 while(rs.next())
+	        {
+			 	Sviluppatore p= new Sviluppatore (rs.getString("codfiscale"));
+			 	p.setCognome(rs.getString("cognome"));
+	        	p.setNome(rs.getString("nome"));
+	        	lista.add(p);
+	        }
+		return lista;
 	}
 }

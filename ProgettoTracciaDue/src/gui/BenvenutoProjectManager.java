@@ -99,6 +99,7 @@ public class BenvenutoProjectManager extends JFrame {
 		JButton btnNewButton_7 = new JButton("Partecipanti Meeting");
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaPartecipantiMeeting();
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

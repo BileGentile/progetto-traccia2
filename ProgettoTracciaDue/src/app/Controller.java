@@ -43,6 +43,7 @@ import exceptions.ConnectionException;
 import gui.Presentazione;
 import gui.ProgettoEliminatoConSuccesso;
 import gui.LoginSviluppatore;
+import gui.PartecipantiAlMeeting;
 import gui.LoginProjectManager;
 import gui.RegistrazioneProjectManager;
 import gui.ErroreCodiceFiscaleSbagliato;
@@ -83,7 +84,7 @@ public class Controller {
 	ErroreCreazioneProgetto erroreCreazioneProgetto;
 	ValutazioneAvvenutaConSuccesso valutazioneAvvenutaConSuccesso;
 	ErroreInserimentoPartecipante erroreInserimentoPartecipante;
-	
+	PartecipantiAlMeeting partecipantiAlMeeting;
 	
 	public static void main(String[] args) {
 		
@@ -465,6 +466,8 @@ public class Controller {
 		}else if (caso ==10) {
 			erroreInserimentoPartecipante.setVisible(false);
 			aggiungiMembriAlProgetto.setVisible(false);
+		}else if (caso==11) {
+			partecipantiAlMeeting.setVisible(false);
 		}
 		benvenutoPM = new BenvenutoProjectManager (this);
 	    benvenutoPM.setVisible(true);
@@ -745,6 +748,12 @@ public class Controller {
 		aggiungiPresenza.setVisible(false);
 		benvenutoS = new BenvenutoSviluppatore(this);
 		benvenutoS.setVisible(true);
+	}
+	
+	public void AvviaPartecipantiMeeting() {
+		benvenutoPM.setVisible(false);
+		partecipantiAlMeeting= new PartecipantiAlMeeting(this);
+		partecipantiAlMeeting.setVisible(true);
 	}
 
 }
