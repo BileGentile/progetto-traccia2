@@ -137,7 +137,12 @@ public class Controller {
             builder.createTriggerPartecipazioneAlProgetto();
             builder.createTriggerDuplicatidelleSkills();
             builder.createTriggerCodSkills();
-          
+            builder.createTriggerCodProgetto();
+            builder.createTriggerCodMeeting_Fisico();
+            builder.createTriggerCodMeeting_Fisico();
+            
+            
+            
 //            INSERIRE DELLE SKILLS DI DEFAULT
 //            SkillsDAO daos = null;
 //            daos = new SkillsDAOPostgresImpl(connection);	

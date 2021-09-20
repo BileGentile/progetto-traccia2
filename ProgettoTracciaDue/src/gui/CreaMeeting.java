@@ -52,6 +52,11 @@ import com.toedter.calendar.JCalendar;
 import javax.swing.JFormattedTextField;
 import com.toedter.calendar.JDateChooser;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class CreaMeeting extends JFrame {
 
@@ -72,16 +77,14 @@ public class CreaMeeting extends JFrame {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ValutazioneMembro.class.getResource("/image/ingranaggio blu.png"))); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 412, 539);
+		setBounds(100, 100, 569, 539);
+		setMinimumSize(new Dimension(600,550));
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona tipologia");
-		lblNewLabel_1.setBounds(20, 77, 140, 21);
-		contentPane.add(lblNewLabel_1);
 		
 		
 		JLabel lblNewLabel_2 = new JLabel("Inserisci ora inizio");
@@ -90,8 +93,6 @@ public class CreaMeeting extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		lblNewLabel_2.setBounds(20, 182, 140, 13);
-		contentPane.add(lblNewLabel_2);
 		
 		JButton btnNewButton_1 = new JButton("Torna indietro");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -100,29 +101,19 @@ public class CreaMeeting extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(38, 426, 107, 41);
-		contentPane.add(btnNewButton_1);
 		
 		
 		JComboBox comboBox_Piattaforma = new JComboBox();
 		comboBox_Piattaforma.setModel(new DefaultComboBoxModel(new String[] {"Teams", "Zoom", "GoogleMeet", "Webex"}));
 		comboBox_Piattaforma.setToolTipText("\n");
-		comboBox_Piattaforma.setBounds(225, 337, 140, 26);
-		contentPane.add(comboBox_Piattaforma);
 			
 		JLabel lblNewLabel_2_1 = new JLabel("Seleziona piattaforma");
-		lblNewLabel_2_1.setBounds(20, 344, 143, 13);
-		contentPane.add(lblNewLabel_2_1);		
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel("Inserisci nome della sala");
-		lblNewLabel_2_1_1.setBounds(20, 284, 172, 19);
-		contentPane.add(lblNewLabel_2_1_1);
 		
 		txtNull_NomeSala = new JTextField();
 		txtNull_NomeSala.setText("Null");
 		txtNull_NomeSala.setColumns(10);
-		txtNull_NomeSala.setBounds(225, 281, 140, 24);
-		contentPane.add(txtNull_NomeSala);
 		
 		JComboBox comboBox_Tipologia = new JComboBox();
 		comboBox_Tipologia.addItemListener(new ItemListener() {
@@ -144,8 +135,6 @@ public class CreaMeeting extends JFrame {
 					
 		comboBox_Tipologia.setModel(new DefaultComboBoxModel(new String[] { "Telematico","Fisico"}));
 		comboBox_Tipologia.setToolTipText("");
-		comboBox_Tipologia.setBounds(225, 77, 140, 21);
-		contentPane.add(comboBox_Tipologia);
 		
 		JComboBox comboBox_Progetto = new JComboBox();
 		comboBox_Progetto.addMouseListener(new MouseAdapter() {
@@ -207,34 +196,22 @@ public class CreaMeeting extends JFrame {
    
 		comboBox_Progetto.setMaximumRowCount(10);
 		comboBox_Progetto.setToolTipText("");
-		comboBox_Progetto.setBounds(225, 43, 140, 21);
-		contentPane.add(comboBox_Progetto);
 
 
 
 		JLabel lblNewLabel_2_2 = new JLabel("Inserisci ora fine");
-		lblNewLabel_2_2.setBounds(20, 211, 159, 22);
-		contentPane.add(lblNewLabel_2_2);
 
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Inserisci CF dell'organizzatore");
-		lblNewLabel_1_1.setBounds(20, 11, 172, 21);
-		contentPane.add(lblNewLabel_1_1);
 
 		textField_CF = new JTextField();
 		textField_CF.setColumns(10);
-		textField_CF.setBounds(225, 11, 140, 21);
-		contentPane.add(textField_CF);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Seleziona il Progetto");
-		lblNewLabel_1_2.setBounds(20, 43, 140, 21);
-		contentPane.add(lblNewLabel_1_2);
 		
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		dateChooser.setBounds(225, 144, 139, 20);
-		contentPane.add(dateChooser);
 		
 		Date date = new Date();
 		
@@ -242,28 +219,18 @@ public class CreaMeeting extends JFrame {
 		spinner_OraInizio.setModel(new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY));
 		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner_OraInizio, "HH:mm");
 		spinner_OraInizio.setEditor(dateEditor);
-		spinner_OraInizio.setBounds(225, 178, 140, 21);
-		contentPane.add(spinner_OraInizio);
 		
 		JSpinner spinner2_OraFine = new JSpinner();
 		spinner2_OraFine.setModel(new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY));
 		JSpinner.DateEditor dateEditor2 = new JSpinner.DateEditor(spinner2_OraFine, "HH:mm");
 		spinner2_OraFine.setEditor(dateEditor2);
-		spinner2_OraFine.setBounds(225, 212, 140, 21);
-		contentPane.add(spinner2_OraFine);
 		
 		
 		JLabel lblNewLabel = new JLabel("Seleziona una data");
-		lblNewLabel.setBounds(20, 150, 125, 14);
-		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_3 = new JLabel("Inserisci titolo");
-		lblNewLabel_3.setBounds(20, 112, 80, 14);
-		contentPane.add(lblNewLabel_3);
 		
 		textField_Titolo = new JTextField();
-		textField_Titolo.setBounds(225, 109, 140, 20);
-		contentPane.add(textField_Titolo);
 		textField_Titolo.setColumns(10);
 		
 		System.out.println(spinner_OraInizio.getValue().toString());
@@ -275,18 +242,106 @@ public class CreaMeeting extends JFrame {
 				IlControllore.CreaMeeting(comboBox_Tipologia.getSelectedItem().toString(), textField_Titolo.getText(), dateChooser.getDate(), oraInizioS, oraFineS, textField_Luogo.getText(), txtNull_NomeSala.getText().toString(), comboBox_Piattaforma.getSelectedItem().toString(), textField_CF.getText(), comboBox_Progetto.getSelectedItem().toString());
 			}
 		});
-		btnNewButton.setBounds(255, 426, 107, 41);
-		contentPane.add(btnNewButton);
 		
 		
 		textField_Luogo = new JTextField();
-		textField_Luogo.setBounds(225, 244, 140, 20);
-		contentPane.add(textField_Luogo);
 		textField_Luogo.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Inserisci Luogo");
-		lblNewLabel_4.setBounds(20, 247, 91, 14);
-		contentPane.add(lblNewLabel_4);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGap(33)
+							.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+							.addGap(84)
+							.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+							.addGap(35))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGap(15)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_2_2, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_2_1, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewLabel_1_1, GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+								.addComponent(lblNewLabel_1_2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblNewLabel_2_1_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(40)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(comboBox_Piattaforma, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtNull_NomeSala, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_Luogo, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(spinner2_OraFine, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(spinner_OraInizio, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_Titolo, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBox_Tipologia, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(comboBox_Progetto, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_CF, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))))
+					.addGap(122))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(6)
+							.addComponent(textField_CF, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(11)
+							.addComponent(lblNewLabel_1_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1_2, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_Progetto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(13)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_Tipologia, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+					.addGap(14)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_3, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_Titolo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+						.addComponent(dateChooser, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+					.addGap(9)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblNewLabel_2)
+							.addGap(16))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(spinner_OraInizio, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_2_2, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+						.addComponent(spinner2_OraFine, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+					.addGap(14)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_4, GroupLayout.PREFERRED_SIZE, 14, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField_Luogo, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+					.addGap(23)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel_2_1_1, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtNull_NomeSala, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE))
+					.addGap(15)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblNewLabel_2_1)
+						.addComponent(comboBox_Piattaforma, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+					.addGap(39)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		contentPane.setLayout(gl_contentPane);
 		
 	}
 }

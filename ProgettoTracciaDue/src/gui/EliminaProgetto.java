@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -54,6 +55,7 @@ public class EliminaProgetto extends JFrame {
 		JTextField textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(236, 50, 156, 29);
+		setMinimumSize(new Dimension(600,550));
 		contentPane.add(textField);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona nome progetto:");

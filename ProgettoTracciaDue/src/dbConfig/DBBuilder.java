@@ -754,4 +754,127 @@ public class DBBuilder
        	return result;
        }
     
+    
+    // TRIGGER GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE
+       public int createTriggerCodProgetto() throws ConnectionException
+          {
+          	int result= -1;
+      		    	
+          	if(connectionExists()) {
+          		try {
+          			Statement st = connection.createStatement();
+          			if(!functionExists("function_cod_progetto")) {
+          				String sql = " CREATE FUNCTION function_cod_progetto() RETURNS TRIGGER AS $trigger_cod_progetto$"
+          						+ "BEGIN "
+          						+ "WHILE((SELECT DISTINCT Pr.nome "
+          						+ "		 FROM progetto AS Pr "
+          						+ "		 WHERE (Pr.codprogetto = NEW.codprogetto)) "
+          						+ "		IS NOT NULL)"
+          						+ "LOOP "
+          						+ "NEW.codprogetto := nextval('sequenzacodiceprogetti'); "
+          						+ "END LOOP; "
+          						+ "RETURN NEW; "
+          						+ "END "
+          						+ "$trigger_cod_progetto$ LANGUAGE plpgsql; "
+          						+ "CREATE TRIGGER trigger_cod_progetto "
+          						+ "BEFORE INSERT OR UPDATE "
+          						+ "ON progetto "
+          						+ "FOR EACH ROW "
+          						+ "EXECUTE PROCEDURE function_cod_progetto();";
+          				result = st.executeUpdate(sql);
+          				st.close();
+          			} else {
+          				System.out.println("Il trigger_cod_progetto esiste già!");
+          			}
+          		} catch(SQLException ex) {
+          			System.out.println("SQL Exception nella creazione del trigger_cod_progetto : "+ex);
+          		}
+          	} else {
+          		throw new ConnectionException("A connection must exist!");
+          	}
+          	return result;
+          }
+       
+       // TRIGGER GESTIRE LA CREAZIONE DI MEETING FISICI CON CODICE UGUALE A MEETING FISICI GIA' PRESENTI
+       public int createTriggerCodMeeting_Fisico() throws ConnectionException
+       {
+       	int result= -1;
+   		    	
+       	if(connectionExists()) {
+       		try {
+       			Statement st = connection.createStatement();
+       			if(!functionExists("function_cod_meeting_fisico")) {
+       				String sql = " CREATE FUNCTION function_cod_meeting_fisico() RETURNS TRIGGER AS $trigger_cod_meeting_fisico$"
+       						+ "BEGIN "
+       						+ "WHILE((SELECT DISTINCT Me_F.titolo "
+       						+ "		 FROM meetingfisico AS Me_F "
+       						+ "		 WHERE (Me_F.codicemeeting = NEW.codicemeeting)) "
+       						+ "		IS NOT NULL)"
+       						+ "LOOP "
+       						+ "NEW.codicemeeting := nextval('sequenzacodicemeetingfisico'); "
+       						+ "END LOOP; "
+       						+ "RETURN NEW; "
+       						+ "END "
+       						+ "$trigger_cod_meeting_fisico$ LANGUAGE plpgsql; "
+       						+ "CREATE TRIGGER trigger_cod_meeting_fisico "
+       						+ "BEFORE INSERT OR UPDATE "
+       						+ "ON meetingfisico "
+       						+ "FOR EACH ROW "
+       						+ "EXECUTE PROCEDURE function_cod_meeting_fisico();";
+       				result = st.executeUpdate(sql);
+       				st.close();
+       			} else {
+       				System.out.println("Il trigger_cod_meeting_fisico esiste già!");
+       			}
+       		} catch(SQLException ex) {
+       			System.out.println("SQL Exception nella creazione del trigger_cod_meeting_fisico : "+ex);
+       		}
+       	} else {
+       		throw new ConnectionException("A connection must exist!");
+       	}
+       	return result;
+       }
+    
+       
+       
+       // TRIGGER GESTIRE LA CREAZIONE DI MEETING TELEMATICI CON CODICE UGUALE A MEETING TELEMATICI GIA' PRESENTI
+       public int createTriggerCodMeeting_Telematico() throws ConnectionException
+       {
+       	int result= -1;
+   		    	
+       	if(connectionExists()) {
+       		try {
+       			Statement st = connection.createStatement();
+       			if(!functionExists("function_cod_meeting_telematico")) {
+       				String sql = " CREATE FUNCTION function_cod_meeting_telematico() RETURNS TRIGGER AS $trigger_cod_meeting_telematico$"
+       						+ "BEGIN "
+       						+ "WHILE((SELECT DISTINCT Me_F.titolo "
+       						+ "		 FROM meetingfisico AS Me_F "
+       						+ "		 WHERE (Me_F.codicemeeting = NEW.codicemeeting)) "
+       						+ "		IS NOT NULL)"
+       						+ "LOOP "
+       						+ "NEW.codicemeeting := nextval('sequenzacodicemeetingfisico'); "
+       						+ "END LOOP; "
+       						+ "RETURN NEW; "
+       						+ "END "
+       						+ "$trigger_cod_meeting_telematico$ LANGUAGE plpgsql; "
+       						+ "CREATE TRIGGER trigger_cod_meeting_telematico "
+       						+ "BEFORE INSERT OR UPDATE "
+       						+ "ON meetingtelematico "
+       						+ "FOR EACH ROW "
+       						+ "EXECUTE PROCEDURE function_cod_meeting_telematico();";
+       				result = st.executeUpdate(sql);
+       				st.close();
+       			} else {
+       				System.out.println("Il trigger_cod_meeting_telematico esiste già!");
+       			}
+       		} catch(SQLException ex) {
+       			System.out.println("SQL Exception nella creazione del trigger_cod_meeting_telematico : "+ex);
+       		}
+       	} else {
+       		throw new ConnectionException("A connection must exist!");
+       	}
+       	return result;
+       }
+       
 }
