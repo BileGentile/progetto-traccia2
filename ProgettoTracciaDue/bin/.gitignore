@@ -1,6 +1,8 @@
-/gui/
+/app/
 /dao_impl/
 /daos/
 /dbConfig/
-/app/
 /entity/
+/exceptions/
+/gui/
+/image/

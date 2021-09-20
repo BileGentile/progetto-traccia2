@@ -637,8 +637,8 @@ public class DBBuilder
     	if(connectionExists()) {
     		try {
 		    	Statement st = connection.createStatement();
-		    	if(!functionExists("functionpartecipazionealprogetto")) {
-		    		String sql = " CREATE FUNCTION functionpartecipazionealprogetto() RETURNS TRIGGER AS $TriggerPartecipazioneAlProgetto$"
+		    	if(!functionExists("function_partecipazione_al_progetto")) {
+		    		String sql = " CREATE FUNCTION function_partecipazione_al_progetto() RETURNS TRIGGER AS $Trigger_Partecipazione_Al_Progetto$"
 		    				+ "BEGIN "
 		    				+ "IF((SELECT P.codfiscale "
 		    				+ "FROM progetto AS P "
@@ -649,12 +649,12 @@ public class DBBuilder
 		 					+ "END IF; "
 		 					+ "Return NEW; "
 		    				+ "END; "
-		    				+ "$TriggerPartecipazioneAlProgetto$ LANGUAGE plpgsql; "
-		    				+ "CREATE TRIGGER TriggerPartecipazioneAlProgetto "
+		    				+ "$Trigger_Partecipazione_Al_Progetto$ LANGUAGE plpgsql; "
+		    				+ "CREATE TRIGGER Trigger_Partecipazione_Al_Progetto "
 		    				+ "AFTER INSERT OR UPDATE "
 		    				+ "ON partecipazioniprogetto "
 		    				+ "FOR EACH ROW "
-		    				+ "EXECUTE PROCEDURE FunctionPartecipazioneAlProgetto();";
+		    				+ "EXECUTE PROCEDURE function_partecipazione_al_progetto();";
 		    		result = st.executeUpdate(sql);
 		    		st.close();
 
@@ -681,8 +681,8 @@ public class DBBuilder
     	if(connectionExists()) {
     		try {
     			Statement st = connection.createStatement();
-    			if(!functionExists("functionduplicatidelleskills")) {
-    				String sql = " CREATE FUNCTION functionduplicatidelleskills() RETURNS TRIGGER AS $TriggerDuplicatidelleSkills$"
+    			if(!functionExists("function_duplicati_delle_skills")) {
+    				String sql = " CREATE FUNCTION function_duplicati_delle_skills() RETURNS TRIGGER AS $Trigger_Duplicati_delle_Skills$"
     					+ "BEGIN "
     					+ "IF((SELECT Sk.nomeskill "
     					+ "		FROM skills AS Sk "
@@ -690,29 +690,22 @@ public class DBBuilder
     					+ "IS NOT NULL) THEN "
     					+ "		DELETE FROM skills AS Sk "
     					+ "		WHERE (NEW.nomeskill = Sk.nomeskill AND Sk.codskills = New.codskills); "
-    					+ "END IF; "
-    					+ "WHILE((SELECT Sk.nomeskill "
-    					+ "		  FROM skills AS Sk "
-    					+ "		  WHERE (NEW.nomeskill != Sk.nomeskill AND Sk.codskills = New.codskills))"
-    					+ "IS NOT NULL) THEN "
-    					+ "		New.codskills=nextval(New.codskills);"
-    					+ "		INSERT INTO skills VALUES(NEW.nomeskill, New.codskills);  "
-    					+ "END WHILE;"    					
+    					+ "END IF; "					
     					+ "Return NEW; "
     					+ "END; "
-    					+ "$TriggerDuplicatidelleSkills$ LANGUAGE plpgsql; "
-    					+ "CREATE TRIGGER TriggerDuplicatidelleSkills "
+    					+ "$Trigger_Duplicati_delle_Skills$ LANGUAGE plpgsql; "
+    					+ "CREATE TRIGGER Trigger_Duplicati_delle_Skills "
     					+ "AFTER INSERT OR UPDATE "
     					+ "		ON skills "
     					+ "FOR EACH ROW "
-    					+ "EXECUTE PROCEDURE FunctionDuplicatidelleSkills();";
+    					+ "EXECUTE PROCEDURE function_duplicati_delle_skills();";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
-    				System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
+    				System.out.println("Il trigger Duplicati_delle_Skills esiste già!");
     			}
     		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella creazione della tabella FunctionPartecipazioneAlProgetto : "+ex);
+    			System.out.println("SQL Exception nella creazione della tabella Duplicati_delle_Skills : "+ex);
     		}
     	} else {
     		throw new ConnectionException("A connection must exist!");
@@ -720,4 +713,45 @@ public class DBBuilder
     	return result;
     }
 
+    
+ // TRIGGER GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE
+    public int createTriggerCodSkills() throws ConnectionException
+       {
+       	int result= -1;
+   		    	
+       	if(connectionExists()) {
+       		try {
+       			Statement st = connection.createStatement();
+       			if(!functionExists("function_cod_skills")) {
+       				String sql = " CREATE FUNCTION function_cod_skills() RETURNS TRIGGER AS $trigger_cod_skills$"
+       						+ "BEGIN "
+       						+ "WHILE((SELECT DISTINCT Sk.nomeskill "
+       						+ "		 FROM skills AS Sk "
+       						+ "		 WHERE (Sk.codskills = NEW.codskills)) "
+       						+ "		IS NOT NULL)"
+       						+ "LOOP "
+       						+ "NEW.codskills := nextval('sequenzacodiceskills'); "
+       						+ "END LOOP; "
+       						+ "RETURN NEW; "
+       						+ "END "
+       						+ "$trigger_cod_skills$ LANGUAGE plpgsql; "
+       						+ "CREATE TRIGGER trigger_cod_skills "
+       						+ "BEFORE INSERT OR UPDATE "
+       						+ "ON skills "
+       						+ "FOR EACH ROW "
+       						+ "EXECUTE PROCEDURE function_cod_skills();";
+       				result = st.executeUpdate(sql);
+       				st.close();
+       			} else {
+       				System.out.println("Il TriggerCodSkills esiste già!");
+       			}
+       		} catch(SQLException ex) {
+       			System.out.println("SQL Exception nella creazione del TriggerCodSkills : "+ex);
+       		}
+       	} else {
+       		throw new ConnectionException("A connection must exist!");
+       	}
+       	return result;
+       }
+    
 }

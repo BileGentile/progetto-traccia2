@@ -30,6 +30,7 @@ import javax.swing.JTextArea;
 import javax.swing.JList;
 import javax.swing.JSpinner;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.AbstractListModel;
 import javax.swing.JCheckBox;
@@ -104,8 +105,14 @@ public class AggiungiProgetto extends JFrame {
     	}	
 
 		JList<String> list = new JList<String>(demoList);
-		list.setBounds(235, 195, 134, 103);
-		contentPane.add(list);
+		JList<String> listskills = new JList<String>(demoList);		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(listskills);
+		scrollPane.setBounds(227, 185, 176, 88);
+		listskills.setLayoutOrientation(JList.VERTICAL);
+
+		contentPane.add(scrollPane);
+		
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Ricerca di base","Ricerca industriale","Ricerca sperimentale", "Sviluppo sperimentale"}));
