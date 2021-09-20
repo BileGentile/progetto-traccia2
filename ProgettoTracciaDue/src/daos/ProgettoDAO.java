@@ -10,6 +10,8 @@ public interface ProgettoDAO {
 	
 	public String getProgettoByNome(String nome) throws SQLException;
 	
+	public List<Progetto> getProgettiSviluppatore(String codfiscale) throws SQLException;
+		
 	public List<Progetto> getProgettoProjectManager(String codfiscale) throws SQLException;
 	
 	public int inserimentoAvvenutoConSuccesso(String codFiscale, String codProgetto) throws SQLException;

@@ -49,8 +49,15 @@ public class BenvenutoSviluppatore extends JFrame {
 			}
 		});
 		
-		JButton btnNewButton_1 = new JButton("Mostra dati personali");
+		JButton btnNewButton_1 = new JButton("Mostra progetti");
 		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				IlControllore.AvviaProgettiSviluppatore();
+			}
+		});
+		
+		JButton btnNewButton_3 = new JButton("Mostra Meeting");
+		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});

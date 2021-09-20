@@ -15,7 +15,7 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 	
 	private Connection connection;
 
-	private PreparedStatement getProgettoByNomePS, inserisciProgettoPS, getAllProgettiPS, cambiaStatoProgettoPS, getProgettoProjectManager,inserisciArchivioPartecipantiProgettoPS,inserimentoAvvenutoConSuccesso;
+	private PreparedStatement getProgettoByNomePS,getProgettiSviluppatore, inserisciProgettoPS, getAllProgettiPS, cambiaStatoProgettoPS, getProgettoProjectManager,inserisciArchivioPartecipantiProgettoPS,inserimentoAvvenutoConSuccesso;
 
 	
 	public ProgettoDAOPostgresImpl (Connection connection) throws SQLException{
@@ -36,6 +36,10 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		inserisciArchivioPartecipantiProgettoPS = connection.prepareStatement("INSERT INTO partecipazioniprogetto VALUES (?,?)");
 		
 		inserimentoAvvenutoConSuccesso= connection.prepareStatement("select codprogetto from partecipazioniprogetto where codfiscale LIKE ? AND codprogetto LIKE ?");
+		
+		getProgettiSviluppatore=connection.prepareStatement("select p.codprogetto,p.nome, p.tipologia,p.codfiscale\r\n"
+				+ "from partecipazioniprogetto as pp join progetto as p on pp.codprogetto=p.codprogetto\r\n"
+				+ "where pp.codfiscale LIKE ?;");
 	}
 
 
@@ -75,6 +79,24 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
         {
         	Progetto s = new Progetto(rs.getString("nome")); //rs.getString(1)
         	s.setNomeProgetto(rs.getString("nome"));
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+	}
+	
+	@Override
+	public List<Progetto> getProgettiSviluppatore(String codfiscale) throws SQLException {
+		getProgettiSviluppatore.setString(1, codfiscale);
+        ResultSet rs= getProgettiSviluppatore.executeQuery();
+        List<Progetto> lista = new ArrayList<Progetto>();
+        while(rs.next())
+        {
+        	Progetto s = new Progetto(rs.getString("codprogetto")); //rs.getString(1)
+        	s.setNomeProgetto(rs.getString("nome"));
+        	s.setTipoProgetto(rs.getString("tipologia"));
+        	ProjectManager pm=new ProjectManager(codfiscale);
+        	s.setProjectManagerProgetto(pm);
             lista.add(s);
         }
         rs.close();

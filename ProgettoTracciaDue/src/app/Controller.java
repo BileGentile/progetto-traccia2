@@ -41,6 +41,7 @@ import entity.Sviluppatore;
 import exceptions.ConnectionException;
 
 import gui.Presentazione;
+import gui.ProgettiSviluppatore;
 import gui.ProgettoEliminatoConSuccesso;
 import gui.LoginSviluppatore;
 import gui.PartecipantiAlMeeting;
@@ -85,6 +86,7 @@ public class Controller {
 	ValutazioneAvvenutaConSuccesso valutazioneAvvenutaConSuccesso;
 	ErroreInserimentoPartecipante erroreInserimentoPartecipante;
 	PartecipantiAlMeeting partecipantiAlMeeting;
+	ProgettiSviluppatore progettiSviluppatore;
 	
 	public static void main(String[] args) {
 		
@@ -632,7 +634,11 @@ public class Controller {
 	public void RitornaBenvenutoSviluppatore(int caso) {
 		if(caso== 1){
 			aggiungiPresenza.setVisible(false);
-		}	
+		}
+		else if(caso ==2)
+		{
+			progettiSviluppatore.setVisible(false);
+		}
 		benvenutoS = new BenvenutoSviluppatore(this);
 	    benvenutoS.setVisible(true);
 	}
@@ -752,6 +758,12 @@ public class Controller {
 		benvenutoPM.setVisible(false);
 		partecipantiAlMeeting= new PartecipantiAlMeeting(this);
 		partecipantiAlMeeting.setVisible(true);
+	}
+	
+	public void AvviaProgettiSviluppatore() {
+		benvenutoS.setVisible(false);
+		progettiSviluppatore= new ProgettiSviluppatore(this);
+		progettiSviluppatore.setVisible(true);
 	}
 
 }
