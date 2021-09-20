@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -29,6 +30,7 @@ public class ValutazioneAvvenutaConSuccesso extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		contentPanel.setBackground(SystemColor.activeCaption);
 		setBounds(80, 80, 350, 200);
+		setMinimumSize(new Dimension(200,250));
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

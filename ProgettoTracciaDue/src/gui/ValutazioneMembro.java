@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -34,6 +35,8 @@ import entity.Membro;
 import entity.Progetto;
 import entity.Sviluppatore;
 import exceptions.ConnectionException;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ValutazioneMembro extends JFrame {
 
@@ -46,39 +49,27 @@ public class ValutazioneMembro extends JFrame {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ValutazioneMembro.class.getResource("/image/ingranaggio blu.png"))); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 500, 370);
+		setMinimumSize(new Dimension(500, 370));
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona Membro ");
-		lblNewLabel.setBounds(38, 100, 158, 29);
-		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona valutazione");
-		lblNewLabel_1.setBounds(38, 150, 127, 29);
-		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblBenvenutoNellaValutazione = new JLabel("Benvenuto nella valutazione dei membri ");
-		lblBenvenutoNellaValutazione.setBounds(38, 20, 339, 29);
-		contentPane.add(lblBenvenutoNellaValutazione);
 
 		JLabel lblNewLabel_1_2 = new JLabel("Inserisci il tuo codice fiscale");
-		lblNewLabel_1_2.setBounds(38, 50, 146, 29);
-		contentPane.add(lblNewLabel_1_2);
 		
 		JTextField textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(200, 50, 156, 29);
-		contentPane.add(textField);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Buona", "Mediocre", "Male"}));
-		comboBox.setBounds(200, 150, 140, 29);
-		contentPane.add(comboBox);
 
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.addMouseListener(new MouseAdapter() {
@@ -115,9 +106,6 @@ public class ValutazioneMembro extends JFrame {
 			}
 		
 		});
-
-		comboBox_1.setBounds(200, 100, 140, 29);
-		contentPane.add(comboBox_1);
 	
 		JButton btnNewButton = new JButton("Valuta ");
 		btnNewButton.addActionListener(new ActionListener() {
@@ -125,9 +113,6 @@ public class ValutazioneMembro extends JFrame {
 				IlControllore.ValutazioneMembro(comboBox.getSelectedItem().toString(), comboBox_1.getSelectedItem().toString());
 			}		
 		});
-
-		btnNewButton.setBounds(288, 197, 91, 29);
-		contentPane.add(btnNewButton);
 	
 		JButton btnNewButton_1 = new JButton("Torna indietro");
 		btnNewButton_1.addActionListener(new ActionListener() {
@@ -136,9 +121,59 @@ public class ValutazioneMembro extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(50, 197, 129, 34);
-		contentPane.add(btnNewButton_1);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(20)
+					.addComponent(lblBenvenutoNellaValutazione, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(20)
+					.addComponent(lblNewLabel_1_2, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+					.addGap(38)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(20)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 175, GroupLayout.PREFERRED_SIZE)
+					.addGap(41)
+					.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(20)
+					.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+					.addGap(76)
+					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(33)
+					.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+					.addGap(113)
+					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+					.addGap(86))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(15)
+					.addComponent(lblBenvenutoNellaValutazione, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_1_2, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(26)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(40)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(59)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
+		);
+		contentPane.setLayout(gl_contentPane);
 
 	}
 }
+
 

@@ -32,7 +32,7 @@ public class ErroreCodiceFiscaleSbagliato extends JDialog {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setBounds(80, 80, 350, 200);
-		setMinimumSize(new Dimension(600,550));
+		setMinimumSize(new Dimension(100,150));
 		getContentPane().setLayout(new BorderLayout());
 		
 		contentPanel.setBackground(SystemColor.activeCaption);

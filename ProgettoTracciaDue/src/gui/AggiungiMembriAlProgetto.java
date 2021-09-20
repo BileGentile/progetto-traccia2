@@ -58,7 +58,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		setTitle("Azienda - Aggiungi membri al progetto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 656, 493);
+		setBounds(100, 100, 656, 520);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -66,19 +66,19 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Inserisci valore del \r\n");
-		lblNewLabel.setBounds(62, 113, 164, 21);
+		lblNewLabel.setBounds(36, 113, 190, 21);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona progetto");
-		lblNewLabel_1.setBounds(62, 77, 146, 29);
+		lblNewLabel_1.setBounds(36, 77, 172, 29);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Seleziona tipo di progetto");
-		lblNewLabel_2.setBounds(62, 247, 137, 19);
+		lblNewLabel_2.setBounds(36, 247, 163, 19);
 		contentPane.add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel(" a cui deve avere partecipato");
-		lblNewLabel_3.setBounds(62, 257, 164, 29);
+		lblNewLabel_3.setBounds(36, 257, 211, 29);
 		contentPane.add(lblNewLabel_3);
 		
 		JComboBox comboBoxTipologia = new JComboBox();
@@ -93,7 +93,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(36, 397, 119, 46);
+		btnNewButton_1.setBounds(36, 397, 125, 46);
 		contentPane.add(btnNewButton_1);
 		
 		JComboBox comboBoxValutazione = new JComboBox();
@@ -151,11 +151,11 @@ public class AggiungiMembriAlProgetto extends JFrame {
         Salario.setColumns(10);
 
 		JLabel lblSalarioMedioDel = new JLabel("Salario medio del membro");
-		lblSalarioMedioDel.setBounds(62, 127, 146, 21);
+		lblSalarioMedioDel.setBounds(36, 127, 190, 21);
 		contentPane.add(lblSalarioMedioDel);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Inseriscis skill ricercata");
-		lblNewLabel_1_1.setBounds(62, 153, 128, 29);
+		lblNewLabel_1_1.setBounds(35, 153, 155, 29);
 		contentPane.add(lblNewLabel_1_1);
 		
 		ComboBoxMembri = new JComboBox();
@@ -193,7 +193,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		contentPane.add(ComboBoxSkills);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Seleziona membro");
-		lblNewLabel_1_1_1.setBounds(138, 347, 109, 29);
+		lblNewLabel_1_1_1.setBounds(111, 347, 136, 29);
 		contentPane.add(lblNewLabel_1_1_1);
 		
 		JButton btnNewButton = new JButton("Aggiungi");
@@ -251,16 +251,16 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		contentPane.add(btnR);
 		
 		JLabel lblNewLabel_4 = new JLabel("Inserisci la valutazione");
-		lblNewLabel_4.setBounds(62, 196, 128, 21);
+		lblNewLabel_4.setBounds(36, 196, 154, 21);
 		contentPane.add(lblNewLabel_4);
 		
 		JLabel lblNewLabel_5 = new JLabel("aziendale minima richiesta");
-		lblNewLabel_5.setBounds(62, 214, 128, 14);
+		lblNewLabel_5.setBounds(36, 214, 154, 14);
 		contentPane.add(lblNewLabel_5);
 
 
 		JLabel lblNewLabel_6 = new JLabel("Inserisci il tuo codice fiscale");
-		lblNewLabel_6.setBounds(62, 28, 146, 29);
+		lblNewLabel_6.setBounds(36, 28, 190, 29);
 		contentPane.add(lblNewLabel_6);
 		
 		textField = new JTextField();
