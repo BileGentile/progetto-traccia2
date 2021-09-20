@@ -15,7 +15,7 @@ import entity.Skills;
 public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 
 	private Connection connection;
-		private PreparedStatement getSviluppatoreByCodFiscalePS,inserisciSviluppatorePS,inserisciSkillSviluppatorePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS, getPartecipantiProgettoPS,getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS;
+		private PreparedStatement getSviluppatoreByCodFiscalePS,getAllSviluppatoriProgettoEMeeting,inserisciSviluppatorePS,inserisciSkillSviluppatorePS, getAllSviluppatoriProgettoPS, inserisciValutazionePS, getPartecipantiProgettoPS,getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS;
 	
 	public SviluppatoreDAOPostgresImpl (Connection connection) throws SQLException  {
 		this.connection=connection;
@@ -49,6 +49,15 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 				+ "where codprogetto in (SELECT codprogetto\n"
 				+ "					   FROM progetto \n"
 				+ "					   WHERE codFiscale LIKE ?);");
+		getAllSviluppatoriProgettoEMeeting=connection.prepareStatement("(select s.codfiscale\r\n"
+				+ "from partecipazioniprojectmanagermeetingfisico as pm join partecipazionisviluppatoremeetingfisico as s\r\n"
+				+ " on pm.codmeeting= s.codmeeting\r\n"
+				+ "where pm.codfiscale LIKE ? )\r\n"
+				+ "union\r\n"
+				+ "(select s.codfiscale\r\n"
+				+ "from partecipazioniprojectmanagermeetingtelematico as pm join partecipazionisviluppatoremeetingtelematico as s\r\n"
+				+ " on pm.codmeeting= s.codmeeting\r\n"
+				+ "where pm.codfiscale LIKE ? )");
 		
 		inserisciValutazionePS = connection.prepareStatement("UPDATE SVILUPPATORE SET valutazione  = ? WHERE codfiscale LIKE ?");
 		
@@ -123,6 +132,20 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 	public List<Sviluppatore> getAllSviluppatoriProgetto (String codfiscale) throws SQLException {
 		getAllSviluppatoriProgettoPS.setString(1, codfiscale);
         ResultSet rs= getAllSviluppatoriProgettoPS.executeQuery();
+        List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
+        while(rs.next())
+        {
+        	Sviluppatore s = new Sviluppatore(rs.getString("codFiscale")); 
+            lista.add(s);
+        }
+        rs.close();
+        return lista;
+	}
+	
+	public List<Sviluppatore> getAllSviluppatoriProgettoEMeeting (String codfiscale) throws SQLException {
+		getAllSviluppatoriProgettoEMeeting.setString(1, codfiscale);
+		getAllSviluppatoriProgettoEMeeting.setString(2, codfiscale);
+        ResultSet rs= getAllSviluppatoriProgettoEMeeting.executeQuery();
         List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
         while(rs.next())
         {

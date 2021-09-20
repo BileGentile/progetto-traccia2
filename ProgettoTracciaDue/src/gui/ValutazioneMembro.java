@@ -100,7 +100,7 @@ public class ValutazioneMembro extends JFrame {
 	            
 					dao = new SviluppatoreDAOPostgresImpl(connection);
 	            
-					List<Sviluppatore> lista = dao.getAllSviluppatoriProgetto(textField.getText().toString());
+					List<Sviluppatore> lista = dao.getAllSviluppatoriProgettoEMeeting(textField.getText().toString());
 					for(Sviluppatore mm : lista)
 					{
 						comboBox_1.addItem(mm.getCF());

@@ -65,7 +65,7 @@ public class PartecipantiAlMeeting extends JFrame {
 	public PartecipantiAlMeeting(Controller c) {
 		IlControllore= c;
 		
-		setTitle("Azienda - Partecipanti Al Progetto");
+		setTitle("Azienda - Partecipanti Al Meeting");
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ValutazioneMembro.class.getResource("/image/ingranaggio blu.png"))); 
 		
