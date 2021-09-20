@@ -14,24 +14,20 @@ import entity.Progetto;
 public class MeetingDAOPostgresImpl implements MeetingDAO {
 
 		private Connection connection;
-		private PreparedStatement inserisciMeeting, getMeetingByCodMeet, getAllMeeting, getMeetingCodFiscale;
+		private PreparedStatement inserisciMeeting, getMeetingByCodMeet, getAllMeeting, getMeetingSviluppatore;
 		
 
 		public MeetingDAOPostgresImpl (Connection connection) throws SQLException{
 			this.connection=connection;
-			getMeetingCodFiscale=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\n"
-					+ "FROM MEETINGFISICO\n"
-					+ "WHERE CODICEMEETING IN \n"
-					+ "(select CODMEETING\n"
-					+ "from partecipazioniprojectmanagermeetingfisico\n"
-					+ "where codfiscale LIKE ?))\n"
-					+ "union\n"
-					+ "(SELECT CODICEMEETING, TITOLO,CODPROGETTO\n"
-					+ "FROM MEETINGTELEMATICO\n"
-					+ "WHERE CODICEMEETING IN \n"
-					+ "(select CODMEETING\n"
-					+ "FROM partecipazioniprojectmanagermeetingtelematico\n"
-					+ "where codfiscale LIKE ?));");
+			getMeetingSviluppatore=connection.prepareStatement("(select p.codmeeting, m.titolo, m.data, m.orainizio, m.orafine\n"
+					+ "from partecipazionisviluppatoremeetingtelematico as p join meetingtelematico as m \n"
+					+ "on p.codmeeting=m.codicemeeting\n"
+					+ "where p.codfiscale LIKE ?)\n"
+					+ "union \n"
+					+ "(select p.codmeeting, m.titolo, m.data, m.orainizio, m.orafine\n"
+					+ "from partecipazionisviluppatoremeetingfisico as p join meetingfisico as m \n"
+					+ "on p.codmeeting=m.codicemeeting\n"
+					+ "where p.codfiscale LIKE ?)");
 
 //			inserisciMeeting = connection.prepareStatement("INSERT INTO Meeting VALUES ( nextval(?),SUBSTR(?,1,10), SUBSTR(?,12,8),?, ?,?,?,?,?)");
 //			getMeetingByCodMeet = connection.prepareStatement("SELECT * FROM Meeting WHERE codMeet LIKE ?  ");
@@ -40,17 +36,18 @@ public class MeetingDAOPostgresImpl implements MeetingDAO {
 		}
 		
 		@Override
-		public List<Meeting> getMeetingCodFiscale(String CF) throws SQLException {
-			getMeetingCodFiscale.setString(1, CF);
-			getMeetingCodFiscale.setString(2, CF);
-			ResultSet rs= getMeetingCodFiscale.executeQuery();
+		public List<Meeting> getMeetingSviluppatore(String CF) throws SQLException {
+			getMeetingSviluppatore.setString(1, CF);
+			getMeetingSviluppatore.setString(2, CF);
+			ResultSet rs= getMeetingSviluppatore.executeQuery();
 			List<Meeting> lista = new ArrayList<Meeting>();
 			 while(rs.next())
 		        {
-					Progetto p= new Progetto (rs.getString("codprogetto"));
-				 	Meeting s = new Meeting(rs.getString("codicemeeting")); 
+				 	Meeting s = new Meeting(rs.getString("codmeeting")); 
 				 	s.setTitolo(rs.getString("titolo"));
-		        	s.setProgettoMeeting(p);
+				 	s.setData(rs.getDate("data"));
+		            s.setOraInizio(rs.getString("oraInizio"));
+		            s.setOraFine(rs.getString("oraFine"));
 		        	lista.add(s);
 		        }
 			return lista;
