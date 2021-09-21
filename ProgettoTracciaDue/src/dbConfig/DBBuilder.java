@@ -754,6 +754,45 @@ public class DBBuilder
        }
     
     
+    public int createtrigger_cod_ambito() throws ConnectionException
+    {
+    	int result= -1;
+		    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			if(!functionExists("function_cod_ambito")) {
+    				String sql = " CREATE FUNCTION function_cod_skills() RETURNS TRIGGER AS $trigger_cod_ambito$"
+    						+ "BEGIN "
+    						+ "WHILE((SELECT DISTINCT AM.nome "
+    						+ "		 FROM ambito AS AM "
+    						+ "		 WHERE (AM.codambito = NEW.codambito)) "
+    						+ "		IS NOT NULL)"
+    						+ "LOOP "
+    						+ "NEW.codambito := nextval('sequenzacodiceambito'); "
+    						+ "END LOOP; "
+    						+ "RETURN NEW; "
+    						+ "END "
+    						+ "$trigger_cod_ambito$ LANGUAGE plpgsql; "
+    						+ "CREATE TRIGGER trigger_cod_ambito "
+    						+ "BEFORE INSERT OR UPDATE "
+    						+ "ON ambito "
+    						+ "FOR EACH ROW "
+    						+ "EXECUTE PROCEDURE function_cod_ambito();";
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("Il trigger_cod_ambito esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione del trigger_cod_ambito : "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
     // TRIGGER GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE
        public int createTriggerCodProgetto() throws ConnectionException
           {
