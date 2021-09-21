@@ -29,7 +29,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		
 		inserisciMeetingPS = connection.prepareStatement("INSERT INTO MeetingTelematico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?)");
 		
-		getMeetingTelematicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo,codprogetto\r\n"
+		getMeetingTelematicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo, data, codprogetto\r\n"
 				+ "from meetingtelematico\r\n"
 				+ "where codprogetto in (SELECT codprogetto\r\n"
 				+ "					  FROM partecipazioniprogetto\r\n"
@@ -104,6 +104,7 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 				Progetto p= new Progetto (rs.getString("codprogetto"));
 			 	MeetingTelematico s = new MeetingTelematico(rs.getString("codicemeeting")); 
 			 	s.setTitolo(rs.getString("titolo"));
+			 	s.setData(rs.getDate("data"));
 	        	s.setProgettoMeeting(p);
 	        	lista.add(s);
 	        }

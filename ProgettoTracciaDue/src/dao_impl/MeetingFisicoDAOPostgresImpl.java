@@ -31,7 +31,7 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 		
 		inserisciMeetingFisicoPS = connection.prepareStatement("INSERT INTO MeetingFisico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?,?)");
 		
-		getMeetingFisicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo,codprogetto\r\n"
+		getMeetingFisicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo, data, codprogetto\r\n"
 				+ "from meetingfisico\r\n"
 				+ "where codprogetto in (SELECT codprogetto\r\n"
 				+ "					  FROM partecipazioniprogetto\r\n"
@@ -108,6 +108,7 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 				Progetto p= new Progetto (rs.getString("codprogetto"));
 				MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting")); 
 			 	s.setTitolo(rs.getString("titolo"));
+			 	s.setData(rs.getDate("data"));
 	        	s.setProgettoMeeting(p);
 	        	lista.add(s);
 	        }

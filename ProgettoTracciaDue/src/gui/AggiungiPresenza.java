@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -91,6 +92,7 @@ public class AggiungiPresenza extends JFrame {
 					dbconn = DBConnection.getInstance();
 					connection = dbconn.getConnection();
 					builder = new DBBuilder(connection);
+					Date data = new Date();
 					if(ComboBoxTipologia.getSelectedItem().toString().equals("Telematico")) {
 						MeetingTelematicoDAO dao = null;
 			            
@@ -98,7 +100,9 @@ public class AggiungiPresenza extends JFrame {
 						List<MeetingTelematico> lista = dao.getMeetingTelematicoCodFiscale(CfInserito.getText().toString());
 						for(MeetingTelematico p : lista)
 						{
-							ComboBoxMeeting.addItem (p.getTitolo());
+							if(p.getData().compareTo(new Date()) >= 0) {
+								ComboBoxMeeting.addItem (p.getTitolo());
+							}
 						}
 					}else {
 						MeetingFisicoDAO dao = null;
@@ -107,7 +111,9 @@ public class AggiungiPresenza extends JFrame {
 						List<MeetingFisico> lista = dao.getMeetingFisicoCodFiscale(CfInserito.getText().toString());
 						for(MeetingFisico p : lista)
 						{
-							ComboBoxMeeting.addItem (p.getTitolo());
+							if(p.getData().compareTo(new Date()) >= 0) {
+								ComboBoxMeeting.addItem (p.getTitolo());
+							}
 						}
 					}
 				}
