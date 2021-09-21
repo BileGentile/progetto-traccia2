@@ -9,15 +9,18 @@ import javax.swing.JTextField;
 import dao_impl.AmbitoDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.ProjectManagerDAOPostgresImpl;
+import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.AmbitoDAO;
 import daos.ProgettoDAO;
 import daos.ProjectManagerDAO;
 import daos.SkillsDAO;
+import daos.SviluppatoreDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import exceptions.ConnectionException;
 import gui.BenvenutoProjectManager;
 import gui.ErroreCodiceFiscaleSbagliato;
+import gui.ValutazioneAvvenutaConSuccesso;
 
 public class ProjectManager extends Membro {
 
@@ -128,4 +131,55 @@ public class ProjectManager extends Membro {
         	System.out.println("CE: "+ex);
         }  	
 	}
+	
+
+	//Valutazione di un membro
+	public void ValutazioneMembro(String valutazione, String CodiceFiscale) {
+		DBConnection dbconn = null;
+		Connection connection = null;
+		DBBuilder builder = null;
+		try
+		{
+			dbconn = DBConnection.getInstance();
+			connection = dbconn.getConnection();
+			builder = new DBBuilder(connection);
+			SviluppatoreDAO dao = null;
+        
+			dao = new SviluppatoreDAOPostgresImpl(connection);
+        
+			dao.inserisciValutazione(valutazione , CodiceFiscale );
+			
+		}
+		catch (SQLException exception)
+		{
+			System.out.println("Errore SQLException: "+ exception.getMessage());
+		}
+	}
+	
+	//Eliminazione di un progetto
+	public void EliminaProgetto( String nomeProgetto) {
+	
+	DBConnection dbconn = null;
+    Connection connection = null;
+    DBBuilder builder = null;
+
+    try
+    {
+        dbconn = DBConnection.getInstance();
+        connection = dbconn.getConnection();
+        builder = new DBBuilder(connection);
+        ProgettoDAO dao = null;
+        
+        dao = new ProgettoDAOPostgresImpl(connection);
+        
+        dao.cambiaStatoProgetto(nomeProgetto);
+    }catch (SQLException exception)
+    {
+    	System.out.println("Errore SQLException: "+ exception.getMessage());
+    }
+	}
+	
+	
+	
+	
 }

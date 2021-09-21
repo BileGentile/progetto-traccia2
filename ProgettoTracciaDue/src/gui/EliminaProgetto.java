@@ -106,7 +106,7 @@ public class EliminaProgetto extends JFrame {
 		JButton btnNewButton = new JButton("Elimina Progetto");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {  
-				IlControllore.EliminaProgetto(comboBox.getSelectedItem().toString());
+				IlControllore.EliminaProgetto(textField.getText().toString(),comboBox.getSelectedItem().toString());
 		}
 		});
 		btnNewButton.setBounds(275, 199, 117, 29);

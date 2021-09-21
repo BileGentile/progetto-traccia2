@@ -454,26 +454,10 @@ public class Controller {
 		valutazioneMembro.setVisible(true);
 	}
 	
-	public void ValutazioneMembro(String valutazione, String codicefiscale) {
-		DBConnection dbconn = null;
-		Connection connection = null;
-		DBBuilder builder = null;
-		try
-		{
-			dbconn = DBConnection.getInstance();
-			connection = dbconn.getConnection();
-			builder = new DBBuilder(connection);
-			SviluppatoreDAO dao = null;
-        
-			dao = new SviluppatoreDAOPostgresImpl(connection);
-        
-			dao.inserisciValutazione(valutazione , codicefiscale );
-			
-		}
-		catch (SQLException exception)
-		{
-			System.out.println("Errore SQLException: "+ exception.getMessage());
-		}
+	public void ValutazioneMembro(String CodiceFiscalePm, String valutazione, String CodiceFiscaleS) {
+		ProjectManager pm=new ProjectManager(CodiceFiscalePm);
+		pm.ValutazioneMembro(valutazione, CodiceFiscaleS);
+		
 		valutazioneAvvenutaConSuccesso = new ValutazioneAvvenutaConSuccesso(this);
 		valutazioneAvvenutaConSuccesso.setVisible(true);
 	}
@@ -521,26 +505,10 @@ public class Controller {
 	    benvenutoS.setVisible(true);
 	}
 	
-	public void EliminaProgetto(String nomeProgetto) {
-		DBConnection dbconn = null;
-        Connection connection = null;
-        DBBuilder builder = null;
-
-        try
-        {
-            dbconn = DBConnection.getInstance();
-            connection = dbconn.getConnection();
-            builder = new DBBuilder(connection);
-            ProgettoDAO dao = null;
-            
-            dao = new ProgettoDAOPostgresImpl(connection);
-            
-            dao.cambiaStatoProgetto(nomeProgetto);
-        }      
-        catch (SQLException exception)
-        {
-        	System.out.println("Errore SQLException: "+ exception.getMessage());
-        }
+	public void EliminaProgetto(String CodiceFiscalePm, String nomeProgetto) {
+		ProjectManager pm=new ProjectManager(CodiceFiscalePm);
+		pm.EliminaProgetto(nomeProgetto);
+	
         progettoEliminatoConSuccesso = new ProgettoEliminatoConSuccesso(this);
         progettoEliminatoConSuccesso.setVisible(true); 
     }
@@ -572,7 +540,7 @@ public class Controller {
             		MeetingTelematicoDAO dao1 = null;
             		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
             		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma );
-            		//AGGIUNGERE LINK??
+
             		int res =  dao1.inserisciMeetingTelematico(p1);
             		MeetingTelematico m= dao1.getMeetingTelematicoByTitolo(titolo);
             		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());

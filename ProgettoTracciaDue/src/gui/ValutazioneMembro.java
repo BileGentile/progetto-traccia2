@@ -110,7 +110,7 @@ public class ValutazioneMembro extends JFrame {
 		JButton btnNewButton = new JButton("Valuta ");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IlControllore.ValutazioneMembro(comboBox.getSelectedItem().toString(), comboBox_1.getSelectedItem().toString());
+				IlControllore.ValutazioneMembro(textField.getText().toString(),comboBox.getSelectedItem().toString(), comboBox_1.getSelectedItem().toString());
 			}		
 		});
 	
