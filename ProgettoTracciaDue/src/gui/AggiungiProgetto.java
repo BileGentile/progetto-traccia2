@@ -107,12 +107,11 @@ public class AggiungiProgetto extends JFrame {
             System.out.println("Errore SQLException: "+ exception.getMessage());
     	}	
 
-		JList<String> list = new JList<String>(demoList);
-		JList<String> listskills = new JList<String>(demoList);		
+		JList<String> ListAmbiti = new JList<String>(demoList);		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportView(listskills);
+		scrollPane.setViewportView(ListAmbiti);
 		scrollPane.setBounds(227, 185, 176, 88);
-		listskills.setLayoutOrientation(JList.VERTICAL);
+		ListAmbiti.setLayoutOrientation(JList.VERTICAL);
 
 		contentPane.add(scrollPane);
 		
@@ -125,7 +124,7 @@ public class AggiungiProgetto extends JFrame {
 		JButton btnNewButton = new JButton("Crea");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {		
-				IlControllore.CreaProgetto(nomeProgetto.getText(), comboBox_1.getSelectedItem().toString(),list.getSelectedValuesList(), CodiceFiscalePm.getText());
+				IlControllore.CreaProgetto(nomeProgetto.getText(), comboBox_1.getSelectedItem().toString(),ListAmbiti.getSelectedValuesList(), CodiceFiscalePm.getText());
 			}
 		});
 		btnNewButton.setBounds(333, 320, 117, 43);
@@ -150,7 +149,7 @@ public class AggiungiProgetto extends JFrame {
 		btnNewButton_1.setBounds(83, 320, 117, 43);
 		contentPane.add(btnNewButton_1);
 		
-		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
+		//AGGIUNGE UN NUOVO AMBITO ALLA TABELLA DI AMBITI GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
 		JTextField textFieldNuovoAmbito = new JTextField();		
 		textFieldNuovoAmbito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			

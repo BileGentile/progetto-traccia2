@@ -23,10 +23,10 @@ public class AmbitoDAOPostgresImpl implements AmbitoDAO {
 		
 		inserisciAmbitoPS=connection.prepareStatement("INSERT INTO ambito VALUES (?,nextval(?))");
 		
-		inserisciAmbitoProgettoPS=connection.prepareStatement("INSERT INTO associazioneambito(codprogetto,codambito) "
+		inserisciAmbitoProgettoPS=connection.prepareStatement("INSERT INTO associazioneambito("
 				+ "	SELECT  P.Codprogetto , A.CodAmbito\n"
 				+ "	FROM progetto AS P CROSS JOIN ambito AS A \n"
-				+ "	WHERE P.nome=? AND A.nome=?;");
+				+ "	WHERE P.nome=? AND A.nome=?); ");
 				}
 
 	@Override

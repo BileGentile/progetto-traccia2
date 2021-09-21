@@ -64,7 +64,7 @@ public class ProjectManager extends Membro {
 		}
 	
 	//Creazione di un nuovo project manager 
-		public void RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> list ) {
+		public void RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> listaAmbiti ) {
 			 DBConnection dbconn = null;
 		        Connection connection = null;
 		        DBBuilder builder = null;
@@ -86,8 +86,9 @@ public class ProjectManager extends Membro {
 		           
 		            int res =  daoProjectManager.inserisciProjectManager(m1);
 		            int i= 0;
-	            	while (i<list.size()) {
-	            		String s1=list.get(i);
+	            	while (i<listaAmbiti.size()) {
+	            		String s1=listaAmbiti.get(i);
+	    
 	            		int res2= daoProjectManager.inserisciSkillProjectManager(m1,s1);
 	            		i++;
 	            	}
