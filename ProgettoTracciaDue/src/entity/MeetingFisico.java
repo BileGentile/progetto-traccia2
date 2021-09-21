@@ -21,8 +21,6 @@ public class MeetingFisico extends Meeting {
 		super(codMeet);
 	}
 
-	
-
 	public String getLuogo() {
 		return luogo;
 	}
@@ -45,4 +43,5 @@ public class MeetingFisico extends Meeting {
 	}
 	
 	//METODI
+	
 }
