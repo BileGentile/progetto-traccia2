@@ -40,7 +40,8 @@ public class EliminaProgetto extends JFrame {
 		setTitle("Azienda - Elimina progetto");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 500, 319);
+		setMinimumSize(new Dimension(500, 319));
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -55,7 +56,6 @@ public class EliminaProgetto extends JFrame {
 		JTextField textField = new JTextField();
 		textField.setColumns(10);
 		textField.setBounds(236, 50, 156, 29);
-		setMinimumSize(new Dimension(600,550));
 		contentPane.add(textField);
 		
 		JLabel lblNewLabel = new JLabel("Seleziona nome progetto:");

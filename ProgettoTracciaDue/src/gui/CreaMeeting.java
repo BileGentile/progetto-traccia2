@@ -236,7 +236,7 @@ public class CreaMeeting extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String oraInizioS = new SimpleDateFormat("HH:mm").format(spinner_OraInizio.getValue());
 				String oraFineS = new SimpleDateFormat("HH:mm").format(spinner2_OraFine.getValue());
-				IlControllore.CreaMeeting(comboBox_Tipologia.getSelectedItem().toString(), textField_Titolo.getText(), dateChooser.getDate(), oraInizioS, oraFineS, textField_Luogo.getText(), txtNull_NomeSala.getText().toString(), comboBox_Piattaforma.getSelectedItem().toString(), textField_CF.getText(), comboBox_Progetto.getSelectedItem().toString());
+				IlControllore.CreaMeeting(textField_CF.getText().toString(), comboBox_Tipologia.getSelectedItem().toString(), textField_Titolo.getText(), dateChooser.getDate(), oraInizioS, oraFineS, textField_Luogo.getText(), txtNull_NomeSala.getText().toString(), comboBox_Piattaforma.getSelectedItem().toString(), textField_CF.getText(), comboBox_Progetto.getSelectedItem().toString());
 			}
 		});
 		
