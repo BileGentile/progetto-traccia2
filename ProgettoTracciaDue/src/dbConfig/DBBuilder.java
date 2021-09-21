@@ -834,6 +834,7 @@ public class DBBuilder
           }
        
        // TRIGGER GESTIRE LA CREAZIONE DI MEETING FISICI CON CODICE UGUALE A MEETING FISICI GIA' PRESENTI
+       //TRIGGER GESTISCE IL CASO IN CUI SI CREI UN MEETING CON NOME UGUALE A UN MEETING GIA' PRESENTE
        public int createTriggerCodMeeting_Fisico() throws ConnectionException
        {
        	int result= -1;
@@ -851,6 +852,12 @@ public class DBBuilder
        						+ "LOOP "
        						+ "NEW.codicemeeting := nextval('sequenzacodicemeetingfisico'); "
        						+ "END LOOP; "
+       						+ "IF ((SELECT DISTINCT Me_F.titolo "
+       						+ "  FROM meetingfisico AS Me_F "
+       						+ "  WHERE (Me_F.titolo = NEW.titolo)) "
+       						+ "IS NOT NULL) THEN "
+       						+ "NEW.titolo := NEW.titolo ||'.' ||SUBSTRING(NEW.codicemeeting,1,4);"
+       						+ "END IF;"
        						+ "RETURN NEW; "
        						+ "END "
        						+ "$trigger_cod_meeting_fisico$ LANGUAGE plpgsql; "
@@ -876,6 +883,8 @@ public class DBBuilder
        
        
        // TRIGGER GESTIRE LA CREAZIONE DI MEETING TELEMATICI CON CODICE UGUALE A MEETING TELEMATICI GIA' PRESENTI
+       //TRIGGER GESTISCE IL CASO IN CUI SI CREI UN MEETING CON NOME UGUALE A UN MEETING GIA' PRESENTE
+
        public int createTriggerCodMeeting_Telematico() throws ConnectionException
        {
        	int result= -1;
@@ -893,6 +902,12 @@ public class DBBuilder
        						+ "LOOP "
        						+ "NEW.codicemeeting := nextval('sequenzacodicemeetingtelematico'); "
        						+ "END LOOP; "
+       						+ "IF ((SELECT DISTINCT Me_T.titolo "
+       						+ "  FROM meetingtelematico AS Me_T "
+       						+ "  WHERE (Me_T.titolo = NEW.titolo)) "
+       						+ "IS NOT NULL) THEN "
+       						+ "NEW.titolo := NEW.titolo ||'.' ||SUBSTRING(NEW.codicemeeting,1,4);"
+       						+ "END IF;"
        						+ "RETURN NEW; "
        						+ "END "
        						+ "$trigger_cod_meeting_telematico$ LANGUAGE plpgsql; "
