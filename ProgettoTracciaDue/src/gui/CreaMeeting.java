@@ -207,6 +207,7 @@ public class CreaMeeting extends JFrame {
 		JLabel lblNewLabel_1_2 = new JLabel("Seleziona il Progetto");
 		
 		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.setMinSelectableDate(new Date());
 		dateChooser.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
 		

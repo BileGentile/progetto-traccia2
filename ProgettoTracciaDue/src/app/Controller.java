@@ -177,8 +177,7 @@ public class Controller {
              
              dao = new MembroDAOPostgresImpl(connection);
 
-<<<<<<< Updated upstream
-=======
+
             
             //TEST PER IL DATABASE, SIMULO L'INSERIMENTO DI TRE MEMBRI, TOGLI COMMENTO PER TESTARE
             
@@ -192,7 +191,7 @@ public class Controller {
 //            int res3 = dao.inserisciMembro(m3);
 //            System.out.println(res3);
            
->>>>>>> Stashed changes
+
         }
         catch (SQLException exception)
         {
