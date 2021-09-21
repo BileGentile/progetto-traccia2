@@ -2,15 +2,20 @@ package entity;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JTextField;
 
 import dao_impl.AmbitoDAOPostgresImpl;
+import dao_impl.MeetingFisicoDAOPostgresImpl;
+import dao_impl.MeetingTelematicoDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.ProjectManagerDAOPostgresImpl;
 import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.AmbitoDAO;
+import daos.MeetingFisicoDAO;
+import daos.MeetingTelematicoDAO;
 import daos.ProgettoDAO;
 import daos.ProjectManagerDAO;
 import daos.SkillsDAO;
@@ -179,7 +184,59 @@ public class ProjectManager extends Membro {
     }
 	}
 	
+	//Creazione di un Meeting
+	public void CreazioneMeeting( String tipologia, String titolo, Date data, String oraInizio, String oraFine, String luogo, String nomeSala, String piattaforma, String organizzatore, String NomeProgetto) {
 	
-	
-	
+
+		DBConnection dbconn = null;
+	    Connection connection = null;
+	    DBBuilder builder = null;
+	    String codiceProgetto;
+	    Progetto p;
+        try
+        {
+            	
+            	dbconn = DBConnection.getInstance();
+            	connection = dbconn.getConnection();
+            	builder = new DBBuilder(connection);
+            	ProgettoDAO dao = null;			
+            	
+            	dao = new ProgettoDAOPostgresImpl(connection);
+            	codiceProgetto= dao.getProgettoByNome(NomeProgetto);
+            	p= new Progetto(codiceProgetto);
+            	
+            	dbconn = DBConnection.getInstance();
+                connection = dbconn.getConnection();
+                builder = new DBBuilder(connection);
+                
+            	if(tipologia.equals("Telematico")) {
+            		builder.createTableMeetingTelematico();
+            		MeetingTelematicoDAO dao1 = null;
+            		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
+            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma );
+
+            		int res =  dao1.inserisciMeetingTelematico(p1);
+            		MeetingTelematico m= dao1.getMeetingTelematicoByTitolo(titolo);
+            		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());
+            	}else if (tipologia.equals("Fisico")) {
+            		builder.createTableMeetingFisico(); 
+            		MeetingFisicoDAO dao1 = null;
+            		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
+            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p , luogo, nomeSala);
+            		int res =  dao1.inserisciMeetingFisico(p1);
+            		MeetingFisico m= dao1.getMeetingFisicoByTitolo(titolo);
+            		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());
+            	}
+        
+        }
+        catch (SQLException exception)
+        {
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+        }
+        catch (ConnectionException ex)
+        {
+            System.out.println("CE: "+ex);
+        }
+		
+	}	
 }

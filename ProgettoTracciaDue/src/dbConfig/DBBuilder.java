@@ -815,7 +815,7 @@ public class DBBuilder
           						+ "END "
           						+ "$trigger_cod_progetto$ LANGUAGE plpgsql; "
           						+ "CREATE TRIGGER trigger_cod_progetto "
-          						+ "BEFORE INSERT OR UPDATE "
+          						+ "BEFORE INSERT  "
           						+ "ON progetto "
           						+ "FOR EACH ROW "
           						+ "EXECUTE PROCEDURE function_cod_progetto();";
@@ -862,7 +862,7 @@ public class DBBuilder
        						+ "END "
        						+ "$trigger_cod_meeting_fisico$ LANGUAGE plpgsql; "
        						+ "CREATE TRIGGER trigger_cod_meeting_fisico "
-       						+ "BEFORE INSERT OR UPDATE "
+       						+ "BEFORE INSERT  "
        						+ "ON meetingfisico "
        						+ "FOR EACH ROW "
        						+ "EXECUTE PROCEDURE function_cod_meeting_fisico();";
@@ -912,7 +912,7 @@ public class DBBuilder
        						+ "END "
        						+ "$trigger_cod_meeting_telematico$ LANGUAGE plpgsql; "
        						+ "CREATE TRIGGER trigger_cod_meeting_telematico "
-       						+ "BEFORE INSERT OR UPDATE "
+       						+ "BEFORE INSERT  "
        						+ "ON meetingtelematico "
        						+ "FOR EACH ROW "
        						+ "EXECUTE PROCEDURE function_cod_meeting_telematico();";
