@@ -43,8 +43,10 @@ public class BenvenutoProjectManager extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Benvenuto project manager, cosa desideri fare?");
+		lblNewLabel.setBounds(34, 56, 405, 58);
 
 		JButton btnNewButton = new JButton("Aggiungi progetto");
+		btnNewButton.setBounds(34, 172, 186, 21);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso=1;
@@ -53,6 +55,7 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 			
 		JButton btnNewButton_1 = new JButton("Consegna progetto");
+		btnNewButton_1.setBounds(34, 226, 186, 21);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaEliminaProgetto();
@@ -60,13 +63,15 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 		
 		JButton btnNewButton_2 = new JButton("Crea Meeting");
+		btnNewButton_2.setBounds(34, 285, 186, 21);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaCreaMeeting();
 			}
 			});
 		
-		JButton btnNewButton_3 = new JButton("Aggiungi Membri al progetto");
+		JButton btnNewButton_3 = new JButton("Membri al Progetto");
+		btnNewButton_3.setBounds(271, 172, 186, 21);
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso =0;
@@ -75,6 +80,7 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 		
 		JButton btnNewButton_4 = new JButton("Valuta Membro");
+		btnNewButton_4.setBounds(271, 226, 186, 21);
 		btnNewButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaValutazione();
@@ -82,6 +88,7 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 
 		JButton btnNewButton_5 = new JButton("Logout");
+		btnNewButton_5.setBounds(271, 334, 186, 21);
 		btnNewButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso=1;
@@ -90,6 +97,7 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 		
 		JButton btnNewButton_6 = new JButton("Partecipanti Progetto");
+		btnNewButton_6.setBounds(271, 285, 186, 21);
 		btnNewButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaPartecipantiAlProgetto(0);
@@ -97,57 +105,21 @@ public class BenvenutoProjectManager extends JFrame {
 		});
 		
 		JButton btnNewButton_7 = new JButton("Partecipanti Meeting");
+		btnNewButton_7.setBounds(34, 333, 186, 23);
 		btnNewButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaPartecipantiMeeting();
 			}
 		});
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(29)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnNewButton_2, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 405, GroupLayout.PREFERRED_SIZE)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(btnNewButton_7, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-								.addComponent(btnNewButton_5, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE))
-							.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-								.addPreferredGap(ComponentPlacement.RELATED, 237, Short.MAX_VALUE)
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-									.addComponent(btnNewButton_3, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-									.addComponent(btnNewButton_4, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-									.addComponent(btnNewButton_6, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)))))
-					.addContainerGap(42, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addGap(51)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
-						.addComponent(btnNewButton_3))
-					.addGap(33)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_1)
-						.addComponent(btnNewButton_4))
-					.addGap(38)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_2)
-						.addComponent(btnNewButton_6, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-					.addGap(27)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton_7, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewButton_5))
-					.addGap(52))
-		);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.setLayout(null);
+		contentPane.add(btnNewButton_2);
+		contentPane.add(btnNewButton_6);
+		contentPane.add(btnNewButton_1);
+		contentPane.add(btnNewButton);
+		contentPane.add(lblNewLabel);
+		contentPane.add(btnNewButton_7);
+		contentPane.add(btnNewButton_5);
+		contentPane.add(btnNewButton_3);
+		contentPane.add(btnNewButton_4);
 	}
 }

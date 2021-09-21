@@ -109,7 +109,7 @@ public class EliminaProgetto extends JFrame {
 				IlControllore.EliminaProgetto(textField.getText().toString(),comboBox.getSelectedItem().toString());
 		}
 		});
-		btnNewButton.setBounds(275, 199, 117, 29);
+		btnNewButton.setBounds(262, 210, 146, 29);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Torna indietro");
@@ -119,7 +119,7 @@ public class EliminaProgetto extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(38, 199, 117, 29);
+		btnNewButton_1.setBounds(54, 210, 146, 29);
 		contentPane.add(btnNewButton_1);
 	}
 

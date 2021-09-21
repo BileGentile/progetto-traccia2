@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
@@ -55,6 +56,8 @@ public class AggiungiProgetto extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 560, 434);
+		setMinimumSize(new Dimension(560,450));
+
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -125,7 +128,7 @@ public class AggiungiProgetto extends JFrame {
 				IlControllore.CreaProgetto(nomeProgetto.getText(), comboBox_1.getSelectedItem().toString(),list.getSelectedValuesList(), CodiceFiscalePm.getText());
 			}
 		});
-		btnNewButton.setBounds(393, 317, 116, 43);
+		btnNewButton.setBounds(333, 320, 117, 43);
 		contentPane.add(btnNewButton);
 		
 		CodiceFiscalePm = new JTextField();
@@ -144,7 +147,7 @@ public class AggiungiProgetto extends JFrame {
 				IlControllore.RitornaBenvenutoProjectManager(caso);
 			}
 		});
-		btnNewButton_1.setBounds(23, 320, 117, 36);
+		btnNewButton_1.setBounds(83, 320, 117, 43);
 		contentPane.add(btnNewButton_1);
 		
 		//AGGIUNGE UNA NUOVA SKILL ALLA TABELLA DI SKILL GIA' PRESENTI NEL DATABASE SOLO SE E' UNA SKILL DI NOME DIVERSO DA QUELLI GIA' PRESENTI 
