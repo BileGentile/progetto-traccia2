@@ -86,7 +86,6 @@ public class CreaMeeting extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Seleziona tipologia");
 		
-		
 		JLabel lblNewLabel_2 = new JLabel("Inserisci ora inizio");
 		lblNewLabel_2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -122,13 +121,14 @@ public class CreaMeeting extends JFrame {
 					
 					comboBox_Piattaforma.removeAllItems();
 					comboBox_Piattaforma.addItem("null");
+					textField_Luogo.setText("");
 					txtNull_NomeSala.setText("");
 					}else {
 					comboBox_Piattaforma.removeAllItems();
 					comboBox_Piattaforma.addItem("Teams");
 					comboBox_Piattaforma.addItem("Zoom");
 					txtNull_NomeSala.setText("NULL");
-		
+					textField_Luogo.setText("NULL");
 					}
 			}
 		});
@@ -197,16 +197,13 @@ public class CreaMeeting extends JFrame {
 		comboBox_Progetto.setMaximumRowCount(10);
 		comboBox_Progetto.setToolTipText("");
 
-
-
 		JLabel lblNewLabel_2_2 = new JLabel("Inserisci ora fine");
 
-		
 		JLabel lblNewLabel_1_1 = new JLabel("Inserisci CF dell'organizzatore");
 
 		textField_CF = new JTextField();
 		textField_CF.setColumns(10);
-
+		
 		JLabel lblNewLabel_1_2 = new JLabel("Seleziona il Progetto");
 		
 		JDateChooser dateChooser = new JDateChooser();
@@ -243,9 +240,9 @@ public class CreaMeeting extends JFrame {
 			}
 		});
 		
-		
 		textField_Luogo = new JTextField();
 		textField_Luogo.setColumns(10);
+		textField_Luogo.setText("NULL");
 		
 		JLabel lblNewLabel_4 = new JLabel("Inserisci Luogo");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
