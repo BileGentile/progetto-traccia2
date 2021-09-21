@@ -154,7 +154,22 @@ public class Controller {
             daos3 = new SkillsDAOPostgresImpl(connection);	
             Skills s3 = new Skills("Problem Solving","sequenzacodiceskills");
      		int re3= daos3.inserisciSkills(s3);
-   		
+     		
+     		//INSERIRE AMBITI DI DEFAULT
+     		AmbitoDAO daoA1 = null;
+     		daoA1 = new AmbitoDAOPostgresImpl(connection);
+     		Ambito a1 = new Ambito("Economia", "sequenzacodiceambito");
+     		int re4 = daoA1.inserisciAmbito(a1);
+     		
+     		AmbitoDAO daoA2 = null;
+     		daoA2 = new AmbitoDAOPostgresImpl(connection);
+     		Ambito a2 = new Ambito("Medicina", "sequenzacodiceambito");
+     		int re5 = daoA2.inserisciAmbito(a2);
+     		
+     		AmbitoDAO daoA3 = null;
+     		daoA3 = new AmbitoDAOPostgresImpl(connection);
+     		Ambito a3 = new Ambito("Informatica", "sequenzacodiceambito");
+     		int re6 = daoA3.inserisciAmbito(a3);
      		
      		 MembroDAO dao = null;
              ProgettoDAO daoo = null;
@@ -162,6 +177,22 @@ public class Controller {
              
              dao = new MembroDAOPostgresImpl(connection);
 
+<<<<<<< Updated upstream
+=======
+            
+            //TEST PER IL DATABASE, SIMULO L'INSERIMENTO DI TRE MEMBRI, TOGLI COMMENTO PER TESTARE
+            
+//            Membro m1  =  new Membro("Mario", "Biondi", "MROVRD77L99K776J", "Schifo", "ProjectManager");
+//            Membro m2  =  new Membro("Pino", "Verdi", "PNOVRD77L99K776J", "Bravo", "Sviluppatore");
+//            Membro m3  =  new Membro("Rino", "Ceronte", "RNOVRD77L99K775P", "Eccellente", "Sviluppatore");
+//            int res =  dao.inserisciMembro(m1);
+//            System.out.println(res);
+//            int res2 = dao.inserisciMembro(m2);
+//            System.out.println(res2);
+//            int res3 = dao.inserisciMembro(m3);
+//            System.out.println(res3);
+           
+>>>>>>> Stashed changes
         }
         catch (SQLException exception)
         {
