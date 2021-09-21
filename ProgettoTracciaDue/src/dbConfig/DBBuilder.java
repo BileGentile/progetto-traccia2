@@ -762,7 +762,7 @@ public class DBBuilder
     		try {
     			Statement st = connection.createStatement();
     			if(!functionExists("function_cod_ambito")) {
-    				String sql = " CREATE FUNCTION function_cod_skills() RETURNS TRIGGER AS $trigger_cod_ambito$"
+    				String sql = " CREATE FUNCTION function_cod_ambito() RETURNS TRIGGER AS $trigger_cod_ambito$"
     						+ "BEGIN "
     						+ "WHILE((SELECT DISTINCT AM.nome "
     						+ "		 FROM ambito AS AM "
