@@ -165,6 +165,10 @@ public class RegistrazioneSviluppatore extends JFrame {
 			}
 		});		
 		textFieldNuovaSkill.setColumns(10);
+		textFieldNuovaSkill.setBounds(42, 286, 168, 29);
+		contentPane.add(textFieldNuovaSkill);         
+
+		
 		
 		JButton btnNewButton = new JButton("Registrati");
 		btnNewButton.addActionListener(new ActionListener() {
