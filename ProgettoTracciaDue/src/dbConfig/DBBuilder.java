@@ -754,7 +754,7 @@ public class DBBuilder
        }
     
     
-    public int createtrigger_cod_ambito() throws ConnectionException
+    public int createTrigger_cod_ambito() throws ConnectionException
     {
     	int result= -1;
 		    	
