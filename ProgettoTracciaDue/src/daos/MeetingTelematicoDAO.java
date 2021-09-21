@@ -9,18 +9,20 @@ import entity.Sviluppatore;
 
 public interface MeetingTelematicoDAO {
 
-	public List<MeetingTelematico> getAllMeetingTelematico()  throws SQLException;
 	public MeetingTelematico getMeetingTelematicoByTitolo(String nome) throws SQLException;
-	public MeetingTelematico getMeetingTelematicoByCodMeet(String CodMeet) throws SQLException ;
+	
 	public List<MeetingTelematico> getMeetingTelematicoCodFiscale(String CF) throws SQLException;
+	
 	public List<MeetingTelematico> getMeetingTelematicoProjectManager(String CF) throws SQLException;
+	
 	public int inserisciMeetingTelematico(MeetingTelematico meetingTelematico) throws SQLException;
+	
 	public List<Sviluppatore> cercaPartecipantiMeeting(String codMeet)throws SQLException;
-	public int cancellaMeetingTelematicoByTitolo(MeetingTelematico meetingTelematico) throws SQLException;
+	
 	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException;
+	
 	public int getInserisciPartecipazionePM(String cF, String codMeet)throws SQLException;
-		
-
+			
 }
 
 

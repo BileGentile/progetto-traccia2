@@ -21,17 +21,16 @@ import entity.Sviluppatore;
 public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	
 	private Connection connection;
-	private PreparedStatement getMeetingFisicoByTitoloPS,cercaPartecipantiMeeting,getMeetingTelematicoProjectManager,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS, getMeetingFisicoByCodMeetPS, cancellaMeetingFisicoByTitoloPS, getAllMeetingFisicoPS;
+	private PreparedStatement getMeetingFisicoByTitoloPS,cercaPartecipantiMeeting,getMeetingFisicoProjectManager,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingFisicoCodFiscale, inserisciMeetingFisicoPS;
 	
 
 	public MeetingFisicoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 
 		getMeetingFisicoByTitoloPS = connection.prepareStatement("SELECT * FROM MeetingFisico WHERE titolo LIKE ?");
+		
 		inserisciMeetingFisicoPS = connection.prepareStatement("INSERT INTO MeetingFisico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?,?)");
-		getMeetingFisicoByCodMeetPS = connection.prepareStatement("SELECT * FROM MeetingFisico WHERE codMeet LIKE ?  ");
-		cancellaMeetingFisicoByTitoloPS = connection.prepareStatement("DELETE FROM MeetingFisico WHERE titolo LIKE ?");
-		getAllMeetingFisicoPS = connection.prepareStatement("SELECT * FROM MeetingFisico");
+		
 		getMeetingFisicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo,codprogetto\r\n"
 				+ "from meetingfisico\r\n"
 				+ "where codprogetto in (SELECT codprogetto\r\n"
@@ -41,16 +40,20 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 				+ "					  (select codmeeting\r\n"
 				+ "					   from partecipazionisviluppatoremeetingfisico\r\n"
 				+ "					   where codfiscale LIKE ?);");
+		
 		getInserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingfisico\r\n"
 				+ "values(?,?);");
+		
 		getInserisciPartecipazionePM=connection.prepareStatement("insert into partecipazioniprojectmanagermeetingfisico\r\n"
 				+ "values(?,?);");
-		getMeetingTelematicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
+		
+		getMeetingFisicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
 				+ "FROM MEETINGFISICO\r\n"
 				+ "WHERE CODICEMEETING IN \r\n"
 				+ "(select CODMEETING\r\n"
 				+ "from partecipazioniprojectmanagermeetingfisico\r\n"
 				+ "where codfiscale LIKE ?));");
+		
 		cercaPartecipantiMeeting=connection.prepareStatement("select *\r\n"
 				+ "from sviluppatore\r\n"
 				+ "where codfiscale in \r\n"
@@ -80,25 +83,6 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	}
 	
 	@Override
-	public MeetingFisico getMeetingFisicoByCodMeet(String codMeet) throws SQLException {
-		getMeetingFisicoByCodMeetPS.setString(1, codMeet);
-        ResultSet rs= getMeetingFisicoByCodMeetPS.executeQuery();
-        DatabaseMetaData metaData = connection.getMetaData();
-        ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingfisico");
-        	MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting")); //rs.getString(1)
-            s.setTitolo(rs.getString("titolo"));
-            s.setData(rs.getDate("data"));
-            s.setOraInizio(rs.getString("oraInizio"));
-            s.setOraFine(rs.getString("oraFine"));
-            s.setLuogo(rs.getString("luogo"));
-            s.setNomeSala(rs.getString("nomeSala"));
-            s.setProgettoMeeting(fks.getObject("codprogetto", Progetto.class));
-            //s.setOrganizzatore(rs.getString("Organizzatore")); DA FARE?
-          
-        return s;
-	}
-	
-	@Override
 	public int inserisciMeetingFisico(MeetingFisico meetingFisico) throws SQLException {
 		Progetto p= meetingFisico.getProgettoMeeting();
 		inserisciMeetingFisicoPS.setString(1, meetingFisico.getCodMeet());
@@ -112,35 +96,7 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
         int row = inserisciMeetingFisicoPS.executeUpdate();
         return row;
 	}
-	
-	@Override
-	public int cancellaMeetingFisicoByTitolo(MeetingFisico meetingFisico) throws SQLException {
-		cancellaMeetingFisicoByTitoloPS.setString(1, meetingFisico.getTitolo());
-		int row = cancellaMeetingFisicoByTitoloPS.executeUpdate();
-		return row;
-	}
 
-	@Override
-	public List<MeetingFisico> getAllMeetingFisico() throws SQLException {
-		ResultSet rs = getAllMeetingFisicoPS.executeQuery();
-		DatabaseMetaData metaData = connection.getMetaData();
-        ResultSet fks = metaData.getExportedKeys(connection.getCatalog(), null, "meetingfisico");
-		List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
-		while(rs.next()) {
-			MeetingFisico s = new MeetingFisico(rs.getString("codicemeeting"));
-			s.setTitolo(rs.getString("titolo"));
-			s.setData(rs.getDate("data"));
-			s.setOraInizio(rs.getString("oraInizio"));
-			s.setOraFine(rs.getString("oraFine"));
-			s.setLuogo(rs.getString("luogo"));
-			s.setNomeSala(rs.getString("nomeSala"));
-			s.setProgettoMeeting(fks.getObject("codprogetto", Progetto.class));
-			lista.add(s);
-		}
-		rs.close();
-		return lista;
-	}
-	
 	@Override
 	public List<MeetingFisico> getMeetingFisicoCodFiscale(String CF) throws SQLException {
 		getMeetingFisicoCodFiscale.setString(1, CF);
@@ -159,9 +115,9 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	}
 	
 	@Override
-	public List<MeetingFisico> getMeetingTelematicoProjectManager(String CF) throws SQLException{
-		getMeetingTelematicoProjectManager.setString(1, CF);
-		ResultSet rs= getMeetingTelematicoProjectManager.executeQuery();
+	public List<MeetingFisico> getMeetingFisicoProjectManager(String CF) throws SQLException{
+		getMeetingFisicoProjectManager.setString(1, CF);
+		ResultSet rs= getMeetingFisicoProjectManager.executeQuery();
 		List<MeetingFisico> lista = new ArrayList<MeetingFisico>();
 		 while(rs.next())
 	        {
@@ -203,4 +159,5 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 	        }
 		return lista;
 	}
+
 }

@@ -142,7 +142,7 @@ public class PartecipantiAlMeeting extends JFrame {
 						MeetingFisicoDAO dao = null;
 			            
 						dao = new MeetingFisicoDAOPostgresImpl(connection);           
-						List<MeetingFisico> lista = dao.getMeetingTelematicoProjectManager(cf.getText().toString());
+						List<MeetingFisico> lista = dao.getMeetingFisicoProjectManager(cf.getText().toString());
 						for(MeetingFisico p : lista)
 						{
 							ComboBoxMeeting.addItem (p.getTitolo());
