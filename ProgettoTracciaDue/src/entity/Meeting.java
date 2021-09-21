@@ -1,7 +1,16 @@
 package entity;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+
+import dao_impl.MeetingFisicoDAOPostgresImpl;
+import dao_impl.MeetingTelematicoDAOPostgresImpl;
+import daos.MeetingFisicoDAO;
+import daos.MeetingTelematicoDAO;
+import dbConfig.DBBuilder;
+import dbConfig.DBConnection;
 
 public class Meeting {
 
@@ -33,6 +42,10 @@ public class Meeting {
     	super();
     	CodMeet = codMeet;
     }
+
+	public Meeting() {
+		super();
+	}
 
 	public String getCodMeet() {
 		return CodMeet;
@@ -104,9 +117,37 @@ public class Meeting {
 				+ ", progettoMeeting=" + progettoMeeting + "]";
 	}
 
-    
     //METODI
 	
+	public void aggiungiPartecipanteMeeting(String CF, String Tipologia, String titoloMeeting) {
+		DBConnection dbconn = null;
+	    Connection connection = null;
+	    DBBuilder builder = null;
+	
+	    try
+        {
+	    	dbconn = DBConnection.getInstance();
+	    	connection = dbconn.getConnection();
+	    	builder = new DBBuilder(connection);
+
+	    	if(Tipologia.equals("Telematico")) {
+	    		MeetingTelematicoDAO dao = null;
+	    		dao = new MeetingTelematicoDAOPostgresImpl(connection); 
+	    		MeetingTelematico m =dao.getMeetingTelematicoByTitolo(titoloMeeting);
+	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
+	    	}else {
+	    		MeetingFisicoDAO dao = null;
+	    		dao = new MeetingFisicoDAOPostgresImpl(connection); 
+	    		MeetingFisico m=dao.getMeetingFisicoByTitolo(titoloMeeting);
+	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
+	    	}
+        }
+		
+        catch (SQLException exception)
+        {
+            System.out.println("Errore SQLException: "+ exception.getMessage());
+        } 	
+	}
     
 }
 

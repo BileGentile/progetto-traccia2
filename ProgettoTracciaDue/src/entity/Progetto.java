@@ -1,6 +1,14 @@
 package entity;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import dao_impl.ProgettoDAOPostgresImpl;
+import daos.ProgettoDAO;
+import dbConfig.DBBuilder;
+import dbConfig.DBConnection;
+import exceptions.ConnectionException;
 
 public class Progetto {
 	
@@ -34,24 +42,31 @@ public class Progetto {
 	public String getNomeProgetto() {
 		return NomeProgetto;
 	}
+	
 	public void setNomeProgetto(String nomeProgetto) {
 		NomeProgetto = nomeProgetto;
 	}
+	
 	public String getTipoProgetto() {
 		return TipoProgetto;
 	}
+	
 	public void setTipoProgetto(String tipoProgetto) {
 		TipoProgetto = tipoProgetto;
 	}
+	
 	public String getStato() {
 		return Stato;
 	}
+	
 	public void setStato(String stato) {
 		Stato = stato;
 	}
+	
 	public String getCodiceProgetto() {
 		return CodiceProgetto;
 	}
+	
 	public void setCodiceProgetto(String codiceProgetto) {
 		CodiceProgetto = codiceProgetto;
 	}
@@ -98,4 +113,31 @@ public class Progetto {
 	
 	//metodi
 	
+	public int aggiungiPartecipante(String codiceFiscale, String codProgetto) {
+		DBConnection dbconn = null;
+	    Connection connection = null;
+	    DBBuilder builder = null;
+	    int ris = -1;
+	    try
+	    {
+	    	dbconn = DBConnection.getInstance();
+            connection = dbconn.getConnection();
+            builder = new DBBuilder(connection);
+            builder.createTablePartecipazioniProgetto();
+            ProgettoDAO dao =  null;
+
+            dao= new ProgettoDAOPostgresImpl(connection);
+            int res= dao.inserisciArchivioPartecipantiProgettoPS(codiceFiscale, codProgetto);
+            ris= dao.inserimentoAvvenutoConSuccesso(codiceFiscale, codProgetto); 
+        }
+	    catch (SQLException exception)
+    	{
+	    	System.out.println("Errore SQLException: "+ exception.getMessage());
+    	}
+	    catch (ConnectionException ex)
+    	{
+	    	System.out.println("CE: "+ex);
+    	}
+	    return ris;
+	}
 }

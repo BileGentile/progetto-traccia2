@@ -176,21 +176,6 @@ public class Controller {
              
              dao = new MembroDAOPostgresImpl(connection);
 
-
-            
-            //TEST PER IL DATABASE, SIMULO L'INSERIMENTO DI TRE MEMBRI, TOGLI COMMENTO PER TESTARE
-            
-//            Membro m1  =  new Membro("Mario", "Biondi", "MROVRD77L99K776J", "Schifo", "ProjectManager");
-//            Membro m2  =  new Membro("Pino", "Verdi", "PNOVRD77L99K776J", "Bravo", "Sviluppatore");
-//            Membro m3  =  new Membro("Rino", "Ceronte", "RNOVRD77L99K775P", "Eccellente", "Sviluppatore");
-//            int res =  dao.inserisciMembro(m1);
-//            System.out.println(res);
-//            int res2 = dao.inserisciMembro(m2);
-//            System.out.println(res2);
-//            int res3 = dao.inserisciMembro(m3);
-//            System.out.println(res3);
-           
-
         }
         catch (SQLException exception)
         {
@@ -309,7 +294,7 @@ public class Controller {
 	public void TornaPresentazione2(int caso) {
 		if(caso==1) {
 			loginPM.setVisible(false);	
-		}else{
+		}else if (caso==2){
 			loginS.setVisible(false);	
 		}
 		presenta=new Presentazione(this);
@@ -413,39 +398,16 @@ public class Controller {
 	}
 	
 	public void CreaArchivioPartecipanti(String codiceFiscale, String codProgetto) {
-		DBConnection dbconn = null;
-	    Connection connection = null;
-	    DBBuilder builder = null;
-	    
-	    try
-	    {
-	    	dbconn = DBConnection.getInstance();
-            connection = dbconn.getConnection();
-            builder = new DBBuilder(connection);
-            builder.createTablePartecipazioniProgetto();
-            ProgettoDAO dao =  null;
-            
-            dao= new ProgettoDAOPostgresImpl(connection);
-            int res= dao.inserisciArchivioPartecipantiProgettoPS(codiceFiscale, codProgetto);
-            int ris= dao.inserimentoAvvenutoConSuccesso(codiceFiscale, codProgetto);
-            if(ris ==-1) {
-            	erroreInserimentoPartecipante = new ErroreInserimentoPartecipante(this);
-            	erroreInserimentoPartecipante.setVisible(true);
-            }else {
-            	aggiungiMembriAlProgetto.setVisible(false);	
-        	    benvenutoPM = new BenvenutoProjectManager (this);
-        	    benvenutoPM.setVisible(true); 
-            }
-           
+		Progetto p=new Progetto(codProgetto);
+		int ris= p.aggiungiPartecipante(codiceFiscale, codProgetto);
+		if(ris ==-1) {
+			erroreInserimentoPartecipante = new ErroreInserimentoPartecipante(this);
+			erroreInserimentoPartecipante.setVisible(true);
+		}else {
+			aggiungiMembriAlProgetto.setVisible(false);	
+			benvenutoPM = new BenvenutoProjectManager (this);
+			benvenutoPM.setVisible(true); 
         }
-	    catch (SQLException exception)
-    	{
-	    	System.out.println("Errore SQLException: "+ exception.getMessage());
-    	}
-	    catch (ConnectionException ex)
-    	{
-	    	System.out.println("CE: "+ex);
-    	}
 	}
 	
 	public void AvviaValutazione() {
@@ -524,31 +486,8 @@ public class Controller {
 	}
 
 	public void AggiungiArchivioPartecipantiMeeting(String CF, String Tipologia, String titoloMeeting) {
-		DBConnection dbconn = null;
-	    Connection connection = null;
-	    DBBuilder builder = null;
-	    try
-        {
-	    	dbconn = DBConnection.getInstance();
-	    	connection = dbconn.getConnection();
-	    	builder = new DBBuilder(connection);
-	    	
-	    	if(Tipologia.equals("Telematico")) {
-	    		MeetingTelematicoDAO dao = null;
-	    		dao = new MeetingTelematicoDAOPostgresImpl(connection); 
-	    		MeetingTelematico m =dao.getMeetingTelematicoByTitolo(titoloMeeting);
-	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
-	    	}else {
-	    		MeetingFisicoDAO dao = null;
-	    		dao = new MeetingFisicoDAOPostgresImpl(connection); 
-	    		MeetingFisico m=dao.getMeetingFisicoByTitolo(titoloMeeting);
-	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
-	    	}
-	    }
-        catch (SQLException exception)
-        {
-            System.out.println("Errore SQLException: "+ exception.getMessage());
-        } 	
+	    Meeting m= new Meeting();
+	    m.aggiungiPartecipanteMeeting(CF, Tipologia, titoloMeeting);
 		aggiungiPresenza.setVisible(false);
 		benvenutoS = new BenvenutoSviluppatore(this);
 		benvenutoS.setVisible(true);
