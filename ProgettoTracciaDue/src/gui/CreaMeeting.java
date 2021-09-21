@@ -62,7 +62,6 @@ public class CreaMeeting extends JFrame {
 
 	private JPanel contentPane;
 
-
 	Controller IlControllore; 
 	private JTextField txtNull_NomeSala;
 	private JSpinner textField;
