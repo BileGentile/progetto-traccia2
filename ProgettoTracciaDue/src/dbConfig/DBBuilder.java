@@ -658,7 +658,6 @@ public class DBBuilder
 		    		result = st.executeUpdate(sql);
 		    		st.close();
 
-		    		System.out.println(" Hai inserito un membro che già faceva parte del progetto!");
 		    	} else {
 		    		System.out.println("Il trigger TriggerPartecipazioneAlProgetto esiste già!");
 		    	}
@@ -848,18 +847,13 @@ public class DBBuilder
        			if(!functionExists("function_cod_meeting_telematico")) {
        				String sql = " CREATE FUNCTION function_cod_meeting_telematico() RETURNS TRIGGER AS $trigger_cod_meeting_telematico$"
        						+ "BEGIN "
-       						+ "WHILE((SELECT DISTINCT Me_F.titolo "
-       						+ "		 FROM meetingfisico AS Me_F "
-       						+ "		 WHERE (Me_F.codicemeeting = NEW.codicemeeting)) "
+       						+ "WHILE((SELECT DISTINCT Me_T.titolo "
+       						+ "		 FROM meetingfisico AS Me_T "
+       						+ "		 WHERE (Me_T.codicemeeting = NEW.codicemeeting)) "
        						+ "		IS NOT NULL)"
        						+ "LOOP "
        						+ "NEW.codicemeeting := nextval('sequenzacodicemeetingfisico'); "
        						+ "END LOOP; "
-       						+ "IF ((SELECT DISTINCT Me_F.titolo "
-       						+ "       		FROM meetingfisico AS Me_F "
-       						+ "       		WHERE (Me_F.titolo = NEW.titolo AND Me_F.codprogetto=NEW.codprogetto))"
-       						+ "       		IS NOT NULL))THEN"
-       						+ "NEW.titolo:=NEW.titolo||'2';"
        						+ "RETURN NEW; "
        						+ "END "
        						+ "$trigger_cod_meeting_telematico$ LANGUAGE plpgsql; "
