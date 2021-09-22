@@ -20,16 +20,16 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 	public SviluppatoreDAOPostgresImpl (Connection connection) throws SQLException  {
 		this.connection=connection;
 		
-		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM sviluppatore WHERE codFiscale LIKE ? AND ruolo LIKE 'Sviluppatore' ");
+		getSviluppatoreByCodFiscalePS = connection.prepareStatement("SELECT * FROM sviluppatore WHERE codFiscale LIKE ?  ");
 		
-		inserisciSviluppatorePS = connection.prepareStatement("INSERT INTO sviluppatore VALUES (?,?,UPPER(?), 'Sviluppatore', ?,?)");
+		inserisciSviluppatorePS = connection.prepareStatement("INSERT INTO sviluppatore VALUES (?,?,UPPER(?), ?,?)");
 		
 		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore (codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
 		
-		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS = connection.prepareStatement("select RISULTATO1.codfiscale, RISULTATO1.cognome, RISULTATO1.nome, RISULTATO1.ruolo,RISULTATO1.salariomedio, RISULTATO1.valutazione  \r\n"
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS = connection.prepareStatement("select RISULTATO1.codfiscale, RISULTATO1.cognome, RISULTATO1.nome,RISULTATO1.salariomedio, RISULTATO1.valutazione  \r\n"
 				+ "from (SELECT * \r\n"
 				+ "	  FROM SVILUPPATORE\r\n"
-				+ "	  WHERE  salariomedio > ? AND ruolo LIKE 'Sviluppatore' AND valutazione LIKE ?\r\n"
+				+ "	  WHERE  salariomedio > ? AND valutazione LIKE ?\r\n"
 				+ "	  AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
 				+ "						  FROM skills AS S \r\n"
 				+ "						  Where S.nomeskill LIKE ?)\r\n"
@@ -61,7 +61,7 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		
 		inserisciValutazionePS = connection.prepareStatement("UPDATE SVILUPPATORE SET valutazione  = ? WHERE codfiscale LIKE ?");
 		
-		getPartecipantiProgettoPS = connection.prepareStatement("select s.nome, s.cognome, s.codfiscale, s.ruolo, s.salariomedio, s.valutazione\r\n"
+		getPartecipantiProgettoPS = connection.prepareStatement("select s.nome, s.cognome, s.codfiscale, s.salariomedio, s.valutazione\r\n"
 				+ "from partecipazioniprogetto join sviluppatore as s on partecipazioniprogetto.codfiscale= s.codfiscale\r\n"
 				+ "where partecipazioniprogetto.codprogetto in\r\n"
 				+ "(select progetto.codprogetto\r\n"
@@ -120,7 +120,6 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
         	Sviluppatore s = new Sviluppatore(rs.getString("codFiscale")); 
             s.setNome(rs.getString("nome"));
             s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
             s.setSalarioMedio(rs.getInt("SalarioMedio"));
             s.setValutazione(rs.getString("Valutazione"));
             lista.add(s);
@@ -174,7 +173,6 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
         	Sviluppatore s = new Sviluppatore(rs.getString("codFiscale")); 
             s.setNome(rs.getString("nome"));
             s.setCognome(rs.getString("cognome"));
-            s.setRuolo(rs.getString("ruolo"));
             s.setSalarioMedio(rs.getInt("SalarioMedio"));
             s.setValutazione(rs.getString("Valutazione"));
             lista.add(s);

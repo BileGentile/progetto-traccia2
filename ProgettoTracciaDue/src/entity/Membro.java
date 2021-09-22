@@ -16,12 +16,11 @@ public class Membro {
 
     
     //COSTRUTTORI
-	public Membro(String nome, String cognome, String cF, String ruolo, int salarioMedio) {
+	public Membro(String nome, String cognome, String cF, int salarioMedio) {
 		super();
 		Nome = nome;
 		Cognome = cognome;
 		CF = cF;
-		Ruolo = ruolo;
 		SalarioMedio = salarioMedio;
 	}
 	
@@ -54,13 +53,6 @@ public class Membro {
 		CF = cF;
 	}
 	
-	public String getRuolo() {
-		return Ruolo;
-	}
-
-	public void setRuolo(String ruolo) {
-		Ruolo = ruolo;
-	}
 	
 	public int getSalarioMedio() {
 		return SalarioMedio;
@@ -96,7 +88,7 @@ public class Membro {
 
 	@Override
 	public String toString() {
-		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF + ", Ruolo=" + Ruolo + ", SalarioMedio="
+		return "Membro [Nome=" + Nome + ", Cognome=" + Cognome + ", CF=" + CF  + ", SalarioMedio="
 				+ SalarioMedio + ", skills=" + skills + ", progetti=" + progetti + "]";
 	}
 

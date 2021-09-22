@@ -33,8 +33,8 @@ public class ProjectManager extends Membro {
 		super(CF);
 	}
 
-	public ProjectManager(String nome, String cognome, String cF, String ruolo, int salarioMedio) {
-		super(nome, cognome, cF, ruolo, salarioMedio);
+	public ProjectManager(String nome, String cognome, String cF, int salarioMedio) {
+		super(nome, cognome, cF,  salarioMedio);
 	}
 
 	//METODI
@@ -82,7 +82,7 @@ public class ProjectManager extends Membro {
 
 		            daoProjectManager = new ProjectManagerDAOPostgresImpl(connection);
 		            
-		            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale, "ProjectManager", Integer.valueOf(salario));
+		            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale,  Integer.valueOf(salario));
 		           
 		            int res =  daoProjectManager.inserisciProjectManager(m1);
 		            int i= 0;

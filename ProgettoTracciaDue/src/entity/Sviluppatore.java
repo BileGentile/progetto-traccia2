@@ -19,8 +19,8 @@ public class Sviluppatore extends Membro {
 		super(CF);
 	}
 
-	public Sviluppatore(String nome, String cognome, String cF, String ruolo, int salarioMedio, String valutazione) {
-		super(nome, cognome, cF, ruolo, salarioMedio);
+	public Sviluppatore(String nome, String cognome, String cF, int salarioMedio, String valutazione) {
+		super(nome, cognome, cF, salarioMedio);
 		Valutazione = valutazione;
 	}
 
@@ -77,7 +77,7 @@ public class Sviluppatore extends Membro {
 
             daoSviluppatore = new  SviluppatoreDAOPostgresImpl(connection);
          
-           Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, "Sviluppatore", Integer.valueOf(salario), "NULL");
+            Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, Integer.valueOf(salario), "NULL");
       
             int res =  daoSviluppatore.inserisciSviluppatore(m1);
             	int i= 0;
