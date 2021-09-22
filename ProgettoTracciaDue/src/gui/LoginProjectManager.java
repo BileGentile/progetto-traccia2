@@ -40,8 +40,8 @@ public class LoginProjectManager extends JFrame {
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistrazioneProjectManager.class.getResource("/image/ingranaggio blu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(90, 90, 500, 350);
-		setMinimumSize(new Dimension(500,350));
+		setBounds(100, 100, 419, 300);
+		setMinimumSize(new Dimension(450,340));
 
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.activeCaption);
@@ -49,18 +49,22 @@ public class LoginProjectManager extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Inserisci codice fiscale");
+		lblNewLabel.setBounds(30, 48, 163, 55);
 		
 		codiceFiscale = new JTextField();
+		codiceFiscale.setBounds(185, 66, 179, 19);
 		codiceFiscale.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Login");
+		btnNewButton.setBounds(250, 217, 135, 51);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaBenvenutoPM(codiceFiscale);
 			}
 		});
 		
-		btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1 = new JButton("Torna indietro");		
+		btnNewButton_1.setBounds(71, 217, 139, 51);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso=1;
@@ -69,6 +73,7 @@ public class LoginProjectManager extends JFrame {
 		});
 		
 		JLabel BottoneRegistrarePW = new JLabel("Non sei registrato? clicca quì");
+		BottoneRegistrarePW.setBounds(185, 95, 195, 19);
 		BottoneRegistrarePW.addMouseListener(new MouseAdapter() {
 			
 			@Override
@@ -77,45 +82,11 @@ public class LoginProjectManager extends JFrame {
 				IlControllore.AvviaRegistrazioneProjectManager();
 			}
 		});
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(25)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(155)
-							.addComponent(codiceFiscale, GroupLayout.PREFERRED_SIZE, 179, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-								.addPreferredGap(ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 127, GroupLayout.PREFERRED_SIZE)
-								.addGap(37)
-								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 126, GroupLayout.PREFERRED_SIZE))
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addGap(155)
-								.addComponent(BottoneRegistrarePW, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE))))
-					.addGap(101))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(43)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(47)
-							.addComponent(BottoneRegistrarePW, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(18)
-							.addComponent(codiceFiscale, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE))
-					.addGap(80)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-						.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE))
-					.addGap(73))
-		);
-		contentPane.setLayout(gl_contentPane);
+		contentPane.setLayout(null);
+		contentPane.add(codiceFiscale);
+		contentPane.add(lblNewLabel);
+		contentPane.add(btnNewButton_1);
+		contentPane.add(btnNewButton);
+		contentPane.add(BottoneRegistrarePW);
 	}
 }

@@ -21,12 +21,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import app.Controller;
-import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.ProjectManagerDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
 import dao_impl.SviluppatoreDAOPostgresImpl;
-import daos.MembroDAO;
 import daos.ProgettoDAO;
 import daos.ProjectManagerDAO;
 import daos.SkillsDAO;

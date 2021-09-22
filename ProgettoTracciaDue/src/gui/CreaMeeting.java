@@ -1,4 +1,6 @@
+
 package gui;
+
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -13,10 +15,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.DateFormatter;
 
 import app.Controller;
-import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.ProjectManagerDAOPostgresImpl;
-import daos.MembroDAO;
 import daos.ProgettoDAO;
 import daos.ProjectManagerDAO;
 import dbConfig.DBBuilder;

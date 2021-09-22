@@ -42,8 +42,10 @@ public class Presentazione extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Benvenuto nell'APP ufficiale dell'azienda,");
+		lblNewLabel.setBounds(23, 35, 330, 82);
 				
 				JButton btnNewButton = new JButton("Sviluppatore");
+				btnNewButton.setBounds(250, 217, 135, 51);
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						IlControllore.AvviaLoginSviluppatore();
@@ -51,46 +53,21 @@ public class Presentazione extends JFrame {
 				});
 				
 				JButton btnNewButton_1 = new JButton("Project Manager");
+				btnNewButton_1.setBounds(71, 217, 139, 51);
 				btnNewButton_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						IlControllore.LoginProjectManager();
 					}
 				});
+				contentPane.setLayout(null);
 				
 				JLabel lblNewLabel_1 = new JLabel("Clicca sul tuo ruolo:");
-				GroupLayout gl_contentPane = new GroupLayout(contentPane);
-				gl_contentPane.setHorizontalGroup(
-					gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap(34, Short.MAX_VALUE)
-							.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-							.addGap(40)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-							.addGap(46))
-				);
-				gl_contentPane.setVerticalGroup(
-					gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(30)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(40)
-									.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblNewLabel, GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-									.addGap(11)))
-							.addGap(89)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE))
-							.addGap(30))
-				);
-				contentPane.setLayout(gl_contentPane);
+				lblNewLabel_1.setBounds(23, 75, 137, 53);
+				contentPane.add(lblNewLabel_1);
+				contentPane.add(lblNewLabel);
+				contentPane.add(btnNewButton_1);
+				contentPane.add(btnNewButton);
 				
 	}
 }
+

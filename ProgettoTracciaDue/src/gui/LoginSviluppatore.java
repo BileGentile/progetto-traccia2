@@ -43,11 +43,14 @@ public class LoginSviluppatore extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("Inserisci codice fiscale");
+		lblNewLabel.setBounds(21, 48, 171, 21);
 		
 		textField = new JTextField();
+		textField.setBounds(210, 49, 159, 19);
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Login");
+		btnNewButton.setBounds(250, 217, 135, 51);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IlControllore.AvviaBenvenutoS(textField.getText());
@@ -55,6 +58,7 @@ public class LoginSviluppatore extends JFrame {
 		});
 		
 		btnNewButton_1 = new JButton("Torna indietro");
+		btnNewButton_1.setBounds(71, 217, 139, 51);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int caso=2;
@@ -63,6 +67,7 @@ public class LoginSviluppatore extends JFrame {
 		});
 	
 		JLabel BottoneRegistrareS = new JLabel("Non sei registrato? clicca quì");
+		BottoneRegistrareS.setBounds(210, 79, 195, 19);
 		BottoneRegistrareS.addMouseListener(new MouseAdapter() {
 		
 		@Override
@@ -71,44 +76,12 @@ public class LoginSviluppatore extends JFrame {
 			IlControllore.AvviaRegistrazioneSviluppatore();
 		}
 	});
-	GroupLayout gl_contentPane = new GroupLayout(contentPane);
-	gl_contentPane.setHorizontalGroup(
-		gl_contentPane.createParallelGroup(Alignment.LEADING)
-			.addGroup(gl_contentPane.createSequentialGroup()
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addContainerGap(10, Short.MAX_VALUE)
-						.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGap(16)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGap(66)
-						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGap(18)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(BottoneRegistrareS, GroupLayout.PREFERRED_SIZE, 195, GroupLayout.PREFERRED_SIZE)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE))))
-				.addGap(76))
-	);
-	gl_contentPane.setVerticalGroup(
-		gl_contentPane.createParallelGroup(Alignment.LEADING)
-			.addGroup(gl_contentPane.createSequentialGroup()
-				.addGap(43)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
-					.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addComponent(BottoneRegistrareS, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE)
-				.addGap(93)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-					.addComponent(btnNewButton_1, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)))
-	);
-	contentPane.setLayout(gl_contentPane);
+	contentPane.setLayout(null);
+	contentPane.add(btnNewButton_1);
+	contentPane.add(lblNewLabel);
+	contentPane.add(btnNewButton);
+	contentPane.add(BottoneRegistrareS);
+	contentPane.add(textField);
 	
 	}
 }

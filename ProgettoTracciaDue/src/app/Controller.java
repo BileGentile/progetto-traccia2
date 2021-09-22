@@ -2,7 +2,6 @@ package app;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Date;
@@ -15,7 +14,6 @@ import dao_impl.AmbitoDAOPostgresImpl;
 import dao_impl.MeetingDAOPostgresImpl;
 import dao_impl.MeetingFisicoDAOPostgresImpl;
 import dao_impl.MeetingTelematicoDAOPostgresImpl;
-import dao_impl.MembroDAOPostgresImpl;
 import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.ProjectManagerDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
@@ -24,7 +22,6 @@ import daos.AmbitoDAO;
 import daos.MeetingDAO;
 import daos.MeetingFisicoDAO;
 import daos.MeetingTelematicoDAO;
-import daos.MembroDAO;
 import daos.ProgettoDAO;
 import daos.ProjectManagerDAO;
 import daos.SkillsDAO;
@@ -170,11 +167,9 @@ public class Controller {
      		Ambito a3 = new Ambito("Informatica", "sequenzacodiceambito");
      		int re6 = daoA3.inserisciAmbito(a3);
      		
-     		 MembroDAO dao = null;
              ProgettoDAO daoo = null;
              MeetingDAO daooo=null;
              
-             dao = new MembroDAOPostgresImpl(connection);
 
         }
         catch (SQLException exception)
