@@ -31,6 +31,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Calendar;
@@ -57,6 +58,10 @@ import java.awt.Dimension;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class CreaMeeting extends JFrame {
 
@@ -205,24 +210,45 @@ public class CreaMeeting extends JFrame {
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Seleziona il Progetto");
 		
+		Date date = new Date();
+		
+		JSpinner spinner2_OraFine = new JSpinner();
+		spinner2_OraFine.setModel(new SpinnerDateModel(date, null, null, Calendar.MINUTE));
+		
+		JSpinner spinner_OraInizio = new JSpinner();
+		spinner_OraInizio.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+		        Date mod = (Date)spinner_OraInizio.getValue();
+		        mod.setHours(23);
+            	mod.setMinutes(59);
+            	mod.setSeconds(0);
+            	
+				spinner2_OraFine.setModel(new SpinnerDateModel((Date)spinner_OraInizio.getValue(), (Date)spinner_OraInizio.getValue(), mod, Calendar.MINUTE));
+				JSpinner.DateEditor dateEditor2 = new JSpinner.DateEditor(spinner2_OraFine, "HH:mm");
+				spinner2_OraFine.setEditor(dateEditor2);
+			}
+		});
+		SpinnerDateModel mdl = new SpinnerDateModel(date, null, null, Calendar.MINUTE);
+		spinner_OraInizio.setModel(mdl);
+		
 		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.getDateEditor().addPropertyChangeListener(
+			    new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent evt) {
+			            if ("date".equals(evt.getPropertyName())) {
+			            	spinner_OraInizio.setModel(new SpinnerDateModel((Date) evt.getNewValue(), null , null, Calendar.MINUTE));
+			            	JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner_OraInizio, "HH:mm");
+			        	    spinner_OraInizio.setEditor(dateEditor);
+			            	System.out.println(evt.getPropertyName()
+			                    + ": " + (Date) evt.getNewValue());
+			            }
+			        }
+			    });
 		dateChooser.setMinSelectableDate(new Date());
 		dateChooser.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		dateChooser.setDateFormatString("yyyy-MM-dd");
-		
-		Date date = new Date();
-		
-		JSpinner spinner_OraInizio = new JSpinner();
-		spinner_OraInizio.setModel(new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY));
-		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner_OraInizio, "HH:mm");
-		spinner_OraInizio.setEditor(dateEditor);
-		
-		JSpinner spinner2_OraFine = new JSpinner();
-		spinner2_OraFine.setModel(new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY));
-		JSpinner.DateEditor dateEditor2 = new JSpinner.DateEditor(spinner2_OraFine, "HH:mm");
-		spinner2_OraFine.setEditor(dateEditor2);
-		
-		
+
 		JLabel lblNewLabel = new JLabel("Seleziona una data");
 		
 		JLabel lblNewLabel_3 = new JLabel("Inserisci titolo");
