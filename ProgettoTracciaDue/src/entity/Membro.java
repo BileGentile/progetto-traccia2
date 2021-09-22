@@ -100,8 +100,4 @@ public class Membro {
 				+ SalarioMedio + ", skills=" + skills + ", progetti=" + progetti + "]";
 	}
 
-
-	
-    //METODI
-	
 }

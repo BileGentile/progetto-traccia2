@@ -59,7 +59,7 @@ public class Sviluppatore extends Membro {
 	}
 
 	//Creazione di un nuovo sviluppatore 
-	public void RegistraS(String nome, String cognome, String codfiscale, String salario, List<String> list ){
+	public void RegistraS(String cognome,String nome, String codfiscale, String salario, List<String> list ){
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -77,8 +77,7 @@ public class Sviluppatore extends Membro {
 
             daoSviluppatore = new  SviluppatoreDAOPostgresImpl(connection);
          
-            
-            Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, "Sviluppatore", Integer.valueOf(salario), "NULL");
+           Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, "Sviluppatore", Integer.valueOf(salario), "NULL");
       
             int res =  daoSviluppatore.inserisciSviluppatore(m1);
             	int i= 0;

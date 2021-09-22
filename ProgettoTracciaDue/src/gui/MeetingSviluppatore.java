@@ -81,7 +81,7 @@ private JPanel contentPane;
 		table.setBounds(35, 189, 465, 287);
 		contentPane.add(table);
 		
-		JButton btnR = new JButton("Ricerca Progetti");
+		JButton btnR = new JButton("Ricerca Meeting");
 		btnR.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DBConnection dbconn = null;

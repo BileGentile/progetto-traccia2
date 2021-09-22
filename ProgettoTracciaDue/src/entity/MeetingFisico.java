@@ -42,6 +42,4 @@ public class MeetingFisico extends Meeting {
 		return "MeetingFisico [luogo=" + luogo + ", nomeSala=" + nomeSala + ", toString()=" + super.toString() + "]";
 	}
 	
-	//METODI
-	
 }

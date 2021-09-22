@@ -313,9 +313,9 @@ public class Controller {
 	}
 
 	//Creazione di un nuovo sviluppatore 
-	public void RegistraSviluppatore(String nome, String cognome, String codfiscale, String salario, List<String> list ){
+	public void RegistraSviluppatore(String cognome,String nome, String codfiscale, String salario, List<String> list ){
 		Sviluppatore s=new Sviluppatore(codfiscale);
-		s.RegistraS(nome, cognome, codfiscale, salario, list);
+		s.RegistraS(cognome, nome, codfiscale, salario, list);
 		registrazioneS.setVisible(false);
 		loginS= new LoginSviluppatore(this);
 		loginS.setVisible(true);
@@ -419,7 +419,6 @@ public class Controller {
 	public void ValutazioneMembro(String CodiceFiscalePm, String valutazione, String CodiceFiscaleS) {
 		ProjectManager pm=new ProjectManager(CodiceFiscalePm);
 		pm.ValutazioneMembro(valutazione, CodiceFiscaleS);
-		
 		valutazioneAvvenutaConSuccesso = new ValutazioneAvvenutaConSuccesso(this);
 		valutazioneAvvenutaConSuccesso.setVisible(true);
 	}
@@ -470,7 +469,6 @@ public class Controller {
 	public void EliminaProgetto(String CodiceFiscalePm, String nomeProgetto) {
 		ProjectManager pm=new ProjectManager(CodiceFiscalePm);
 		pm.EliminaProgetto(nomeProgetto);
-	
         progettoEliminatoConSuccesso = new ProgettoEliminatoConSuccesso(this);
         progettoEliminatoConSuccesso.setVisible(true); 
     }
@@ -478,7 +476,6 @@ public class Controller {
 	public void CreaMeeting(String CodiceFiscalePm, String tipologia, String titolo, Date data, String oraInizio, String oraFine, String luogo, String nomeSala, String piattaforma, String organizzatore, String NomeProgetto) {
 		ProjectManager pm=new ProjectManager(CodiceFiscalePm);
 		pm.CreazioneMeeting( tipologia,  titolo,  data,  oraInizio,  oraFine,  luogo,  nomeSala,  piattaforma,  organizzatore, NomeProgetto);
-		
         creaMeeting.setVisible(false);
         benvenutoPM = new BenvenutoProjectManager(this);
         benvenutoPM.setVisible(true);

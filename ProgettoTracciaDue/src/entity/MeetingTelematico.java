@@ -44,6 +44,4 @@ public class MeetingTelematico extends Meeting {
 				+ "]";
 	}
 
-	//METODI
-
 }
