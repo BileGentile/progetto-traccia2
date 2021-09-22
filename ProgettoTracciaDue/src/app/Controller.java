@@ -120,9 +120,7 @@ public class Controller {
             builder.createTablePartecipazioniProgetto();
             builder.createTableAssociazioneAmbito();
             builder.createTablePartecipazioniSviluppatoreMeetingFisico();
-            builder.createTablePartecipazioniProjectManagerMeetingFisico();
             builder.createTablePartecipazioniSviluppatoreMeetingTelematico();
-            builder.createTablePartecipazioniProjectManagerMeetingTelematico();
             builder.createTableAssociazioneSkillsProjectManager();
             builder.createTableAssociazioneSkillsSviluppatore();
             
@@ -468,9 +466,9 @@ public class Controller {
         progettoEliminatoConSuccesso.setVisible(true); 
     }
 	
-	public void CreaMeeting(String CodiceFiscalePm, String tipologia, String titolo, Date data, String oraInizio, String oraFine, String luogo, String nomeSala, String piattaforma, String organizzatore, String NomeProgetto) {
+	public void CreaMeeting(String CodiceFiscalePm, String tipologia, String titolo, Date data, String oraInizio, String oraFine, String luogo, String nomeSala, String piattaforma, String NomeProgetto) {
 		ProjectManager pm=new ProjectManager(CodiceFiscalePm);
-		pm.CreazioneMeeting( tipologia,  titolo,  data,  oraInizio,  oraFine,  luogo,  nomeSala,  piattaforma,  organizzatore, NomeProgetto);
+		pm.CreazioneMeeting( tipologia,  titolo,  data,  oraInizio,  oraFine,  luogo,  nomeSala,  piattaforma,CodiceFiscalePm, NomeProgetto);
         creaMeeting.setVisible(false);
         benvenutoPM = new BenvenutoProjectManager(this);
         benvenutoPM.setVisible(true);

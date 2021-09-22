@@ -27,8 +27,8 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore (codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
 		
 		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS = connection.prepareStatement("select RISULTATO1.codfiscale, RISULTATO1.cognome, RISULTATO1.nome,RISULTATO1.salariomedio, RISULTATO1.valutazione  \r\n"
-				+ "from (SELECT * \r\n"
-				+ "	  FROM SVILUPPATORE\r\n"
+				+ "from (SELECT * "
+				+ "	  FROM SVILUPPATORE "
 				+ "	  WHERE  salariomedio > ? AND valutazione LIKE ?\r\n"
 				+ "	  AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
 				+ "						  FROM skills AS S \r\n"

@@ -54,7 +54,7 @@ public class ProjectManager extends Membro {
 	            dao = new ProjectManagerDAOPostgresImpl(connection);
 	            
 	            lista = dao.getProjectManagerByCodFiscale(codiceFiscale);
-	            
+	         
 	         }
 	        catch (SQLException exception)
 	        {
@@ -202,10 +202,13 @@ public class ProjectManager extends Membro {
             	connection = dbconn.getConnection();
             	builder = new DBBuilder(connection);
             	ProgettoDAO dao = null;			
+            	ProjectManager da=null;
             	
             	dao = new ProgettoDAOPostgresImpl(connection);
             	codiceProgetto= dao.getProgettoByNome(NomeProgetto);
             	p= new Progetto(codiceProgetto);
+            	
+            	
             	
             	dbconn = DBConnection.getInstance();
                 connection = dbconn.getConnection();
@@ -215,19 +218,15 @@ public class ProjectManager extends Membro {
             		builder.createTableMeetingTelematico();
             		MeetingTelematicoDAO dao1 = null;
             		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
-            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma );
-
+            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma,organizzatore );
             		int res =  dao1.inserisciMeetingTelematico(p1);
-            		MeetingTelematico m= dao1.getMeetingTelematicoByTitolo(titolo);
-            		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());
+            		
             	}else if (tipologia.equals("Fisico")) {
             		builder.createTableMeetingFisico(); 
             		MeetingFisicoDAO dao1 = null;
             		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
-            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p , luogo, nomeSala);
+            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p , luogo, nomeSala,organizzatore);
             		int res =  dao1.inserisciMeetingFisico(p1);
-            		MeetingFisico m= dao1.getMeetingFisicoByTitolo(titolo);
-            		int res2= dao1.getInserisciPartecipazionePM(organizzatore, m.getCodMeet());
             	}
         
         }

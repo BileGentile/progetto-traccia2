@@ -22,19 +22,19 @@ public class Meeting {
     private String OraInizio;
     private String OraFine;
     private Progetto progettoMeeting;
-    private ProjectManager Organizzatore;
+    private String Organizzatore;
     private ArrayList<Membro> partecipanti;
-    
     //COSTRUTTORI
     
    public Meeting(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
-			Progetto progettoMeeting) {
+			Progetto progettoMeeting, String organizzatore) {
 		super();
 		CodMeet = codMeet;
 		Titolo = titolo;
 		Data = data;
 		OraInizio = oraInizio;
 		OraFine = oraFine;
+		Organizzatore = organizzatore;
 		this.progettoMeeting = progettoMeeting;
 	}
   
@@ -103,18 +103,20 @@ public class Meeting {
 		Titolo = titolo;
 	}
 
-	public ProjectManager getOrganizzatore() {
+	public String getOrganizzatore() {
 		return Organizzatore;
 	}
 
-	public void setOrganizzatore(ProjectManager organizzatore) {
+	public void setOrganizzatore(String organizzatore) {
 		Organizzatore = organizzatore;
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "Meeting [CodMeet=" + CodMeet + ", Data=" + Data + ", OraInizio=" + OraInizio + ", Durata=" + OraFine
-				+ ", progettoMeeting=" + progettoMeeting + "]";
+				+ ", progettoMeeting=" + progettoMeeting + " Organizzatore=" + Organizzatore +"]";
 	}
 
     //METODI
@@ -134,12 +136,12 @@ public class Meeting {
 	    		MeetingTelematicoDAO dao = null;
 	    		dao = new MeetingTelematicoDAOPostgresImpl(connection); 
 	    		MeetingTelematico m =dao.getMeetingTelematicoByTitolo(titoloMeeting);
-	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
+	    		int ris=dao.InserisciPartecipazione(CF,m.getCodMeet());
 	    	}else {
 	    		MeetingFisicoDAO dao = null;
 	    		dao = new MeetingFisicoDAOPostgresImpl(connection); 
 	    		MeetingFisico m=dao.getMeetingFisicoByTitolo(titoloMeeting);
-	    		int ris=dao.getInserisciPartecipazione(CF,m.getCodMeet());
+	    		int ris=dao.InserisciPartecipazione(CF,m.getCodMeet());
 	    	}
         }
 		

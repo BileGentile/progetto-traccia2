@@ -11,8 +11,8 @@ public class MeetingFisico extends Meeting {
 	//COSTRUTTORI
 	
 	public MeetingFisico(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
-			Progetto progettoMeeting, String luogo, String nomeSala) {
-		super(codMeet, titolo, data, oraInizio, oraFine,progettoMeeting);
+			Progetto progettoMeeting, String luogo, String nomeSala, String codfiscalePm) {
+		super(codMeet, titolo, data, oraInizio, oraFine,progettoMeeting, codfiscalePm);
 		this.luogo = luogo;
 		this.nomeSala = nomeSala;
 	}

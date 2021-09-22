@@ -383,7 +383,8 @@ public class DBBuilder
                           " luogo VARCHAR,"+
                           " nomeSala VARCHAR,"+
   						  " PRIMARY KEY (codiceMeeting),"+
-  						  " codProgetto VARCHAR(255) REFERENCES progetto(codProgetto));";
+  						  " codProgetto VARCHAR(255) REFERENCES progetto(codProgetto), "+
+  						  " codProjectManager VARCHAR(16) REFERENCES projectmanager(codFiscale));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -426,34 +427,7 @@ public class DBBuilder
     	return result;
     }
     
-    //TABELLA D'ASSOCIAZIONE PROJECT MANAGER A MEETING FISICO
-    public int createTablePartecipazioniProjectManagerMeetingFisico() throws ConnectionException
-    {
-    	int result= -1;
-    	
-    	if(connectionExists()) {
-    		try {
-    			Statement st = connection.createStatement();
-    			
-    			if(!tableExists("partecipazioniprojectmanagermeetingfisico")) {
-    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingFisico(" +    
-                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
-    						     "codmeeting VARCHAR(255) REFERENCES meetingFisico(codiceMeeting));";
-    				
-    				result = st.executeUpdate(sql);
-    				st.close();
-    			} else {
-    				System.out.println("La tabella Partecipazioni Project Manager Meeting Fisico esiste già!");
-    			}
-    		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Sviluppatore Meeting Fisico: "+ex);
-    		}
-    	} else {
-    		throw new ConnectionException("A connection must exist!");
-    	}
-    	return result;
-    }
-
+   
     //TABELLA MEETING TELEMATICO
     public int createTableMeetingTelematico() throws ConnectionException
     {
@@ -468,11 +442,12 @@ public class DBBuilder
                         " codiceMeeting VARCHAR(255) NOT NULL, " +
     					" titolo VARCHAR(255) NOT NULL, " +
                         " data DATE NOT NULL, " +
-                        " oraInizio TIME(0) NOT NULL,"+
+                        " oraInizio TIME(0) NOT NULL, "+
                         " oraFine TIME (0) NOT NULL, "+
                         " piattaforma VARCHAR,"+
                         " PRIMARY KEY (codiceMeeting),"+
-						" codProgetto VARCHAR(255) REFERENCES progetto(codProgetto));";
+						" codProgetto VARCHAR(255) REFERENCES progetto(codProgetto), " +
+						" codProjectManager VARCHAR(16) REFERENCES projectmanager(codFiscale));";
     				result = st.executeUpdate(sql);
     				st.close();
     			} else {
@@ -515,33 +490,7 @@ public class DBBuilder
     	return result;
     }
 
-    //TABELLA D'ASSOCIAZIONE PROJECT MANAGER A MEETING TELEMATICO
-    public int createTablePartecipazioniProjectManagerMeetingTelematico() throws ConnectionException
-    {
-    	int result= -1;
-    	
-    	if(connectionExists()) {
-    		try {
-    			Statement st = connection.createStatement();
-    			
-    			if(!tableExists("partecipazioniprojectmanagermeetingtelematico")) {
-    				String sql = "CREATE TABLE partecipazioniProjectManagerMeetingTelematico(" +       
-                                 "codfiscale VARCHAR(16) REFERENCES ProjectManager(codFiscale),"+
-    						     "codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));";
-    				
-    				result = st.executeUpdate(sql);
-    				st.close();
-    			} else {
-    				System.out.println("La tabella Partecipazioni Project Manager Meeting Telematico esiste già!");
-    			}
-    		} catch(SQLException ex) {
-    			System.out.println("SQL Exception nella crezione della tabella Partecipazioni Sviluppatore Meeting Telematico: "+ex);
-    		}
-    	} else {
-    		throw new ConnectionException("A connection must exist!");
-    	}
-    	return result;
-    }
+  
     
     //TABELLA SKILLS
     public int createTableSkills() throws ConnectionException

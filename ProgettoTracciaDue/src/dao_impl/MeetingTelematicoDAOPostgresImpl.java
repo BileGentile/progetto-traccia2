@@ -14,20 +14,21 @@ import entity.Meeting;
 import entity.MeetingFisico;
 import entity.MeetingTelematico;
 import entity.Progetto;
+import entity.ProjectManager;
 import entity.Sviluppatore;
 
 public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 
 	private Connection connection;
 
-	private PreparedStatement getMeetingTelematicoByTitoloPS,cercaPartecipantiMeeting,getMeetingTelematicoProjectManager,getInserisciPartecipazionePM,getInserisciPartecipazione,getMeetingTelematicoCodFiscale, inserisciMeetingPS;
+	private PreparedStatement getMeetingTelematicoByTitoloPS,cercaPartecipantiMeeting,getMeetingTelematicoProjectManager,InserisciPartecipazione,getMeetingTelematicoCodFiscale, inserisciMeetingPS;
 
 	public MeetingTelematicoDAOPostgresImpl (Connection connection) throws SQLException{
 		this.connection=connection;
 
 		getMeetingTelematicoByTitoloPS = connection.prepareStatement("SELECT * FROM MeetingTelematico WHERE titolo LIKE ?");
 		
-		inserisciMeetingPS = connection.prepareStatement("INSERT INTO MeetingTelematico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?)");
+		inserisciMeetingPS = connection.prepareStatement("INSERT INTO MeetingTelematico VALUES (nextval(?), ?, TO_DATE(?, 'YYYY MM DD'), TO_TIMESTAMP(?, 'HH24:MI'), TO_TIMESTAMP(?, 'HH24:MI'), ?, ?,?)");
 		
 		getMeetingTelematicoCodFiscale=connection.prepareStatement("select codicemeeting, titolo, data, codprogetto\r\n"
 				+ "from meetingtelematico\r\n"
@@ -39,14 +40,12 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 				+ "					   from partecipazionisviluppatoremeetingtelematico\r\n"
 				+ "					   where codfiscale LIKE ?);");
 		
-		getInserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingtelematico\r\n"
+		InserisciPartecipazione=connection.prepareStatement("insert into partecipazionisviluppatoremeetingtelematico\r\n"
 				+ "values(?,?);");
 		
-		getInserisciPartecipazionePM=connection.prepareStatement("insert into partecipazioniprojectmanagermeetingtelematico\r\n"
-				+ "values(?,?);");
 		
 		getMeetingTelematicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
-				+ "FROM MEETINGTELEMATICO\r\n"
+				+ "FROM MEETING"
 				+ "WHERE CODICEMEETING IN \r\n"
 				+ "(select CODMEETING\r\n"
 				+ "FROM partecipazioniprojectmanagermeetingtelematico\r\n"
@@ -89,6 +88,8 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		inserisciMeetingPS.setString(5, meetingTelematico.getOraFine());
 		inserisciMeetingPS.setString(6, meetingTelematico.getPiattaforma());
 		inserisciMeetingPS.setString(7, p.getCodiceProgetto());
+		inserisciMeetingPS.setString(8, meetingTelematico.getOrganizzatore());
+
         int row = inserisciMeetingPS.executeUpdate();
         return row;
 	}
@@ -128,20 +129,14 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 	}
 	
 	@Override
-	public int getInserisciPartecipazione(String cF, String codMeet)throws SQLException{
-		getInserisciPartecipazione.setString(1,cF);
-		getInserisciPartecipazione.setString(2, codMeet);
-		int row = getInserisciPartecipazione.executeUpdate();
+	public int InserisciPartecipazione(String cF, String codMeet)throws SQLException{
+		InserisciPartecipazione.setString(1,cF);
+		InserisciPartecipazione.setString(2, codMeet);
+		int row = InserisciPartecipazione.executeUpdate();
     	return row;
 	}
 	
-	@Override
-	public int getInserisciPartecipazionePM(String cF, String codMeet)throws SQLException{
-		getInserisciPartecipazionePM.setString(1,cF);
-		getInserisciPartecipazionePM.setString(2, codMeet);
-		int row = getInserisciPartecipazionePM.executeUpdate();
-    	return row;
-	}
+	
 	
 	public List<Sviluppatore> cercaPartecipantiMeeting(String codMeet)throws SQLException{
 		cercaPartecipantiMeeting.setString(1, codMeet);

@@ -11,8 +11,8 @@ public class MeetingTelematico extends Meeting {
 	//COSTRUTTORI
 	
 	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
-			 Progetto progettoMeeting, String piattaforma) {
-		super(codMeet, titolo, data, oraInizio, oraFine, progettoMeeting);
+			 Progetto progettoMeeting, String piattaforma, String codfiscalePm) {
+		super(codMeet, titolo, data, oraInizio, oraFine, progettoMeeting, codfiscalePm);
 		Piattaforma = piattaforma;
 	}
 	
