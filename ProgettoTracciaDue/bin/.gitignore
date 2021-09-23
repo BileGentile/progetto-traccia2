@@ -2,3 +2,5 @@
 /dbConfig/
 /entity/
 /gui/
+/dao_impl/
+/daos/

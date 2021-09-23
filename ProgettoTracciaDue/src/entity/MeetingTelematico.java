@@ -6,7 +6,6 @@ public class MeetingTelematico extends Meeting {
 	
 	//ATTRIBUTI
 	private String Piattaforma;
-	private String link;
 	
 	//COSTRUTTORI
 	
@@ -31,17 +30,9 @@ public class MeetingTelematico extends Meeting {
 		Piattaforma = piattaforma;
 	}
 
-	public String getLink() {
-		return link;
-	}
-
-	public void setLink(String link) {
-		this.link = link;
-	}
-
 	@Override
 	public String toString() {
-		return "MeetingTelematico [Piattaforma=" + Piattaforma + ", link=" + link + ", toString()=" + super.toString()
+		return "MeetingTelematico [Piattaforma=" + Piattaforma +  ", toString()=" + super.toString()
 				+ "]";
 	}
 

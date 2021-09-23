@@ -235,7 +235,7 @@ public class AggiungiMembriAlProgetto extends JFrame {
 		            SviluppatoreDAO dao = null;
 		            dao = new SviluppatoreDAOPostgresImpl(connection);
 		            int valore=ComboBoxProgetti.getSelectedIndex();
-		            List<Sviluppatore> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS(Integer.parseInt(Salario.getText().toString()),ComboBoxSkills.getSelectedItem().toString(), comboBoxValutazione.getSelectedItem().toString(), codiceProgetto, comboBoxTipologia.getSelectedItem().toString() ); 
+		            List<Sviluppatore> listaMembri = dao.getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS(Integer.parseInt(Salario.getText().toString()),ComboBoxSkills.getSelectedItem().toString(), comboBoxValutazione.getSelectedItem().toString(), codiceProgetto, comboBoxTipologia.getSelectedItem().toString(),textField.getText().toString() ); 
 		            for(Sviluppatore n : listaMembri)
 		            {
 		            	ComboBoxMembri.addItem(n.getCF());

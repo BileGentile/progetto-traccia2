@@ -26,23 +26,28 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		
 		inserisciSkillSviluppatorePS= connection.prepareStatement("INSERT INTO associazioneskillssviluppatore (codfiscale, codskills)  SELECT ?, S.CodSkills FROM skills AS S WHERE S.nomeskill=?;");
 		
-		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS = connection.prepareStatement("select RISULTATO1.codfiscale, RISULTATO1.cognome, RISULTATO1.nome,RISULTATO1.salariomedio, RISULTATO1.valutazione  \r\n"
-				+ "from (SELECT * "
-				+ "	  FROM SVILUPPATORE "
-				+ "	  WHERE  salariomedio > ? AND valutazione LIKE ?\r\n"
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS = connection.prepareStatement("(select RISULTATO1.codfiscale,RISULTATO1.nome, RISULTATO1.cognome\r\n"
+				+ "from (SELECT * \r\n"
+				+ "	  FROM SVILUPPATORE \r\n"
+				+ "	  WHERE  salariomedio > ? AND valutazione LIKE ? \r\n"
 				+ "	  AND codFiscale IN ((SELECT DISTINCT codfiscale \r\n"
 				+ "						  FROM skills AS S \r\n"
-				+ "						  Where S.nomeskill LIKE ?)\r\n"
+				+ "						  Where S.nomeskill LIKE ? )\r\n"
 				+ "						 except\r\n"
 				+ "						 (select codfiscale\r\n"
 				+ "						  from partecipazioniprogetto\r\n"
 				+ "						  where codprogetto like ?))) as RISULTATO1 \r\n"
-				+ "	LEFT outer join \r\n"
-				+ "	(SELECT PP.codfiscale, tipologia\r\n"
-				+ "	from progetto as p join partecipazioniprogetto as pp on pp.codprogetto = p.codprogetto\r\n"
-				+ "	where tipologia LIKE ?) as RISULTATO2 \r\n"
-				+ "	on RISULTATO1.codfiscale=RISULTATO2.codfiscale\r\n"
-				+ "ORDER BY tipologia ASC;");
+				+ "LEFT outer join \r\n"
+				+ "(SELECT PP.codfiscale, tipologia\r\n"
+				+ "from progetto as p join partecipazioniprogetto as pp on pp.codprogetto = p.codprogetto\r\n"
+				+ "where tipologia LIKE ?) as RISULTATO2 \r\n"
+				+ "\r\n"
+				+ "on RISULTATO1.codfiscale=RISULTATO2.codfiscale\r\n"
+				+ "ORDER BY tipologia ASC)\r\n"
+				+ "except \r\n"
+				+ "(select codfiscale, nome, cognome\r\n"
+				+ " from projectmanager\r\n"
+				+ " where codfiscale like ?);");
 		
 		getAllSviluppatoriProgettoPS=connection.prepareStatement("select distinct codfiscale\n"
 				+ "from partecipazioniprogetto\n"
@@ -107,12 +112,13 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 	}
 	
 	@Override
-	public List<Sviluppatore> getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS(int salario, String skills, String valutazione, String progetto, String tipologia) throws SQLException{
+	public List<Sviluppatore> getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS(int salario, String skills, String valutazione, String progetto, String tipologia, String codfiscalePM) throws SQLException{
 		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setInt(1, salario);
 		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(2, valutazione);
 		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(3, skills);
 		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(4, progetto);
 		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(5, tipologia);
+		getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.setString(6, codfiscalePM);
         ResultSet rs= getSviluppatoreBySalarioESkillsEValutazioneETipologiaPS.executeQuery();
         List<Sviluppatore> lista = new ArrayList<Sviluppatore>();
         while(rs.next())
@@ -120,8 +126,6 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
         	Sviluppatore s = new Sviluppatore(rs.getString("codFiscale")); 
             s.setNome(rs.getString("nome"));
             s.setCognome(rs.getString("cognome"));
-            s.setSalarioMedio(rs.getInt("SalarioMedio"));
-            s.setValutazione(rs.getString("Valutazione"));
             lista.add(s);
         }
         rs.close();
