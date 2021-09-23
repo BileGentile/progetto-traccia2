@@ -22,8 +22,6 @@ public class DBBuilder
         return !(connection == null);
     }
     
-
-
     private boolean tableExists(String tbl_name) throws SQLException
     {
         DatabaseMetaData metadata = connection.getMetaData();
@@ -33,7 +31,6 @@ public class DBBuilder
         return false;
     }
     
-
 	private boolean functionExists(String nomeFun)throws SQLException {
 		DatabaseMetaData metadata = connection.getMetaData();
         ResultSet function = metadata.getFunctions(null, null, nomeFun);
@@ -41,9 +38,8 @@ public class DBBuilder
             return true;
 		return false;
 	}
-	
-	
- //CREAZIONE DATABASE
+		
+	//CREAZIONE DATABASE
     public int createDatabase() throws ConnectionException
     {
     	int result= -1;
@@ -67,9 +63,7 @@ public class DBBuilder
     	}
     	return result;
     }
-    
-    
-    
+        
     //CREAZIONE SEQUENZE
     
     //SEQUENZA PROGETTO
@@ -82,7 +76,7 @@ public class DBBuilder
     			Statement st = connection.createStatement();
     			
     			if(!tableExists("sequenzacodiceprogetti")) {
-    				String sql = "CREATE SEQUENCE sequenzaCodiceProgetti " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
+    				String sql = "CREATE SEQUENCE sequenzaCodiceProgetti " + 
                             "INCREMENT 1 " +
                             " START 1000 " +
                             " MINVALUE 1000 " +
@@ -110,8 +104,8 @@ public class DBBuilder
     		try {
     			Statement st = connection.createStatement();
     			if(!tableExists("sequenzacodicemeetingfisico")) {
-    				String sql = "CREATE SEQUENCE sequenzaCodiceMeetingFisico " +        //DA RIFARE CON TUTTI GLI ATTRIBUTI E CON UNA QUERY PIU' PRECISA
-                            "INCREMENT 1 " +
+    				String sql = "CREATE SEQUENCE sequenzaCodiceMeetingFisico " +      
+    						"INCREMENT 1 " +
                             " START 1000 " +
                             " MINVALUE 1000 " +
                             " MAXVALUE 99999;";
@@ -520,9 +514,7 @@ public class DBBuilder
     	}
     	return result;
     }
-
   
-    
     //TABELLA SKILLS
     public int createTableSkills() throws ConnectionException
     {
@@ -688,8 +680,7 @@ public class DBBuilder
     	}
     	return result;
     }
-
-    
+   
  // TRIGGER GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE
     public int createTriggerCodSkills() throws ConnectionException
        {
@@ -856,12 +847,9 @@ public class DBBuilder
        	}
        	return result;
        }
-    
-       
-       
+         
        // TRIGGER GESTIRE LA CREAZIONE DI MEETING TELEMATICI CON CODICE UGUALE A MEETING TELEMATICI GIA' PRESENTI
        //TRIGGER GESTISCE IL CASO IN CUI SI CREI UN MEETING CON NOME UGUALE A UN MEETING GIA' PRESENTE
-
        public int createTriggerCodMeeting_Telematico() throws ConnectionException
        {
        	int result= -1;
