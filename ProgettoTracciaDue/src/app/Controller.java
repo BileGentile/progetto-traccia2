@@ -203,7 +203,7 @@ public class Controller {
 
 	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "ok", si ritornerà alla schermata di presentazione
 	public void TornaPresentazione() {
-		if(loginPM.isVisible()) {
+		if((loginPM!=null)) {
 			loginPM.setVisible(false);
 			presenta=new Presentazione(this);
 			presenta.setVisible(true);
