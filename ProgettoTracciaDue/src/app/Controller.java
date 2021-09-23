@@ -220,30 +220,20 @@ public class Controller {
 		
 	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
 	public void TornaLogin(int caso) {
-		if(caso==1) {
-			erroreCodiceFiscaleSbagliato.setVisible(false);
-			if((loginPM!=null)) {
+			if(loginPM!=null) {
+				erroreCodiceFiscaleSbagliato.setVisible(false);
 				loginPM.setVisible(false);
 				loginPM=new LoginProjectManager(this);
 				loginPM.setVisible(true);
 			}else{
+				erroreCodiceFiscaleSbagliato.setVisible(false);
 				loginS.setVisible(false);
 				loginS=new LoginSviluppatore(this);
 				loginS.setVisible(true);
 			}
-		}else if(caso==2) {
-			registrazionePM.setVisible(false);
-			loginPM=new LoginProjectManager(this);
-			loginPM.setVisible(true);
-		}else if(caso==3) {
-			registrazioneS.setVisible(false);
-			loginS=new LoginSviluppatore(this);
-			loginS.setVisible(true);
-		}
 		
-			
+		
 	}
-
 	//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 	public void AvviaBenvenutoPM(JTextField codiceFiscale) {
 		ProjectManager pm=new ProjectManager(codiceFiscale.getText());
@@ -334,13 +324,13 @@ public class Controller {
 			if(codfiscale.length()!=16) {
             	errore=true;
 			}else {
-			ProjectManager pm=new ProjectManager(codfiscale);
-			pm.RegistraPM(nome, cognome, codfiscale, salario, list);
+				ProjectManager pm=new ProjectManager(codfiscale);
+				pm.RegistraPM(nome, cognome, codfiscale, salario, list);
 			}
 			if(errore==false) {
-			registrazionePM.setVisible(false);
-			loginPM= new LoginProjectManager(this);
-			loginPM.setVisible(true);
+				registrazionePM.setVisible(false);
+				loginPM= new LoginProjectManager(this);
+				loginPM.setVisible(true);
 			}else if(errore==true){
 				erroreCodFiscaleNonRegistrabile = new ErroreCodFiscaleNonRegistrabile(this);
 				erroreCodFiscaleNonRegistrabile.setVisible(true);
