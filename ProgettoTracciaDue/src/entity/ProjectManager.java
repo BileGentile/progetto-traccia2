@@ -66,7 +66,7 @@ public class ProjectManager extends Membro {
 	//Creazione di un nuovo project manager 
 		public boolean RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> listaAmbiti )
 		{
-            	boolean errore= false;
+            	boolean errore=false;
 
 				DBConnection dbconn = null;
 		        Connection connection = null;
@@ -95,6 +95,7 @@ public class ProjectManager extends Membro {
 		          
 		            List<ProjectManager> listaPmConCf = daoPm.getProjectManagerByCodFiscale(codfiscale);
 		            if(listaPmConCf.isEmpty()) {
+
 		            	int res =  daoProjectManager.inserisciProjectManager(m1);
 		            	int i= 0;
 	            			while (i<listaAmbiti.size()) {
@@ -102,6 +103,8 @@ public class ProjectManager extends Membro {
 	            				int res2= daoProjectManager.inserisciSkillProjectManager(m1,s1);
 	            				i++;
 	            			}
+            				errore=false;
+
 		            }
 		            else {
 		            	errore=true;
@@ -114,7 +117,7 @@ public class ProjectManager extends Membro {
 		        } catch (ConnectionException e) {
 		        	  System.out.println("CE: "+e);
 				}
-            	return errore;
+				return errore;
 
 		}
 		

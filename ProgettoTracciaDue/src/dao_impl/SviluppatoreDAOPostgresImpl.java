@@ -61,8 +61,8 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 		
 		inserisciValutazionePS = connection.prepareStatement("UPDATE SVILUPPATORE SET valutazione  = ? WHERE codfiscale LIKE ?");
 		
-		getPartecipantiProgettoPS = connection.prepareStatement("select s.nome, s.cognome, s.codfiscale, s.salariomedio, s.valutazione\r\n"
-				+ "from partecipazioniprogetto join sviluppatore as s on partecipazioniprogetto.codfiscale= s.codfiscale\r\n"
+		getPartecipantiProgettoPS = connection.prepareStatement("select sv.nome, sv.cognome, sv.codfiscale, sv.salariomedio, sv.valutazione\r\n"
+				+ "from partecipazioniprogetto join sviluppatore AS sv on partecipazioniprogetto.codfiscale = sv.codfiscale "
 				+ "where partecipazioniprogetto.codprogetto in\r\n"
 				+ "(select progetto.codprogetto\r\n"
 				+ "from partecipazioniprogetto join progetto \r\n"

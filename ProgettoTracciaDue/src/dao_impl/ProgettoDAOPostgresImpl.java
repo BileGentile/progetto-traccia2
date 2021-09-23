@@ -37,9 +37,9 @@ public class ProgettoDAOPostgresImpl implements ProgettoDAO {
 		
 		inserimentoAvvenutoConSuccesso= connection.prepareStatement("select codprogetto from partecipazioniprogetto where codfiscale LIKE ? AND codprogetto LIKE ?");
 		
-		getProgettiSviluppatore=connection.prepareStatement("select p.codprogetto,p.nome, p.tipologia,p.codfiscale"
-				+ "from partecipazioniprogetto as pp join progetto as p on pp.codprogetto=p.codprogetto"
-				+ "where pp.codfiscale LIKE ? ;");
+		getProgettiSviluppatore=connection.prepareStatement("select PR.codprogetto, PR.nome, PR.tipologia, PR.codfiscale "
+				+ "			from partecipazioniprogetto PAR join progetto PR on PAR.codprogetto = PR.codprogetto "
+				+ "			where PAR.codfiscale LIKE ?; ");
 	}
 
 

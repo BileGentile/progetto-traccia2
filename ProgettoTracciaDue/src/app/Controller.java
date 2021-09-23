@@ -222,7 +222,7 @@ public class Controller {
 	public void TornaLogin(int caso) {
 		if(caso==1) {
 			erroreCodiceFiscaleSbagliato.setVisible(false);
-			if(loginPM.isVisible()) {
+			if((loginPM!=null)) {
 				loginPM.setVisible(false);
 				loginPM=new LoginProjectManager(this);
 				loginPM.setVisible(true);
@@ -310,14 +310,14 @@ public class Controller {
 
 	//Creazione di un nuovo sviluppatore 
 	public void RegistraSviluppatore(String cognome,String nome, String codfiscale, String salario, List<String> list ){
-		boolean errore;
+		boolean errore=false;
 		if(codfiscale.length()!=16) {
         	errore=true;
 		}else {
 			Sviluppatore s=new Sviluppatore(codfiscale);
 			s.RegistraS(cognome, nome, codfiscale, salario, list);
 		}
-		if(errore=false) {
+		if(errore==false) {
 			registrazioneS.setVisible(false);
 			loginS= new LoginSviluppatore(this);
 			loginS.setVisible(true);
@@ -330,18 +330,18 @@ public class Controller {
 	
 	//Creazione di un nuovo project manager 
 	public void RegistraProjectManager(String nome, String cognome, String codfiscale, String salario, List<String> list ) {
-			boolean errore;
+			boolean errore=false;
 			if(codfiscale.length()!=16) {
             	errore=true;
 			}else {
 			ProjectManager pm=new ProjectManager(codfiscale);
 			pm.RegistraPM(nome, cognome, codfiscale, salario, list);
 			}
-			if(errore=false) {
+			if(errore==false) {
 			registrazionePM.setVisible(false);
 			loginPM= new LoginProjectManager(this);
 			loginPM.setVisible(true);
-			}else {
+			}else if(errore==true){
 				erroreCodFiscaleNonRegistrabile = new ErroreCodFiscaleNonRegistrabile(this);
 				erroreCodFiscaleNonRegistrabile.setVisible(true);
 
