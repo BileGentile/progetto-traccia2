@@ -21,6 +21,8 @@ public class DBBuilder
     private boolean connectionExists() {
         return !(connection == null);
     }
+    
+
 
     private boolean tableExists(String tbl_name) throws SQLException
     {
@@ -32,14 +34,42 @@ public class DBBuilder
     }
     
 
-	private boolean functionExists(String string)throws SQLException {
+	private boolean functionExists(String nomeFun)throws SQLException {
 		DatabaseMetaData metadata = connection.getMetaData();
-        ResultSet function = metadata.getFunctions(null, null, string);
+        ResultSet function = metadata.getFunctions(null, null, nomeFun);
         if (function.next())
             return true;
 		return false;
 	}
-
+	
+	
+ //CREAZIONE DATABASE
+    public int createDatabase() throws ConnectionException
+    {
+    	int result= -1;
+    	
+    	if(connectionExists()) {
+    		try {
+    			Statement st = connection.createStatement();
+    			
+    			if(!tableExists("BDProgettoTracciaDue")) {
+    				String sql = "CREATE DATABASE BDProgettoTracciaDue;" ;
+    				result = st.executeUpdate(sql);
+    				st.close();
+    			} else {
+    				System.out.println("il database BDProgettoTracciaDue esiste già!");
+    			}
+    		} catch(SQLException ex) {
+    			System.out.println("SQL Exception nella creazione del database BDProgettoTracciaDue : "+ex);
+    		}
+    	} else {
+    		throw new ConnectionException("A connection must exist!");
+    	}
+    	return result;
+    }
+    
+    
+    
     //CREAZIONE SEQUENZE
     
     //SEQUENZA PROGETTO
@@ -202,7 +232,8 @@ public class DBBuilder
     				String sql = "CREATE TABLE sviluppatore " + 
                             "(nome VARCHAR(100) not NULL, " +
                             " cognome VARCHAR(100) not NULL, " +
-                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +                            " salarioMedio INTEGER not NULL,"+
+                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +             
+                            " salarioMedio INTEGER not NULL,"+
                             " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
                             " PRIMARY KEY (codFiscale));";
     				

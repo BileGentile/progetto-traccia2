@@ -64,8 +64,11 @@ public class ProjectManager extends Membro {
 		}
 	
 	//Creazione di un nuovo project manager 
-		public void RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> listaAmbiti ) {
-			 DBConnection dbconn = null;
+		public boolean RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> listaAmbiti )
+		{
+            	boolean errore= false;
+
+				DBConnection dbconn = null;
 		        Connection connection = null;
 		        DBBuilder builder = null;
 		       
@@ -78,27 +81,41 @@ public class ProjectManager extends Membro {
 		            builder.createTableSkills();
 		            builder.createTableAssociazioneSkillsProjectManager(); 
 		            ProjectManagerDAO daoProjectManager = null;
+		            ProjectManagerDAO daoPm =null;
 		            SkillsDAO daoSkill =null;
-
+		            
+		            daoPm = new ProjectManagerDAOPostgresImpl(connection);
 		            daoProjectManager = new ProjectManagerDAOPostgresImpl(connection);
 		            
+
 		            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale,  Integer.valueOf(salario));
-		           
-		            int res =  daoProjectManager.inserisciProjectManager(m1);
-		            int i= 0;
-	            	while (i<listaAmbiti.size()) {
-	            		String s1=listaAmbiti.get(i);
-	    
-	            		int res2= daoProjectManager.inserisciSkillProjectManager(m1,s1);
-	            		i++;
-	            	}
+				    ProjectManager m  =  new ProjectManager(nome, cognome, codfiscale,  Integer.valueOf(salario));		          
+		            
+		   // Vedo se esiste già il Project Manager con quel codice fiscale. Se non esiste lo creo, altrimenti errore.
+		          
+		            List<ProjectManager> listaPmConCf = daoPm.getProjectManagerByCodFiscale(codfiscale);
+		            if(listaPmConCf.isEmpty()) {
+		            	int res =  daoProjectManager.inserisciProjectManager(m1);
+		            	int i= 0;
+	            			while (i<listaAmbiti.size()) {
+	            				String s1=listaAmbiti.get(i);
+	            				int res2= daoProjectManager.inserisciSkillProjectManager(m1,s1);
+	            				i++;
+	            			}
+		            }
+		            else {
+		            	errore=true;
+		            }
 		        }
+		        
 		        catch (SQLException exception)
 		        {
 		            System.out.println("Errore SQLException: "+ exception.getMessage());
 		        } catch (ConnectionException e) {
 		        	  System.out.println("CE: "+e);
 				}
+            	return errore;
+
 		}
 		
 	

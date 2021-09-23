@@ -53,13 +53,13 @@ import gui.ValutazioneMembro;
 import gui.PartecipantiAlProgetto;
 import gui.AggiungiMembriAlProgetto;
 import gui.AggiungiPresenza;
-//import gui.AggiungiPresenzaSviluppatore;
 import gui.AggiungiProgetto;
 import gui.ValutazioneAvvenutaConSuccesso;
 import gui.CreaMeeting;
 import gui.EliminaProgetto;
 import gui.ErroreCreazioneProgetto;
 import gui.ErroreInserimentoPartecipante;
+import gui.ErroreCodFiscaleNonRegistrabile;
 
 public class Controller {
 
@@ -86,7 +86,7 @@ public class Controller {
 	PartecipantiAlMeeting partecipantiAlMeeting;
 	ProgettiSviluppatore progettiSviluppatore;
 	MeetingSviluppatore meetingSviluppatore;
-	
+	ErroreCodFiscaleNonRegistrabile erroreCodFiscaleNonRegistrabile;
 	public static void main(String[] args) {
 		
 		//CREAZIONE DEL DATABASE E DELLA CONNECTION
@@ -99,6 +99,7 @@ public class Controller {
             dbconn = DBConnection.getInstance();
             connection = dbconn.getConnection();
             builder = new DBBuilder(connection);
+            
             
             //CREAZIONE SEQUENZE
             builder.createSequenceProgetto();
@@ -238,7 +239,9 @@ public class Controller {
 			registrazioneS.setVisible(false);
 			loginS=new LoginSviluppatore(this);
 			loginS.setVisible(true);
-		}	
+		}
+		
+			
 	}
 
 	//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
@@ -307,20 +310,42 @@ public class Controller {
 
 	//Creazione di un nuovo sviluppatore 
 	public void RegistraSviluppatore(String cognome,String nome, String codfiscale, String salario, List<String> list ){
-		Sviluppatore s=new Sviluppatore(codfiscale);
-		s.RegistraS(cognome, nome, codfiscale, salario, list);
-		registrazioneS.setVisible(false);
-		loginS= new LoginSviluppatore(this);
-		loginS.setVisible(true);
+		boolean errore;
+		if(codfiscale.length()!=16) {
+        	errore=true;
+		}else {
+			Sviluppatore s=new Sviluppatore(codfiscale);
+			s.RegistraS(cognome, nome, codfiscale, salario, list);
+		}
+		if(errore=false) {
+			registrazioneS.setVisible(false);
+			loginS= new LoginSviluppatore(this);
+			loginS.setVisible(true);
+		}
+		else {	
+			erroreCodFiscaleNonRegistrabile = new ErroreCodFiscaleNonRegistrabile(this);
+			erroreCodFiscaleNonRegistrabile.setVisible(true);
+		}
 	}
 	
 	//Creazione di un nuovo project manager 
 	public void RegistraProjectManager(String nome, String cognome, String codfiscale, String salario, List<String> list ) {
+			boolean errore;
+			if(codfiscale.length()!=16) {
+            	errore=true;
+			}else {
 			ProjectManager pm=new ProjectManager(codfiscale);
 			pm.RegistraPM(nome, cognome, codfiscale, salario, list);
+			}
+			if(errore=false) {
 			registrazionePM.setVisible(false);
 			loginPM= new LoginProjectManager(this);
 			loginPM.setVisible(true);
+			}else {
+				erroreCodFiscaleNonRegistrabile = new ErroreCodFiscaleNonRegistrabile(this);
+				erroreCodFiscaleNonRegistrabile.setVisible(true);
+
+			}
 	}
 	
 	public void AvviaCreaProgetto(int caso) {
@@ -499,5 +524,35 @@ public class Controller {
 		meetingSviluppatore= new MeetingSviluppatore(this);
 		meetingSviluppatore.setVisible(true);
 	}
+
+	public void TornaPresentazione3() {
+		if (registrazionePM!=null) {
+			registrazionePM.setVisible(false);
+			erroreCodFiscaleNonRegistrabile.setVisible(false);
+
+		}else if(registrazioneS.isVisible()) {
+			registrazioneS.setVisible(false);
+			erroreCodFiscaleNonRegistrabile.setVisible(false);
+
+		}
+		presenta=new Presentazione(this);
+		presenta.setVisible(true);
+	}
+
+	public void TornaRegistrazione() {
+		if (registrazionePM!=null) {
+			registrazionePM.setVisible(false);
+			erroreCodFiscaleNonRegistrabile.setVisible(false);
+			registrazionePM= new RegistrazioneProjectManager(this);	
+			registrazionePM.setVisible(true);
+		}
+		else if(registrazioneS.isVisible()) {
+			registrazioneS.setVisible(false);
+			erroreCodFiscaleNonRegistrabile.setVisible(false);
+			registrazioneS = new RegistrazioneSviluppatore(this);
+			registrazioneS.setVisible(true);
+
+	}
+}
 
 }

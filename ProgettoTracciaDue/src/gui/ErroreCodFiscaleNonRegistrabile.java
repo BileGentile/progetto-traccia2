@@ -18,13 +18,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 
-public class ErroreCodiceFiscaleSbagliato extends JDialog {
+public class ErroreCodFiscaleNonRegistrabile extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
 	Controller IlControllore;
 	
-	public ErroreCodiceFiscaleSbagliato(Controller c) {
+	public ErroreCodFiscaleNonRegistrabile(Controller c) {
 		
 		IlControllore = c;
 		
@@ -41,9 +41,14 @@ public class ErroreCodiceFiscaleSbagliato extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblNewLabel = new JLabel("Errore! Il codice fiscale inserito non \u00E8 corretto");
-			lblNewLabel.setBounds(16, 31, 293, 13);
+			lblNewLabel.setBounds(16, 31, 310, 13);
 			contentPanel.add(lblNewLabel);
 
+		}
+		{
+			JLabel lblOSeiGi = new JLabel("o sei gi\u00E0 registrato.");
+			lblOSeiGi.setBounds(16, 47, 310, 13);
+			contentPanel.add(lblOSeiGi);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -54,8 +59,7 @@ public class ErroreCodiceFiscaleSbagliato extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						IlControllore.TornaPresentazione();
-						
+						IlControllore.TornaPresentazione3();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -66,8 +70,8 @@ public class ErroreCodiceFiscaleSbagliato extends JDialog {
 				JButton cancelButton = new JButton("riprova");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						int caso=1;
-						IlControllore.TornaLogin(caso);
+					
+						IlControllore.TornaRegistrazione();
 					}
 				});
 				cancelButton.setActionCommand("Cancel");

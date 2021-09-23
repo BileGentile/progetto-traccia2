@@ -59,7 +59,9 @@ public class Sviluppatore extends Membro {
 	}
 
 	//Creazione di un nuovo sviluppatore 
-	public void RegistraS(String cognome,String nome, String codfiscale, String salario, List<String> list ){
+	public boolean RegistraS(String cognome,String nome, String codfiscale, String salario, List<String> list ){
+		boolean errore=false;
+		
 		DBConnection dbconn = null;
         Connection connection = null;
         DBBuilder builder = null;
@@ -72,20 +74,32 @@ public class Sviluppatore extends Membro {
             builder.createTableSviluppatore();
             builder.createTableSkills();
             builder.createTableAssociazioneSkillsSviluppatore();
+            
             SviluppatoreDAO daoSviluppatore = null;
+            SviluppatoreDAO daoSviluppatori = null;
             SkillsDAO daoSkill =null;
 
             daoSviluppatore = new  SviluppatoreDAOPostgresImpl(connection);
-         
+            daoSviluppatori = new SviluppatoreDAOPostgresImpl(connection);
+            
             Sviluppatore m1  =  new Sviluppatore(nome, cognome, codfiscale, Integer.valueOf(salario), "NULL");
-      
-            int res =  daoSviluppatore.inserisciSviluppatore(m1);
+            Sviluppatore m2  =  new Sviluppatore(nome, cognome, codfiscale, Integer.valueOf(salario), "NULL");
+
+            List<Sviluppatore> listaSConCf = daoSviluppatori.getSviluppatoreByCodFiscale(codfiscale);
+            
+            if(listaSConCf.isEmpty()) {
+            	int res = daoSviluppatori.inserisciSviluppatore(m1);
             	int i= 0;
-            	while (i<list.size()) {
-            		String s1=list.get(i);         
-            		int res2= daoSviluppatore.inserisciSkillSviluppatore(m1,s1);
-            		i++;
-            	}
+            		while (i<list.size()) {
+            			String s1=list.get(i);         
+            			int res2= daoSviluppatore.inserisciSkillSviluppatore(m1,s1);
+            			i++;
+        			}
+            }
+            else {
+            	errore=true;
+            }
+        
         }
         
         catch (SQLException exception)
@@ -94,6 +108,7 @@ public class Sviluppatore extends Membro {
         } catch (ConnectionException e) {
         	  System.out.println("CE: "+e);
 		}
+		return errore;
         
 	}
 
