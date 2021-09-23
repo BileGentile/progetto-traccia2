@@ -50,14 +50,14 @@ public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 				+ "					   FROM progetto \n"
 				+ "					   WHERE codFiscale LIKE ?);");
 		getAllSviluppatoriProgettoEMeeting=connection.prepareStatement("(select s.codfiscale\r\n"
-				+ "from partecipazioniprojectmanagermeetingfisico as pm join partecipazionisviluppatoremeetingfisico as s\r\n"
-				+ " on pm.codmeeting= s.codmeeting\r\n"
-				+ "where pm.codfiscale LIKE ? )\r\n"
-				+ "union\r\n"
-				+ "(select s.codfiscale\r\n"
-				+ "from partecipazioniprojectmanagermeetingtelematico as pm join partecipazionisviluppatoremeetingtelematico as s\r\n"
-				+ " on pm.codmeeting= s.codmeeting\r\n"
-				+ "where pm.codfiscale LIKE ? )");
+				+ " from meetingfisico as m join partecipazionisviluppatoremeetingfisico as s\r\n"
+				+ " on m.codicemeeting= s.codmeeting\r\n"
+				+ " where m.codprojectmanager LIKE ?)\r\n"
+				+ " union\r\n"
+				+ " (select s.codfiscale\r\n"
+				+ "  from meetingtelematico as m join partecipazionisviluppatoremeetingtelematico as s\r\n"
+				+ " on m.codicemeeting= s.codmeeting\r\n"
+				+ "  where m.codprojectmanager LIKE ?)");
 		
 		inserisciValutazionePS = connection.prepareStatement("UPDATE SVILUPPATORE SET valutazione  = ? WHERE codfiscale LIKE ?");
 		

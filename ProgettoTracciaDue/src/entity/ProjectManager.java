@@ -153,7 +153,6 @@ public class ProjectManager extends Membro {
 			SviluppatoreDAO dao = null;
         
 			dao = new SviluppatoreDAOPostgresImpl(connection);
-        
 			dao.inserisciValutazione(valutazione , CodiceFiscale );
 			
 		}
