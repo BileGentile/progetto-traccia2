@@ -11,8 +11,8 @@ public class MeetingTelematico extends Meeting {
 	//COSTRUTTORI
 	
 	public MeetingTelematico(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
-			 Progetto progettoMeeting, String piattaforma, String codfiscalePm) {
-		super(codMeet, titolo, data, oraInizio, oraFine, progettoMeeting, codfiscalePm);
+			Progetto progettoMeeting, String organizzatore, String piattaforma) {
+		super(codMeet, titolo, data, oraInizio, oraFine, progettoMeeting, organizzatore);
 		Piattaforma = piattaforma;
 	}
 	
@@ -20,6 +20,7 @@ public class MeetingTelematico extends Meeting {
 		super(codMeet);
 	}
 	
+
 	//GETTERS AND SETTERS
 
 	public String getPiattaforma() {

@@ -46,12 +46,9 @@ public class MeetingFisicoDAOPostgresImpl implements MeetingFisicoDAO  {
 		
 		
 		
-		getMeetingFisicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
+		getMeetingFisicoProjectManager=connection.prepareStatement("SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
 				+ "FROM MEETINGFISICO\r\n"
-				+ "WHERE CODICEMEETING IN \r\n"
-				+ "(select CODMEETING\r\n"
-				+ "from partecipazioniprojectmanagermeetingfisico\r\n"
-				+ "where codfiscale LIKE ?));");
+				+ "where codProjectManager LIKE ?;");
 		
 		cercaPartecipantiMeeting=connection.prepareStatement("select *\r\n"
 				+ "from sviluppatore\r\n"

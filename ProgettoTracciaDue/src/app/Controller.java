@@ -472,7 +472,6 @@ public class Controller {
         creaMeeting.setVisible(false);
         benvenutoPM = new BenvenutoProjectManager(this);
         benvenutoPM.setVisible(true);
-
 	}
 
 	public void AggiungiArchivioPartecipantiMeeting(String CF, String Tipologia, String titoloMeeting) {

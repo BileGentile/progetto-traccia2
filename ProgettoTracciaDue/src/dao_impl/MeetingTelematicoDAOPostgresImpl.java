@@ -44,13 +44,9 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 				+ "values(?,?);");
 		
 		
-		getMeetingTelematicoProjectManager=connection.prepareStatement("(SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
-				+ "FROM MEETING"
-				+ "WHERE CODICEMEETING IN \r\n"
-				+ "(select CODMEETING\r\n"
-				+ "FROM partecipazioniprojectmanagermeetingtelematico\r\n"
-				+ "where codfiscale LIKE ?));\r\n"
-				+ "");
+		getMeetingTelematicoProjectManager=connection.prepareStatement("SELECT CODICEMEETING, TITOLO,CODPROGETTO\r\n"
+				+ "FROM MEETINGTELEMATICO\r\n"
+				+ "where codProjectManager LIKE ?;");
 		
 		cercaPartecipantiMeeting=connection.prepareStatement("select *\r\n"
 				+ "from sviluppatore\r\n"
@@ -135,8 +131,6 @@ public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {
 		int row = InserisciPartecipazione.executeUpdate();
     	return row;
 	}
-	
-	
 	
 	public List<Sviluppatore> cercaPartecipantiMeeting(String codMeet)throws SQLException{
 		cercaPartecipantiMeeting.setString(1, codMeet);

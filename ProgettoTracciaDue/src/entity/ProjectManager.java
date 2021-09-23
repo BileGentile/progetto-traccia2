@@ -218,14 +218,14 @@ public class ProjectManager extends Membro {
             		builder.createTableMeetingTelematico();
             		MeetingTelematicoDAO dao1 = null;
             		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
-            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p, piattaforma,organizzatore );
+            		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p,organizzatore,piattaforma );
             		int res =  dao1.inserisciMeetingTelematico(p1);
             		
             	}else if (tipologia.equals("Fisico")) {
             		builder.createTableMeetingFisico(); 
             		MeetingFisicoDAO dao1 = null;
             		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
-            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p , luogo, nomeSala,organizzatore);
+            		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p ,organizzatore, luogo, nomeSala);
             		int res =  dao1.inserisciMeetingFisico(p1);
             	}
         
