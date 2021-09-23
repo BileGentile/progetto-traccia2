@@ -232,7 +232,7 @@ public class DBBuilder
     				String sql = "CREATE TABLE sviluppatore " + 
                             "(nome VARCHAR(100) not NULL, " +
                             " cognome VARCHAR(100) not NULL, " +
-                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +             
+                            " codFiscale VARCHAR(16) CHECK (codFiscale  ~* '^[A-Z][A-Z][A-Z][A-Z][A-Z][A-Z][0-9][0-9][A-Z][0-9][0-9][A-Z][0-9][0-9][0-9][A-Z]'), " +  
                             " salarioMedio INTEGER not NULL,"+
                             " valutazione VARCHAR CHECK (valutazione LIKE 'Buona' OR  valutazione LIKE 'Mediocre' OR valutazione LIKE 'Male' OR  valutazione LIKE 'NULL' )," +
                             " PRIMARY KEY (codFiscale));";

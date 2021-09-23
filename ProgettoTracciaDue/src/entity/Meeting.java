@@ -23,9 +23,9 @@ public class Meeting {
     private String OraFine;
     private Progetto progettoMeeting;
     private String Organizzatore;
-    private ArrayList<Membro> partecipanti;
-    //COSTRUTTORI
+    private ArrayList<Sviluppatore> partecipanti;
     
+    //COSTRUTTORI
    public Meeting(String codMeet, String titolo, Date data, String oraInizio, String oraFine,
 			Progetto progettoMeeting, String organizzatore) {
 		super();
@@ -87,11 +87,11 @@ public class Meeting {
 		this.progettoMeeting = progettoMeeting;
 	}
 	
-	public ArrayList<Membro> getPartecipanti() {
+	public ArrayList<Sviluppatore> getPartecipanti() {
 		return partecipanti;
 	}
 
-	public void setPartecipanti(ArrayList<Membro> partecipanti) {
+	public void setPartecipanti(ArrayList<Sviluppatore> partecipanti) {
 		this.partecipanti = partecipanti;
 	}
 	
