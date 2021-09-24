@@ -722,6 +722,7 @@ public class DBBuilder
        }
     
     
+    // TRIGGER CHE GESTISCE LA CREAZIONE DI UN AMBITO CON CODICE DI UN AMBITO GIA' PRESENTE
     public int createTrigger_cod_ambito() throws ConnectionException
     {
     	int result= -1;
@@ -761,7 +762,7 @@ public class DBBuilder
     	return result;
     }
     
-    // TRIGGER GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE
+    // TRIGGER CHE GESTISCE LA CREAZIONE DI UN PROGETTO CON CODICE DI UN PROGETTO GIA' PRESENTE
        public int createTriggerCodProgetto() throws ConnectionException
           {
           	int result= -1;
