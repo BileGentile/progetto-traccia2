@@ -79,7 +79,7 @@ CREATE TABLE associazioneAmbito
 /*CREAZIONE TABELLA MEETING FISICO */
 CREATE TABLE meetingFisico 
 (codiceMeeting VARCHAR(255) NOT NULL,
- titolo VARCHAR(255) NOT NULL,
+ titolo VARCHAR(255) NOT NULL UNIQUE,
  data DATE NOT NULL,
  oraInizio TIME (0) NOT NULL,
  oraFine TIME (0) NOT NULL,
@@ -97,10 +97,10 @@ CREATE TABLE partecipazioniSviluppatoreMeetingFisico
 /*CREAZIONE TABELLA MEETING TELEMATICO */
 CREATE TABLE meetingTelematico
 (codiceMeeting VARCHAR(255) NOT NULL,
- titolo VARCHAR(255) NOT NULL,
+ titolo VARCHAR(255) NOT NULL UNIQUE,
  data DATE NOT NULL,
- oraInizio TIME(0) NOT NULL,
- oraFine TIME (0) NOT NULL,
+ oraInizio TIME(0) NOT NULL CHECK ( oraInizio < oraFine ),
+ oraFine TIME (0) NOT NULL CHECK ( oraFine > oraInizio ),
  piattaforma VARCHAR,
  PRIMARY KEY (codiceMeeting),
  codProgetto VARCHAR(255) REFERENCES progetto(codProgetto),
@@ -113,7 +113,7 @@ codmeeting VARCHAR(255) REFERENCES meetingTelematico(codiceMeeting));
 
 /*CREAZIONE TABELLA SKILLS */
 CREATE TABLE skills 
-(nomeSkill VARCHAR(100) not NULL, 
+(nomeSkill VARCHAR(100) not NULL UNIQUE, 
  codSkills VARCHAR(255) PRIMARY KEY,
  UNIQUE(nomeSkill));
     				

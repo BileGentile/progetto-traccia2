@@ -403,8 +403,8 @@ public class DBBuilder
                           " codiceMeeting VARCHAR(255) NOT NULL, " +
     					  " titolo VARCHAR(255) NOT NULL, " +
                           " data DATE NOT NULL, " +
-                          " oraInizio TIME (0) NOT NULL,"+
-                          " oraFine TIME (0) NOT NULL,"+
+                          " oraInizio TIME(0) NOT NULL CHECK ( oraInizio < oraFine ),"+
+                          " oraFine TIME (0) NOT NULL CHECK ( oraFine > oraInizio ),"+
                           " luogo VARCHAR,"+
                           " nomeSala VARCHAR,"+
   						  " PRIMARY KEY (codiceMeeting),"+
@@ -467,8 +467,8 @@ public class DBBuilder
                         " codiceMeeting VARCHAR(255) NOT NULL, " +
     					" titolo VARCHAR(255) NOT NULL, " +
                         " data DATE NOT NULL, " +
-                        " oraInizio TIME(0) NOT NULL, "+
-                        " oraFine TIME (0) NOT NULL, "+
+                        " oraInizio TIME(0) NOT NULL CHECK ( oraInizio < oraFine ),"+
+                        " oraFine TIME (0) NOT NULL CHECK ( oraFine > oraInizio ),"+
                         " piattaforma VARCHAR,"+
                         " PRIMARY KEY (codiceMeeting),"+
 						" codProgetto VARCHAR(255) REFERENCES progetto(codProgetto), " +
