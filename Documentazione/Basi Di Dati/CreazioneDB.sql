@@ -146,8 +146,7 @@ ON partecipazioniprogetto
 FOR EACH ROW 
 EXECUTE PROCEDURE function_partecipazione_al_progetto();		    		
     				    				  				  
-/* CREAZIONE TRIGGER PER EVITARE CHE VENGANO CREATI DUE SKILL CON LO STESSO NOME E
-GESTIRE IL CASO IN CUI VENGA INSERITA UNA SKILL CON STESSO CODICE DI UNA GIA' PRESENTEN */
+/* CREAZIONE TRIGGER PER EVITARE CHE VENGANO CREATI DUE SKILL CON LO STESSO NOME*/
 CREATE FUNCTION function_duplicati_delle_skills() RETURNS TRIGGER AS $Trigger_Duplicati_delle_Skills$
 BEGIN
 IF((SELECT Sk.nomeskill
@@ -165,6 +164,7 @@ AFTER INSERT OR UPDATE
 ON skills
 FOR EACH ROW 
 EXECUTE PROCEDURE function_duplicati_delle_skills();
+
 
 /* CREAZIONE TRIGGER PER  GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE*/
 CREATE FUNCTION function_cod_skills() RETURNS TRIGGER AS $trigger_cod_skills$
@@ -184,8 +184,9 @@ BEFORE INSERT OR UPDATE
 ON skills
 FOR EACH ROW
 EXECUTE PROCEDURE function_cod_skills();
+
     				
-/* CREAZIONE TRIGGER PER GESTIRE CODICI DI AMBITO*/
+/*   TRIGGER CHE GESTISCE LA CREAZIONE DI UN AMBITO CON CODICE DI UN AMBITO GIA' PRESENTE*/
 CREATE FUNCTION function_cod_ambito() RETURNS TRIGGER AS $trigger_cod_ambito$
 BEGIN
 WHILE((SELECT DISTINCT AM.nome 
@@ -204,7 +205,7 @@ ON ambito
 FOR EACH ROW 
 EXECUTE PROCEDURE function_cod_ambito();
     				
-/* CREAZIONE TRIGGER PER GESTIRE LA CREAZIONE DI UNA SKILL CON CODICE DI UNA SKILL GIA' PRESENTE*/
+/*  TRIGGER GESTISCE LA CREAZIONE DI UN PROGETTO CON CODICE DI UN PROGETTO GIA' PRESENTE*/
 CREATE FUNCTION function_cod_progetto() RETURNS TRIGGER AS $trigger_cod_progetto$
 BEGIN
 WHILE((SELECT DISTINCT Pr.nome 
@@ -231,16 +232,17 @@ WHILE((SELECT DISTINCT Me_F.titolo
 	   FROM meetingfisico AS Me_F 
 	   WHERE (Me_F.codicemeeting = NEW.codicemeeting))
 	  IS NOT NULL)
-	  LOOP 
-	  NEW.codicemeeting := nextval('sequenzacodicemeetingfisico');
-	  END LOOP; 
-	  IF ((SELECT DISTINCT Me_F.titolo
-		   FROM meetingfisico AS Me_F
-		   WHERE (Me_F.titolo = NEW.titolo))
-		  IS NOT NULL) THEN 
-		  NEW.titolo := NEW.titolo ||'.' ||SUBSTRING(NEW.codicemeeting,1,4);
-	END IF;
-		  RETURN NEW;
+	  	LOOP 
+	  	NEW.codicemeeting := nextval('sequenzacodicemeetingfisico');
+	  	END LOOP; 
+IF ((SELECT DISTINCT Me_F.titolo
+		FROM meetingfisico AS Me_F
+		WHERE (Me_F.titolo = NEW.titolo))
+		IS NOT NULL) 
+THEN 
+NEW.titolo := NEW.titolo ||'.' ||SUBSTRING(NEW.codicemeeting,1,4);
+END IF;
+RETURN NEW;
 END
 $trigger_cod_meeting_fisico$ LANGUAGE plpgsql;
 CREATE TRIGGER trigger_cod_meeting_fisico
