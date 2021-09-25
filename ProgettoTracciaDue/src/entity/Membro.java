@@ -8,7 +8,6 @@ public class Membro {
 	private String Nome;
 	private String Cognome;
 	private String CF;
-    private String Ruolo;
     private int SalarioMedio;
     private ArrayList<Skills> skills;
     private ArrayList<Progetto> progetti;
