@@ -1,3 +1,5 @@
 /app/
 /entity/
 /dbConfig/
+/dao_impl/
+/daos/
