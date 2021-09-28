@@ -234,6 +234,7 @@ public class Controller {
 		
 		
 	}
+
 	//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
 	public void AvviaBenvenutoPM(JTextField codiceFiscale) {
 		ProjectManager pm=new ProjectManager(codiceFiscale.getText());

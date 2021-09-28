@@ -64,7 +64,7 @@ public class ProjectManager extends Membro {
 		}
 	
 	//Creazione di un nuovo project manager 
-		public boolean RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> listaAmbiti )
+	public boolean RegistraPM(String nome, String cognome, String codfiscale, String salario, List<String> listaAmbiti )
 		{
             	boolean errore=false;
 
@@ -120,10 +120,9 @@ public class ProjectManager extends Membro {
 				return errore;
 
 		}
-		
-	
-		//Creazione di un nuovo progetto
-		public void CreaProgetto(String nomeProgetto, String tipoProgetto , List<String> ListaAmbiti) {
+			
+	//Creazione di un nuovo progetto
+	public void CreaProgetto(String nomeProgetto, String tipoProgetto , List<String> ListaAmbiti) {
 			DBConnection dbconn = null;
 	        Connection connection = null;
 	        DBBuilder builder = null;
@@ -159,7 +158,6 @@ public class ProjectManager extends Membro {
 	        }  	
 		}
 	
-
 	//Valutazione di un membro
 	public void ValutazioneMembro(String valutazione, String CodiceFiscale) {
 		DBConnection dbconn = null;
