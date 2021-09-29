@@ -2,7 +2,6 @@ package app;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Date;
 import javax.swing.JTextField;
@@ -11,26 +10,13 @@ import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 
 import dao_impl.AmbitoDAOPostgresImpl;
-import dao_impl.MeetingDAOPostgresImpl;
-import dao_impl.MeetingFisicoDAOPostgresImpl;
-import dao_impl.MeetingTelematicoDAOPostgresImpl;
-import dao_impl.ProgettoDAOPostgresImpl;
-import dao_impl.ProjectManagerDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
-import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.AmbitoDAO;
 import daos.MeetingDAO;
-import daos.MeetingFisicoDAO;
-import daos.MeetingTelematicoDAO;
 import daos.ProgettoDAO;
-import daos.ProjectManagerDAO;
 import daos.SkillsDAO;
-import daos.SviluppatoreDAO;
 import entity.Ambito;
 import entity.Meeting;
-import entity.MeetingFisico;
-import entity.MeetingTelematico;
-import entity.Membro;
 import entity.Progetto;
 import entity.ProjectManager;
 import entity.Skills;
@@ -87,6 +73,7 @@ public class Controller {
 	ProgettiSviluppatore progettiSviluppatore;
 	MeetingSviluppatore meetingSviluppatore;
 	ErroreCodFiscaleNonRegistrabile erroreCodFiscaleNonRegistrabile;
+	
 	public static void main(String[] args) {
 		
 		//CREAZIONE DEL DATABASE E DELLA CONNECTION
