@@ -1,8 +1,6 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -22,26 +20,19 @@ import javax.swing.border.EmptyBorder;
 
 import app.Controller;
 import dao_impl.ProgettoDAOPostgresImpl;
-import dao_impl.ProjectManagerDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
 import dao_impl.SviluppatoreDAOPostgresImpl;
 import daos.ProgettoDAO;
-import daos.ProjectManagerDAO;
 import daos.SkillsDAO;
 import daos.SviluppatoreDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
-import entity.Membro;
 import entity.Progetto;
-import entity.ProjectManager;
 import entity.Skills;
 import entity.Sviluppatore;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JScrollBar;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 
 public class AggiungiMembriAlProgetto extends JFrame {
 

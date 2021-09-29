@@ -23,14 +23,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import app.Controller;
-import dao_impl.ProgettoDAOPostgresImpl;
 import dao_impl.SviluppatoreDAOPostgresImpl;
-import daos.ProgettoDAO;
 import daos.SviluppatoreDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
-import entity.Membro;
-import entity.Progetto;
 import entity.Sviluppatore;
 import exceptions.ConnectionException;
 import javax.swing.GroupLayout;

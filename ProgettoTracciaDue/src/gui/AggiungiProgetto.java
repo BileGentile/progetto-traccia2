@@ -17,13 +17,10 @@ import javax.swing.border.EmptyBorder;
 
 import app.Controller;
 import dao_impl.AmbitoDAOPostgresImpl;
-import dao_impl.SkillsDAOPostgresImpl;
 import daos.AmbitoDAO;
-import daos.SkillsDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
 import entity.Ambito;
-import entity.Skills;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;

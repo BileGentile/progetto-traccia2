@@ -3,7 +3,6 @@ package daos;
 import java.sql.SQLException;
 import java.util.List;
 
-import entity.Meeting;
 import entity.MeetingTelematico;
 import entity.Sviluppatore;
 

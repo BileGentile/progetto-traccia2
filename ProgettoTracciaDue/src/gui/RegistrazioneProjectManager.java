@@ -17,14 +17,10 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import app.Controller;
-import dao_impl.MeetingTelematicoDAOPostgresImpl;
 import dao_impl.SkillsDAOPostgresImpl;
-import daos.MeetingTelematicoDAO;
 import daos.SkillsDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
-import entity.Ambito;
-import entity.MeetingTelematico;
 import entity.Skills;
 
 import java.awt.event.ActionListener;

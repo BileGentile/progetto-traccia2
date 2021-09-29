@@ -20,19 +20,14 @@ import javax.swing.border.EmptyBorder;
 
 import app.Controller;
 
-import dao_impl.MeetingDAOPostgresImpl;
 import dao_impl.MeetingFisicoDAOPostgresImpl;
 import dao_impl.MeetingTelematicoDAOPostgresImpl;
-import daos.MeetingDAO;
 import daos.MeetingFisicoDAO;
 import daos.MeetingTelematicoDAO;
-import daos.ProgettoDAO;
 import dbConfig.DBBuilder;
 import dbConfig.DBConnection;
-import entity.Meeting;
 import entity.MeetingFisico;
 import entity.MeetingTelematico;
-import entity.Progetto;
 import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

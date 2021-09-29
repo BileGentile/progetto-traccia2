@@ -9,8 +9,6 @@ import java.util.List;
 
 import daos.SviluppatoreDAO;
 import entity.Sviluppatore;
-import entity.Membro;
-import entity.Skills;
 
 public class SviluppatoreDAOPostgresImpl implements SviluppatoreDAO {
 

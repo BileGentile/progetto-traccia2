@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import daos.MeetingTelematicoDAO;
-import entity.Meeting;
-import entity.MeetingFisico;
 import entity.MeetingTelematico;
 import entity.Progetto;
-import entity.ProjectManager;
 import entity.Sviluppatore;
 
 public class MeetingTelematicoDAOPostgresImpl implements MeetingTelematicoDAO  {

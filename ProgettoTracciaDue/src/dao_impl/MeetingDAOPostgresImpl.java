@@ -9,7 +9,6 @@ import java.util.List;
 
 import daos.MeetingDAO;
 import entity.Meeting;
-import entity.Progetto;
 
 public class MeetingDAOPostgresImpl implements MeetingDAO {
 

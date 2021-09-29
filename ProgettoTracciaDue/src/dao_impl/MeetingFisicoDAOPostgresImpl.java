@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import daos.MeetingFisicoDAO;
-import entity.Meeting;
 import entity.MeetingFisico;
 import entity.Progetto;
 import entity.Sviluppatore;

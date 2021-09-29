@@ -9,7 +9,6 @@ import java.util.List;
 
 import daos.AmbitoDAO;
 import entity.Ambito;
-import entity.Skills;
 
 public class AmbitoDAOPostgresImpl implements AmbitoDAO {
 	

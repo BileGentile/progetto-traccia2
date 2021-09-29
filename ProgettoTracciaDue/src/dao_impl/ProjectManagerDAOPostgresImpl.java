@@ -9,9 +9,6 @@ import java.util.List;
 
 import daos.ProjectManagerDAO;
 import entity.ProjectManager;
-import entity.Skills;
-import entity.Sviluppatore;
-
 public class ProjectManagerDAOPostgresImpl implements ProjectManagerDAO {
 
 	private Connection connection;
