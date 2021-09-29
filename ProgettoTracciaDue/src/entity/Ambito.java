@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Ambito {
 
-	//	attributi
+	//ATTRIBUTI
 
 	private String NomeAmbito;
 	private String CodAmbito;
 	private ArrayList<Progetto> ambitiProgetto;
 	
-	//	costruttori
+	//COSTRUTTORI
 	
 	public Ambito(String nomeAmbito, String codAmbito) {
 		super();

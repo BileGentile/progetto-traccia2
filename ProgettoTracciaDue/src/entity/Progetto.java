@@ -12,7 +12,7 @@ import exceptions.ConnectionException;
 
 public class Progetto {
 	
-    //	attributi
+	//ATTRIBUTI
 	
 	private String NomeProgetto;
 	private String CodiceProgetto;
@@ -23,7 +23,7 @@ public class Progetto {
 	private ArrayList<Ambito> ambitiProgetto;
 	private ArrayList<Meeting> meetingProgetto;
 	
-	//	costruttori
+	//COSTRUTTORI
 	
 	public Progetto(String nomeProgetto, String tipoProgetto, String codiceProgetto,  String stato,
 		 ProjectManager projectManagerProgetto) {
@@ -111,7 +111,7 @@ public class Progetto {
 				+ "]";
 	}
 	
-	//metodi
+	//METODI
 	
 	public int aggiungiPartecipante(String codiceFiscale, String codProgetto) {
 		DBConnection dbconn = null;
@@ -127,7 +127,7 @@ public class Progetto {
             ProgettoDAO dao =  null;
 
             dao= new ProgettoDAOPostgresImpl(connection);
-            int res= dao.inserisciArchivioPartecipantiProgettoPS(codiceFiscale, codProgetto);
+            dao.inserisciArchivioPartecipantiProgettoPS(codiceFiscale, codProgetto);
             ris= dao.inserimentoAvvenutoConSuccesso(codiceFiscale, codProgetto); 
         }
 	    catch (SQLException exception)

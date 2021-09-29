@@ -125,37 +125,33 @@ public class Controller {
             SkillsDAO daos = null;
             daos = new SkillsDAOPostgresImpl(connection);	
             Skills s = new Skills("Empatia","sequenzacodiceskills");
-    		int re1= daos.inserisciSkills(s);
-    		
+            daos.inserisciSkills(s);
+            
     		SkillsDAO daos2 = null;
             daos2 = new SkillsDAOPostgresImpl(connection);	
             Skills s2 = new Skills("Puntualità","sequenzacodiceskills");
-     		int re2= daos2.inserisciSkills(s2);
+     		daos2.inserisciSkills(s2);
     		
      		SkillsDAO daos3 = null;
             daos3 = new SkillsDAOPostgresImpl(connection);	
             Skills s3 = new Skills("Problem Solving","sequenzacodiceskills");
-     		int re3= daos3.inserisciSkills(s3);
+     		daos3.inserisciSkills(s3);
      		
      		//INSERIRE AMBITI DI DEFAULT
      		AmbitoDAO daoA1 = null;
      		daoA1 = new AmbitoDAOPostgresImpl(connection);
      		Ambito a1 = new Ambito("Economia", "sequenzacodiceambito");
-     		int re4 = daoA1.inserisciAmbito(a1);
+     		daoA1.inserisciAmbito(a1);
      		
      		AmbitoDAO daoA2 = null;
      		daoA2 = new AmbitoDAOPostgresImpl(connection);
      		Ambito a2 = new Ambito("Medicina", "sequenzacodiceambito");
-     		int re5 = daoA2.inserisciAmbito(a2);
+     		daoA2.inserisciAmbito(a2);
      		
      		AmbitoDAO daoA3 = null;
      		daoA3 = new AmbitoDAOPostgresImpl(connection);
      		Ambito a3 = new Ambito("Informatica", "sequenzacodiceambito");
-     		int re6 = daoA3.inserisciAmbito(a3);
-     		
-             ProgettoDAO daoo = null;
-             MeetingDAO daooo=null;
-             
+     		daoA3.inserisciAmbito(a3);
 
         }
         catch (SQLException exception)
@@ -207,19 +203,17 @@ public class Controller {
 		
 	// nel caso in cui il codice fiscale inserito sia sbagliato, e si clicchi su "riprova", si ritornerà alla schermata di login
 	public void TornaLogin(int caso) {
-			if(loginPM!=null) {
-				erroreCodiceFiscaleSbagliato.setVisible(false);
-				loginPM.setVisible(false);
-				loginPM=new LoginProjectManager(this);
-				loginPM.setVisible(true);
-			}else{
-				erroreCodiceFiscaleSbagliato.setVisible(false);
-				loginS.setVisible(false);
-				loginS=new LoginSviluppatore(this);
-				loginS.setVisible(true);
-			}
-		
-		
+		if(loginPM!=null) {
+			erroreCodiceFiscaleSbagliato.setVisible(false);
+			loginPM.setVisible(false);
+			loginPM=new LoginProjectManager(this);
+			loginPM.setVisible(true);
+		}else{
+			erroreCodiceFiscaleSbagliato.setVisible(false);
+			loginS.setVisible(false);
+			loginS=new LoginSviluppatore(this);
+			loginS.setVisible(true);
+		}	
 	}
 
 	//verifica se il codice fiscale inserito dal project manager risulta corretto, se lo è avvia il benvenuto altrimenti da un messaggio di errore
@@ -308,22 +302,21 @@ public class Controller {
 	
 	//Creazione di un nuovo project manager 
 	public void RegistraProjectManager(String nome, String cognome, String codfiscale, String salario, List<String> list ) {
-			boolean errore=false;
-			if(codfiscale.length()!=16) {
-            	errore=true;
-			}else {
-				ProjectManager pm=new ProjectManager(codfiscale);
-				pm.RegistraPM(nome, cognome, codfiscale, salario, list);
-			}
-			if(errore==false) {
-				registrazionePM.setVisible(false);
-				loginPM= new LoginProjectManager(this);
-				loginPM.setVisible(true);
-			}else if(errore==true){
-				erroreCodFiscaleNonRegistrabile = new ErroreCodFiscaleNonRegistrabile(this);
-				erroreCodFiscaleNonRegistrabile.setVisible(true);
-
-			}
+		boolean errore=false;
+		if(codfiscale.length()!=16) {
+			errore=true;
+		}else {
+			ProjectManager pm=new ProjectManager(codfiscale);
+			pm.RegistraPM(nome, cognome, codfiscale, salario, list);
+		}
+		if(errore==false) {
+			registrazionePM.setVisible(false);
+			loginPM= new LoginProjectManager(this);
+			loginPM.setVisible(true);
+		}else if(errore==true){
+			erroreCodFiscaleNonRegistrabile = new ErroreCodFiscaleNonRegistrabile(this);
+			erroreCodFiscaleNonRegistrabile.setVisible(true);
+		}
 	}
 	
 	public void AvviaCreaProgetto(int caso) {

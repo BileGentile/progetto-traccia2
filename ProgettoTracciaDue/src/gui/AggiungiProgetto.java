@@ -163,7 +163,7 @@ public class AggiungiProgetto extends JFrame {
 			            
 					dao2 = new AmbitoDAOPostgresImpl(connection);	
 					Ambito a = new Ambito(textFieldNuovoAmbito.getText(),"sequenzacodiceambito");
-					int res1= dao2.inserisciAmbito(a);
+					dao2.inserisciAmbito(a);
 					demoList.addElement(a.getNomeAmbito());
 					JList<String> listsambiti1 = new JList<String>(demoList);
 					contentPane.add(listsambiti1);

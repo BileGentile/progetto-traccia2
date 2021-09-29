@@ -91,16 +91,16 @@ public class ProjectManager extends Membro {
 		            ProjectManager m1  =  new ProjectManager(nome, cognome, codfiscale,  Integer.valueOf(salario));
 				    ProjectManager m  =  new ProjectManager(nome, cognome, codfiscale,  Integer.valueOf(salario));		          
 		            
-		   // Vedo se esiste già il Project Manager con quel codice fiscale. Se non esiste lo creo, altrimenti errore.
+				    // Vedo se esiste già il Project Manager con quel codice fiscale. Se non esiste lo creo, altrimenti errore.
 		          
 		            List<ProjectManager> listaPmConCf = daoPm.getProjectManagerByCodFiscale(codfiscale);
 		            if(listaPmConCf.isEmpty()) {
 
-		            	int res =  daoProjectManager.inserisciProjectManager(m1);
+		            	daoProjectManager.inserisciProjectManager(m1);
 		            	int i= 0;
 	            			while (i<listaAmbiti.size()) {
 	            				String s1=listaAmbiti.get(i);
-	            				int res2= daoProjectManager.inserisciSkillProjectManager(m1,s1);
+	            				daoProjectManager.inserisciSkillProjectManager(m1,s1);
 	            				i++;
 	            			}
             				errore=false;
@@ -136,7 +136,7 @@ public class ProjectManager extends Membro {
 	        	ProgettoDAO dao1 = null;
 	        	dao1 = new ProgettoDAOPostgresImpl(connection);
 	        	Progetto p2  =  new Progetto (nomeProgetto, tipoProgetto, "sequenzacodiceprogetti", "Incompleto", this);
-	        	int res =  dao1.inserisciProgetto(p2);
+	        	dao1.inserisciProgetto(p2);
 	  	
 	        	builder.createTableAmbito();
 	        	AmbitoDAO dao3 = null;
@@ -144,7 +144,7 @@ public class ProjectManager extends Membro {
 	        	int i= 0;
 	        	while (i<ListaAmbiti.size()) {
 	        		String s1=ListaAmbiti.get(i);
-	        		int res3= dao3.inserisciAmbitoProgetto(nomeProgetto,s1);
+	        		dao3.inserisciAmbitoProgetto(nomeProgetto,s1);
 	        		i++;
 	        	}
 	        }
@@ -226,7 +226,6 @@ public class ProjectManager extends Membro {
             	p= new Progetto(codiceProgetto);
             	
             	
-            	
             	dbconn = DBConnection.getInstance();
                 connection = dbconn.getConnection();
                 builder = new DBBuilder(connection);
@@ -236,14 +235,14 @@ public class ProjectManager extends Membro {
             		MeetingTelematicoDAO dao1 = null;
             		dao1 = new MeetingTelematicoDAOPostgresImpl(connection);
             		MeetingTelematico p1  =  new MeetingTelematico("sequenzacodicemeetingtelematico", titolo, data, oraInizio , oraFine, p,organizzatore,piattaforma );
-            		int res =  dao1.inserisciMeetingTelematico(p1);
+            		dao1.inserisciMeetingTelematico(p1);
             		
             	}else if (tipologia.equals("Fisico")) {
             		builder.createTableMeetingFisico(); 
             		MeetingFisicoDAO dao1 = null;
             		dao1 = new MeetingFisicoDAOPostgresImpl(connection);
             		MeetingFisico p1  =  new MeetingFisico("sequenzacodicemeetingfisico", titolo, data, oraInizio , oraFine , p ,organizzatore, luogo, nomeSala);
-            		int res =  dao1.inserisciMeetingFisico(p1);
+            		dao1.inserisciMeetingFisico(p1);
             	}
         
         }

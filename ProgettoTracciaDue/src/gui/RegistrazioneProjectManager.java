@@ -139,7 +139,7 @@ public class RegistrazioneProjectManager extends JFrame {
 	            
 					dao2 = new SkillsDAOPostgresImpl(connection);	
 					Skills s = new Skills(textFieldNuovaSkill.getText(),"sequenzacodiceskills");
-					int res1= dao2.inserisciSkills(s);
+					dao2.inserisciSkills(s);
 					demoList.addElement(s.getNomeSkill());
 					JList<String> listskills1 = new JList<String>(demoList);
 					contentPane.add(listskills1);

@@ -136,12 +136,12 @@ public class Meeting {
 	    		MeetingTelematicoDAO dao = null;
 	    		dao = new MeetingTelematicoDAOPostgresImpl(connection); 
 	    		MeetingTelematico m =dao.getMeetingTelematicoByTitolo(titoloMeeting);
-	    		int ris=dao.InserisciPartecipazione(CF,m.getCodMeet());
+	    		dao.InserisciPartecipazione(CF,m.getCodMeet());
 	    	}else {
 	    		MeetingFisicoDAO dao = null;
 	    		dao = new MeetingFisicoDAOPostgresImpl(connection); 
 	    		MeetingFisico m=dao.getMeetingFisicoByTitolo(titoloMeeting);
-	    		int ris=dao.InserisciPartecipazione(CF,m.getCodMeet());
+	    		dao.InserisciPartecipazione(CF,m.getCodMeet());
 	    	}
         }
 		
