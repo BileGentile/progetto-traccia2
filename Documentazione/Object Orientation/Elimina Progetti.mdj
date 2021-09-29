@@ -4865,7 +4865,7 @@
 															"top": 87,
 															"width": 101.8544921875,
 															"height": 13,
-															"text": "Lifeline1: Actor1"
+															"text": "utente: Actor1"
 														},
 														{
 															"_type": "LabelView",
@@ -7562,7 +7562,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF8KC8gVjLm7r4="
 									},
-									"name": "Lifeline1",
+									"name": "utente",
 									"represent": {
 										"$ref": "AAAAAAF8K/NzuvsHCmc="
 									},
